@@ -22,8 +22,8 @@ export class Order_selection extends Component {
                         <TextInput style={styles.single_input} placeholder='phone number'></TextInput>
                     </View>
                 </View>
-                <View>
-                    <Text>I want my food between</Text>
+                <View style={styles.order_sel}>
+                    <Text style={styles.order_sel_text}>I want my food between</Text>
                     <View>
                         <TextInput placeholder='time'></TextInput>
                         <Text>and</Text>

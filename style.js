@@ -13,25 +13,26 @@ const styles = StyleSheet.create({
     },
 
     order_sel: {
+      flex: 0.25,
       width: 300,
       alignItems: 'center',
-      // backgroundColor: "coral",
-      marginBottom: 10,
-      // flexDirection: 'row',
+      // backgroundColor: 'coral',
+      // marginBottom: -5,
 
     },
 
     order_sel_text: {
       alignSelf: 'flex-start',
+      fontSize: 20,
     },
 
     order_selection_place_options: {
       flexDirection: 'row',
-      // backgroundColor: "white",
       alignItems: 'center',
     }, 
 
     order_sel_input: {
+      flex: 0.25,
       width: 300,
       alignItems: 'center',
       // backgroundColor: "coral",
