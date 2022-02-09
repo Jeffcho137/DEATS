@@ -11,7 +11,7 @@ export class Home extends Component {
                 <Text style={styles.home_text}>this is the home page</Text>
                 <Button title="Profile" onPress={() => this.props.navigation.navigate('Profile')}></Button>
                 <Button title="Order Delivery" onPress={() => this.props.navigation.navigate('Order_selection')}></Button>
-                <Button title="Make Delivery"></Button>
+                <Button title="Make Delivery"onPress={() => this.props.navigation.navigate('Delivery_selection')}></Button>
                 <StatusBar style="auto" />
             </View>
         )
