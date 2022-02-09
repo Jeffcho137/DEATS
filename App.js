@@ -10,8 +10,8 @@ const AppNavigator = createStackNavigator(
   {
     Home: { screen: Home },
     Profile: { screen: Profile},
-    Order_selection: { screen: Order_selection},
-    Delivery_selection: { screen: Delivery_selection}
+    OrderSelection: { screen: Order_selection},
+    DeliverySelection: { screen: Delivery_selection}
   },
   {
     initialRouteName: 'Home',

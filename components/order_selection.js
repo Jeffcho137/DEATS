@@ -9,9 +9,13 @@ export class Order_selection extends Component {
             <View style={styles.container}>
                 <View style={styles.order_sel}>
                     <Text style={styles.order_sel_text}>I want food from:</Text>
-                    <View style={styles.order_selection_place_options}>
-                        <Button title='HOP'></Button>
-                        <Button title='Collis'></Button>
+                    <View style={styles.order_sel_place_options}>
+                        <View style={styles.order_sel_single_place}>
+                            <Button color='black' title='HOP'></Button>
+                        </View>
+                        <View style={styles.order_sel_single_place}>
+                            <Button color='black' title='Collis'></Button>
+                        </View>
                     </View>
                 </View>
                 <View style={styles.order_sel_input}>
@@ -24,10 +28,10 @@ export class Order_selection extends Component {
                 </View>
                 <View style={styles.order_sel}>
                     <Text style={styles.order_sel_text}>I want my food between</Text>
-                    <View>
-                        <TextInput placeholder='time'></TextInput>
-                        <Text>and</Text>
-                        <TextInput placeholder='time'></TextInput>
+                    <View style={styles.order_sel_times}>
+                        <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
+                        <Text style={styles.order_sel_times_text}>and</Text>
+                        <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
                     </View>
                 </View>
                 <Button title="Confirm" onPress={() => this.props.navigation.navigate('Profile')}></Button>
