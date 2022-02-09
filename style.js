@@ -14,11 +14,9 @@ const styles = StyleSheet.create({
 
     order_sel: {
       flex: 0.25,
-      width: 300,
+      width: 350,
       alignItems: 'center',
-      // backgroundColor: 'coral',
-      // marginBottom: -5,
-
+      marginBottom: 20,
     },
 
     order_sel_text: {
@@ -26,30 +24,65 @@ const styles = StyleSheet.create({
       fontSize: 20,
     },
 
-    order_selection_place_options: {
+    order_sel_place_options: {
+      flex: 0.7,
+      width: 350,
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'space-evenly',
     }, 
+
+    order_sel_single_place: {
+      flex: 0.3,
+      borderColor: 'black',
+      borderWidth: 2,
+      borderRadius: 4,
+    },
 
     order_sel_input: {
       flex: 0.25,
-      width: 300,
-      alignItems: 'center',
-      // backgroundColor: "coral",
-      marginBottom: 10,
+      width: 350,
       flexDirection: 'row',
+      marginBottom: 10,
 
     }, 
 
     order_sel_input_box: {
-      // backgroundColor: "white",
-      marginLeft: 30,
+      flex: 1,
+      marginLeft: 10,
     }, 
 
     single_input: {
       borderRadius: 3,
       borderWidth: 1,
-    }
+      height: 30,
+      marginBottom: 10,
+      fontSize: 15,
+      textAlign: 'center',
+    }, 
+
+    order_sel_times: {
+      flex: 0.7,
+      width: 350,
+      backgroundColor: 'white',
+      flexDirection: 'row',
+      justifyContent: 'space-evenly',
+      alignItems: 'center',
+    }, 
+
+    order_sel_times_text: {
+      fontSize: 15,
+    },
+
+    single_input_times: {
+      flex: 0.3,
+      borderRadius: 3,
+      borderWidth: 1,
+      height: 30,
+      marginBottom: 10,
+      fontSize: 15,
+      textAlign: 'center',
+    }, 
 })
 
 export default styles;
