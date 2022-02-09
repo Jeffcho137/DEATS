@@ -8,8 +8,23 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
 
-    home_text: {
-        color: "#323",
+    home_profile_button: {
+      flex: 0.25,
+      alignSelf: 'flex-start',
+      margin: 10,
+    },
+
+    home_options: {
+      flex: 0.8,
+    },
+
+    home_buttons: {
+      flex: 0.3,
+      justifyContent: 'center',
+      borderWidth: 1,
+      borderRadius: 10,
+      marginBottom: 40,
+      width: 250,
     },
 
     order_sel: {
@@ -35,7 +50,7 @@ const styles = StyleSheet.create({
     order_sel_single_place: {
       flex: 0.3,
       borderColor: 'black',
-      borderWidth: 2,
+      borderWidth: 1,
       borderRadius: 4,
     },
 
