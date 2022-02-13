@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
 
     home_options: {
       flex: 0.8,
+      width: '60%',
     },
 
     home_buttons: {
@@ -24,12 +25,44 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderRadius: 10,
       marginBottom: 40,
-      width: 250,
+    },
+
+    profile_heading: {
+      flex: 0.1,
+      width: '90%',
+      alignItems:'flex-end',
+    },
+
+    phone_number: {
+      flex: 0.1,
+      width: '90%',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    },
+
+    payment: {
+      flex: 0.1,
+      width: '90%',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      marginBottom: '10%',
+    },
+    
+    past_orders: {
+      width: '90%',
+      flex: 0.3,
+    },
+
+    past_deliveries: {
+      width: '90%',
+      flex: 0.3,
     },
 
     order_sel: {
       flex: 0.25,
-      width: 350,
+      width: '90%',
       alignItems: 'center',
       marginBottom: 20,
     },
@@ -41,7 +74,7 @@ const styles = StyleSheet.create({
 
     order_sel_place_options: {
       flex: 0.7,
-      width: 350,
+      width: '100%',
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-evenly',
@@ -56,7 +89,7 @@ const styles = StyleSheet.create({
 
     order_sel_input: {
       flex: 0.25,
-      width: 350,
+      width: '90%',
       flexDirection: 'row',
       marginBottom: 10,
 
@@ -64,13 +97,14 @@ const styles = StyleSheet.create({
 
     order_sel_input_box: {
       flex: 1,
-      marginLeft: 10,
+      marginLeft: '2%',
     }, 
 
     single_input: {
       borderRadius: 3,
       borderWidth: 1,
-      height: 30,
+      height: '20%',
+      width: '100%',
       marginBottom: 10,
       fontSize: 15,
       textAlign: 'center',
@@ -78,8 +112,7 @@ const styles = StyleSheet.create({
 
     order_sel_times: {
       flex: 0.7,
-      width: 350,
-      backgroundColor: 'white',
+      width: '100%',
       flexDirection: 'row',
       justifyContent: 'space-evenly',
       alignItems: 'center',
@@ -93,11 +126,12 @@ const styles = StyleSheet.create({
       flex: 0.3,
       borderRadius: 3,
       borderWidth: 1,
-      height: 30,
+      height: '30%',
       marginBottom: 10,
       fontSize: 15,
       textAlign: 'center',
     }, 
+
 })
 
 export default styles;
