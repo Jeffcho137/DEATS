@@ -95,6 +95,14 @@ const styles = StyleSheet.create({
 
     }, 
 
+    deliver_sel_input: {
+      flex: 0.2,
+      width: '90%',
+      flexDirection: 'row',
+      marginBottom: 10,
+
+    }, 
+
     order_sel_input_box: {
       flex: 1,
       marginLeft: '2%',
