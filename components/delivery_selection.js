@@ -31,7 +31,7 @@ export class Delivery_selection extends Component {
                     </View>
                 </View>
                 
-                <Button title="Begin Searching" onPress={() => this.props.navigation.navigate('Profile')}></Button>
+                <Button title="Begin Searching" onPress={() => this.props.navigation.navigate('DeliverSearch')}></Button>
             
                 <StatusBar style="auto" />
             </View>
