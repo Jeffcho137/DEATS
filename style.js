@@ -140,6 +140,15 @@ const styles = StyleSheet.create({
       textAlign: 'center',
     }, 
 
+    searching_text: {
+      flex: 0.5,
+      borderRadius: 5,
+      borderWidth: 1,
+      height: 50,
+      fontSize: 40,
+      textAlign: 'center',
+    }
+
 })
 
 export default styles;
