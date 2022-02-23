@@ -13,9 +13,11 @@ import { Order_code } from './components/order_code';
 import { Order_status } from './components/order_status';
 import { Deliver_status} from './components/deliver_status';
 import { Completed } from './components/completed';
+import { Login } from './components/login';
 
 const AppNavigator = createStackNavigator(
   {
+    Login: { screen: Login },
     Home: { screen: Home },
     Profile: { screen: Profile},
     OrderSelection: { screen: Order_selection},
@@ -30,7 +32,7 @@ const AppNavigator = createStackNavigator(
     Completed: { screen: Completed}
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'Login',
   }
 );
 
