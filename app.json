@@ -17,7 +17,12 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.deatsbundle.test",
+      "config": {
+        "googleMapsApiKey":"AIzaSyAO-lPZXetZY3jaMwbdLNnhrCAHasPaT9Y"
+      }
+
     },
     "android": {
       "adaptiveIcon": {
