@@ -13,6 +13,7 @@ import { Order_code } from './components/order_code';
 import { Order_status } from './components/order_status';
 import { Deliver_status} from './components/deliver_status';
 import { Completed } from './components/completed';
+import { Map_test } from './components/map';
 
 const AppNavigator = createStackNavigator(
   {
@@ -27,7 +28,8 @@ const AppNavigator = createStackNavigator(
     OrderCode: { screen: Order_code},
     OrderStatus: { screen: Order_status},
     DeliverStatus: { screen: Deliver_status},
-    Completed: { screen: Completed}
+    Completed: { screen: Completed},
+    MapTest: { screen: Map_test}
   },
   {
     initialRouteName: 'Home',
