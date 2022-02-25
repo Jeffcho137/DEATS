@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
@@ -147,7 +147,12 @@ const styles = StyleSheet.create({
       height: 50,
       fontSize: 40,
       textAlign: 'center',
-    }
+    },
+
+    map: {
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height,
+    },
 
 })
 

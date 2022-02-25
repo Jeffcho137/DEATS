@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, Button, TextInput } from 'react-native';
+import { Text, View, Button, TextInput, Dimensions } from 'react-native';
 import styles from '../style';
+import MapView from 'react-native-maps';
+import { PROVIDER_GOOGLE } from 'react-native-maps';
 
-export class Deliver_search extends Component {
+export class Map_test extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.order_sel}>
-                    <Text>SEARCHING</Text>
+                <View>
+                    
+                    <MapView style={styles.map} provider={PROVIDER_GOOGLE}/>
                     
                 </View>
                 
