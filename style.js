@@ -8,6 +8,40 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
 
+    landing_logo: {
+      flex: 0.3,
+      fontSize: 50,
+      width: '100%',
+      textAlign:'center',
+      alignItems:'center',
+    },
+
+    landing_buttons: {
+      flex: 0.3,
+      // backgroundColor: 'coral',
+      width: '100%',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+
+    create_acc_button: {
+      // backgroundColor: 'coral',
+      width: '60%',
+      // height: '20%',
+      borderWidth: 1,
+      borderRadius: 5,
+      marginBottom: '5%',
+
+    },
+    login_button: {
+      // backgroundColor: 'coral',
+      width: '60%',
+      // height: '20%',
+      borderWidth: 1,
+      borderRadius: 5,
+      marginBottom: '5%',
+    },
+
     home_profile_button: {
       flex: 0.25,
       alignSelf: 'flex-start',

@@ -2,28 +2,32 @@ import React, { Component, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button, TextInput } from 'react-native';
 import styles from '../style';
-import { APIService } from '../api_components/APIService';
 
-export class Signup extends Component {
+export class Login extends Component {
 
     constructor(props){
         super(props)
         this.state = {
             id: '',
-            email: 'email',
-            password: 'password',
+            email: '',
+            password: '',
+            success: false,
         }
     }
 
-    // changeEmail = (event) => {
-    //     this.setState({email: event.target.value});
+    // printID = () => {
+    //     if (this.state.id != '') {
+    //         console.log(this.state.id);
+    //     } else {
+    //         console.log("unsuccessful creation of account");
+    //     }
     // }
-    printID = () => {
-        console.log(this.state.id);
-    }
 
     sendLogin = () => {
-        fetch('https://deats-backend-test.herokuapp.com/create_acc/',
+        // if (this.state.email == '' || this.state.password == '') {
+        //     console.log("cannot submit empty email/password");
+        // } else {
+            fetch('https://deats-backend-test.herokuapp.com/login/',
             {
                 method: 'POST',
                 headers: {
@@ -39,23 +43,33 @@ export class Signup extends Component {
             .then((data) => {
                 console.log(data);
                 this.setState({
-                    id: data
+                    id: data,
+                    success: true,
                 });
             })
-            .catch(err => console.error(err));
+            .then((data) => {
+                console.log('test')
+                this.props.navigation.navigate('Home', {
+                    id: this.state.id,
+                    email: this.state.email, 
+                    password: this.state.password,
+                });
+            })
+            .catch(err => console.error('err'));
+        // }
     }
 
     render() {
-        
-        return (
-            <View style={styles.container}>
-                <Button title="send login info" onPress={this.sendLogin}></Button>
-                <TextInput placeholder='email' onChangeText={text => this.setState({email: text})}></TextInput>
-                <TextInput placeholder='password' onChangeText={text => this.setState({password: text})}></TextInput>
-                {/* <Button title='SIGNUP' onPress={() => this.props.navigation.navigate('Home')}></Button> */}
-                <Button title="get id" onPress={this.printID}></Button>
-                <StatusBar style="auto" />
-            </View>
-        )
+        // if (this.state.success == true) {
+            return (
+                <View style={styles.container}>
+                    <TextInput placeholder='email' onChangeText={text => this.setState({email: text})}></TextInput>
+                    <TextInput placeholder='password' onChangeText={text => this.setState({password: text})}></TextInput>
+                    <Button title="send login info" onPress={this.sendLogin}></Button>
+                    <Button title='i need to create an account' onPress={() => this.props.navigation.navigate('Signup')}></Button>
+                    {/* <Button title="get id" onPress={this.printID}></Button> */}
+                    <StatusBar style="auto" />
+                </View>
+            )
     }
 }

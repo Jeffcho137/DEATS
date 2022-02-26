@@ -13,12 +13,16 @@ import { Order_code } from './components/order_code';
 import { Order_status } from './components/order_status';
 import { Deliver_status} from './components/deliver_status';
 import { Completed } from './components/completed';
-import { Signup } from './components/login';
+import { Signup } from './components/signup';
 import { Map_test } from './components/map';
+import { Login } from './components/login';
+import { Landing } from './components/landing';
 
 const AppNavigator = createStackNavigator(
   {
+    Landing: { screen: Landing },
     Signup: { screen: Signup },
+    Login: { screen: Login },
     Home: { screen: Home },
     Profile: { screen: Profile},
     OrderSelection: { screen: Order_selection},
@@ -34,7 +38,7 @@ const AppNavigator = createStackNavigator(
     MapTest: { screen: Map_test}
   },
   {
-    initialRouteName: 'Signup',
+    initialRouteName: 'Landing',
   }
 );
 
