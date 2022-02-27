@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
 
     landing_buttons: {
       flex: 0.3,
-      // backgroundColor: 'coral',
       width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
@@ -52,12 +51,13 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderRadius: 5,
       marginBottom: '5%',
+      textAlign: 'center',
     },
 
     singup_buttons: {
       flex: 0.35,
       alignItems: 'center',
-      width: '100%'
+      width: '100%',
     },
 
     signup_text: {
@@ -73,7 +73,6 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       height: '40%',
       borderRadius: 5,
-      // marginBottom: '5%',
     },
 
     login_text: {
@@ -110,6 +109,14 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       height: '40%',
       borderRadius: 5,
+    },
+
+    unsuccessful_login: {
+      width: '90%',
+      fontSize: 15,
+      textAlign: 'center',
+      color: 'red',
+      marginTop: 10,
     },
 
     home_profile_button: {

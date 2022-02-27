@@ -38,7 +38,7 @@ export class Signup extends Component {
                 },
                 body: JSON.stringify({
                     email: this.state.email,
-                    name: this.state.email,
+                    name: this.state.name,
                     password: this.state.password,
                     phone_num: this.state.number,
                 })
@@ -62,9 +62,6 @@ export class Signup extends Component {
                     console.log(data.msg);
                 }
             })
-            // .then((data) => {
-                
-            // })
             .catch(err => console.error(err));
         }
     }
@@ -83,11 +80,10 @@ export class Signup extends Component {
                     <View style={styles.signup_create}>
                         <Button title="Create Account" onPress={this.sendAccInfo}></Button>
                     </View>
-                    <View style={styles.signup_login}>
+                    <View>
                         <Button title='I have an account already' onPress={() => this.props.navigation.navigate('Login')}></Button>
                     </View>
                 </View>
-                {/* <Button title="get id" onPress={this.printID}></Button> */}
                 <StatusBar style="auto" />
             </View>
         )
