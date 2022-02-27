@@ -20,19 +20,40 @@ const Map_test = () => {
     longitude: -72.28869350196095,
   });
 
+  const [region, setRegion] = React.useState({
+    latitude: 43.704483237221815,
+    longitude: -72.28869350196095,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  });
+
   return (
-    <View style={{ marginTop: 50, flex: 1 }}>
+    <View styles={{ marginTop: 50, flex: 1 }}>
       <GooglePlacesAutocomplete
         placeholder="Search"
+        fetchDetails={true}
+        GooglePlacesSearchQuery={{
+          rankby: "distance",
+        }}
         onPress={(data, details = null) => {
           // 'details' is provided when fetchDetails = true
           console.log(data, details);
+          setRegion({
+            latitude: details.geometry.location.lat,
+            longitude: details.geometry.location.lng,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+          });
         }}
         query={{
           key: "AIzaSyBwmbGUvhyMYbYowgyaf5TalrDdPUKYG3Y",
           language: "en",
+          components: "country:us",
+          radius: 300,
+          location: `${region.latitude}, ${region.longitude}`,
+          // types: establishment,
         }}
-        style={{
+        styles={{
           container: {
             flex: 0,
             position: "absolute",
@@ -52,6 +73,7 @@ const Map_test = () => {
           longitudeDelta: 0.01,
         }}
       >
+        <Marker coordinate={{latitude: region.latitude, longitude: region.longitude}}/>
         <Marker
           coordinate={pin}
           draggable={true}
@@ -73,7 +95,7 @@ const Map_test = () => {
         <Circle center={pin} radius={100} />
       </MapView>
 
-      <Button
+      {/* <Button
         title="Confirm"
         onPress={() => this.props.navigation.navigate("Profile")}
       ></Button>
@@ -82,7 +104,7 @@ const Map_test = () => {
         onPress={() => this.props.navigation.navigate("Home")}
       ></Button>
 
-      <StatusBar style="auto" />
+      <StatusBar style="auto" /> */}
     </View>
   );
   //}
