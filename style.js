@@ -25,21 +25,91 @@ const styles = StyleSheet.create({
     },
 
     create_acc_button: {
-      // backgroundColor: 'coral',
       width: '60%',
-      // height: '20%',
       borderWidth: 1,
       borderRadius: 5,
       marginBottom: '5%',
 
     },
     login_button: {
-      // backgroundColor: 'coral',
       width: '60%',
-      // height: '20%',
       borderWidth: 1,
       borderRadius: 5,
       marginBottom: '5%',
+    },
+
+    signup_info: {
+      width: '100%',
+      alignItems: 'center',
+      height: '30%',
+      marginBottom: '10%',
+    },
+
+    signup_input: {
+      width: '70%',
+      height: '15%',
+      fontSize: 20,
+      borderWidth: 1,
+      borderRadius: 5,
+      marginBottom: '5%',
+    },
+
+    singup_buttons: {
+      flex: 0.35,
+      alignItems: 'center',
+      width: '100%'
+    },
+
+    signup_text: {
+      flex: 0.2,
+      textAlign: 'center',
+      width: '80%',
+      fontSize: 25,
+      marginBottom: 20,
+    },
+
+    signup_create: {
+      width: '50%',
+      borderWidth: 1,
+      height: '40%',
+      borderRadius: 5,
+      // marginBottom: '5%',
+    },
+
+    login_text: {
+      flex: 0.2,
+      textAlign: 'center',
+      width: '80%',
+      fontSize: 25,
+      marginBottom: 20,
+    },
+
+    login_info: {
+      width: '100%',
+      alignItems: 'center',
+      height: '30%',
+    },
+
+    login_input: {
+      width: '70%',
+      height: '15%',
+      fontSize: 20,
+      borderWidth: 1,
+      borderRadius: 5,
+      marginBottom: '5%',
+    },
+
+    login_buttons: {
+      flex: 0.35,
+      alignItems: 'center',
+      width: '100%'
+    },
+
+    login: {
+      width: '50%',
+      borderWidth: 1,
+      height: '40%',
+      borderRadius: 5,
     },
 
     home_profile_button: {
@@ -67,12 +137,20 @@ const styles = StyleSheet.create({
       alignItems:'flex-end',
     },
 
+    profile_name: {
+      fontSize: 20,
+    },
+
     phone_number: {
       flex: 0.1,
       width: '90%',
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
+    },
+
+    profile_text: {
+      fontSize: 15,
     },
 
     payment: {

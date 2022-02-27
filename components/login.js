@@ -9,9 +9,10 @@ export class Login extends Component {
         super(props)
         this.state = {
             id: '',
+            name: '',
+            number: '',
             email: '',
             password: '',
-            success: false,
         }
     }
 
@@ -39,21 +40,25 @@ export class Login extends Component {
                     password: this.state.password,
                 })
             })
-            .then(response => response.text())
+            .then(response => response.json())
             .then((data) => {
                 console.log(data);
-                this.setState({
-                    id: data,
-                    success: true,
-                });
-            })
-            .then((data) => {
-                console.log('test')
-                this.props.navigation.navigate('Home', {
-                    id: this.state.id,
-                    email: this.state.email, 
-                    password: this.state.password,
-                });
+                if (data.succeeded == true) {
+                    this.setState({
+                        id: data.id,
+                        name: data.name,
+                        number: data.phone_num,
+                    });
+                    this.props.navigation.navigate('Home', {
+                        id: this.state.id,
+                        name: this.state.name,
+                        number: this.state.number,
+                        email: this.state.email, 
+                        password: this.state.password,
+                    });
+                } else {
+                    console.log(data.msg);
+                }
             })
             .catch(err => console.error('err'));
         // }
@@ -63,11 +68,19 @@ export class Login extends Component {
         // if (this.state.success == true) {
             return (
                 <View style={styles.container}>
-                    <TextInput placeholder='email' onChangeText={text => this.setState({email: text})}></TextInput>
-                    <TextInput placeholder='password' onChangeText={text => this.setState({password: text})}></TextInput>
-                    <Button title="send login info" onPress={this.sendLogin}></Button>
-                    <Button title='i need to create an account' onPress={() => this.props.navigation.navigate('Signup')}></Button>
-                    {/* <Button title="get id" onPress={this.printID}></Button> */}
+                    <Text style={styles.login_text}>Enter your email and password below:</Text>
+                    <View style={styles.login_info}>
+                        <TextInput style={styles.login_input} placeholder='email' onChangeText={text => this.setState({email: text})}></TextInput>
+                        <TextInput style={styles.login_input} placeholder='password' onChangeText={text => this.setState({password: text})}></TextInput>
+                    </View>
+                    <View style={styles.login_buttons}>
+                        <View style={styles.login}>
+                            <Button title="Login" onPress={this.sendLogin}></Button>
+                        </View>
+                        <View>
+                            <Button title='i need to create an account' onPress={() => this.props.navigation.navigate('Signup')}></Button>
+                        </View>
+                    </View>
                     <StatusBar style="auto" />
                 </View>
             )

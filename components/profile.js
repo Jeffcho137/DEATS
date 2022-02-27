@@ -20,23 +20,23 @@ export class Profile extends Component {
             <View style={styles.container}>
                 <View style={styles.profile_heading}>
                     <View>
-                        <Text>{this.state.name}</Text>
+                        <Text style={styles.profile_name}>{this.state.name}</Text>
                         <Text>my rating</Text>
                     </View>
                 </View>
                 <View style={styles.phone_number}>
-                    <Text>Phone number: {this.state.number}</Text>
+                    <Text style={styles.profile_text}>Phone number: {this.state.number}</Text>
                     <Button title='edit'></Button>
                 </View>
                 <View style={styles.payment}>
-                    <Text>Preferred payment method: </Text>
+                    <Text style={styles.profile_text}>Preferred payment method: </Text>
                     <Button title='edit'></Button>
                 </View>
                 <View style={styles.past_orders}>
-                    <Text>Your Past Orders</Text>
+                    <Text style={styles.profile_text}>Your Past Orders</Text>
                 </View>
                 <View style={styles.past_deliveries}>
-                    <Text>Your Past Deliveries</Text>
+                    <Text style={styles.profile_text}>Your Past Deliveries</Text>
                 </View>
                 <StatusBar style="auto" />
             </View>

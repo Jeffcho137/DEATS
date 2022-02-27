@@ -43,23 +43,28 @@ export class Signup extends Component {
                     phone_num: this.state.number,
                 })
             })
-            .then(response => response.text())
+            .then(response => response.json())
             .then((data) => {
-                console.log(data);
-                this.setState({
-                    id: data,
-                    success: true,
-                });
+                console.log(data)
+                if (data.succeeded == true) {
+                    this.setState({
+                        id: data.user_id,
+                        success: true,
+                    });
+                    this.props.navigation.navigate('Home', {
+                        id: this.state.id,
+                        name: this.state.name,
+                        number: this.state.number,
+                        email: this.state.email, 
+                        password: this.state.password,
+                    });
+                } else {
+                    console.log(data.msg);
+                }
             })
-            .then((data) => {
-                this.props.navigation.navigate('Home', {
-                    id: this.state.id,
-                    name: this.state.name,
-                    number: this.state.number,
-                    email: this.state.email, 
-                    password: this.state.password,
-                });
-            })
+            // .then((data) => {
+                
+            // })
             .catch(err => console.error(err));
         }
     }
@@ -67,12 +72,21 @@ export class Signup extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <TextInput placeholder='name' onChangeText={text => this.setState({name: text})}></TextInput>
-                <TextInput placeholder='number' onChangeText={text => this.setState({number: text})}></TextInput>
-                <TextInput placeholder='email' onChangeText={text => this.setState({email: text})}></TextInput>
-                <TextInput placeholder='password' onChangeText={text => this.setState({password: text})}></TextInput>
-                <Button title="Create Account" onPress={this.sendAccInfo}></Button>
-                <Button title='I have an account already' onPress={() => this.props.navigation.navigate('Login')}></Button>
+                <Text style={styles.signup_text}>Please enter your information below!</Text>
+                <View style={styles.signup_info}>
+                    <TextInput style={styles.signup_input} placeholder='name' onChangeText={text => this.setState({name: text})}></TextInput>
+                    <TextInput style={styles.signup_input} placeholder='number' onChangeText={text => this.setState({number: text})}></TextInput>
+                    <TextInput style={styles.signup_input} placeholder='email' onChangeText={text => this.setState({email: text})}></TextInput>
+                    <TextInput style={styles.signup_input} placeholder='password' onChangeText={text => this.setState({password: text})}></TextInput>
+                </View>
+                <View style={styles.singup_buttons}>
+                    <View style={styles.signup_create}>
+                        <Button title="Create Account" onPress={this.sendAccInfo}></Button>
+                    </View>
+                    <View style={styles.signup_login}>
+                        <Button title='I have an account already' onPress={() => this.props.navigation.navigate('Login')}></Button>
+                    </View>
+                </View>
                 {/* <Button title="get id" onPress={this.printID}></Button> */}
                 <StatusBar style="auto" />
             </View>
