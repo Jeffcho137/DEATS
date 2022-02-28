@@ -11,9 +11,11 @@ import {
   Circle,
 } from "react-native-maps";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
 
 // export class Map_test extends Component {
-const Map_test = () => {
+const Map_test = (props) => {
   //render() {
   const [pin, setPin] = React.useState({
     latitude: 43.704483237221815,
@@ -46,7 +48,7 @@ const Map_test = () => {
           });
         }}
         query={{
-          key: "AIzaSyBwmbGUvhyMYbYowgyaf5TalrDdPUKYG3Y",
+          key: "AIzaSyCCkDRzY3UvSoaZa1anF9ov43ztpe6GSFk",
           language: "en",
           components: "country:us",
           radius: 300,
@@ -72,16 +74,27 @@ const Map_test = () => {
           latitudeDelta: 0.01,
           longitudeDelta: 0.01,
         }}
+        region={region}
       >
-        <Marker coordinate={{latitude: region.latitude, longitude: region.longitude}}/>
+        {/* <Marker
+          coordinate={{
+            latitude: region.latitude,
+            longitude: region.longitude,
+          }}
+        /> */}
         <Marker
           coordinate={pin}
+          coordinate={{
+            latitude: region.latitude,
+            longitude: region.longitude,
+          }}
           draggable={true}
           onDragStart={(e) => {
             console.log("Drag start", e.nativeEvent.coordinate);
           }}
           onPress={(e) => console.log(e.nativeEvent.coordinate)}
           onDragEnd={(e) => {
+            console.log("Drag end", e.nativeEvent.coordinate);
             setPin({
               latitude: e.nativeEvent.coordinate.latitude,
               longitude: e.nativeEvent.coordinate.longitude,
@@ -89,17 +102,21 @@ const Map_test = () => {
           }}
         >
           <Callout>
-            <Text>Customer 1</Text>
+            <Text>This is my location: </Text>
+            <Text>
+              {region.latitude}, {region.longitude}
+            </Text>
           </Callout>
         </Marker>
-        <Circle center={pin} radius={100} />
+        {/* <Circle center={pin} radius={100} /> */}
       </MapView>
 
-      {/* <Button
-        title="Confirm"
-        onPress={() => this.props.navigation.navigate("Profile")}
-      ></Button>
       <Button
+        styles={{ flex: 1 }}
+        title="Confirm"
+        onPress={() => props.navigation.navigate("OrderSelection")}
+      ></Button>
+      {/* <Button
         title="Cancel"
         onPress={() => this.props.navigation.navigate("Home")}
       ></Button>

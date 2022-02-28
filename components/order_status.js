@@ -16,7 +16,7 @@ export class Order_status extends Component {
                 </View>
                 
                 
-                <Button title="I got my food!" onPress={() => this.props.navigation.navigate('MapTest')}></Button>
+                <Button title="I got my food!" onPress={() => this.props.navigation.navigate('Completed')}></Button>
 
             
                 <StatusBar style="auto" />
