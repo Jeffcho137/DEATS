@@ -65,7 +65,9 @@ const Map_test = (props) => {
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           });
+
         }}
+
         query={{
           key: "AIzaSyCCkDRzY3UvSoaZa1anF9ov43ztpe6GSFk",
           language: "en",
@@ -118,7 +120,8 @@ const Map_test = (props) => {
               latitude: e.nativeEvent.coordinate.latitude,
               longitude: e.nativeEvent.coordinate.longitude,
             });
-            const location = get_location(region.latitude, region.longitude);
+
+            const location = get_location(pin.latitude, pin.longitude);
           }}
         >
           <Callout>
