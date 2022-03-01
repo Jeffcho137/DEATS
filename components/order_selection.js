@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button, TextInput } from 'react-native';
 import styles from '../style';
+// import Map_test from "./map";
 
 export class Order_selection extends Component {
     constructor(props){
@@ -14,14 +15,16 @@ export class Order_selection extends Component {
             password: this.props.navigation.state.params.password,
             user_type: this.props.navigation.state.params.user_type,
             food_place: '',
-            building: '',
+            del_loc: this.props.navigation.state.params.lat,
             room: '',
             start_time: 0,
             end_time: 0,
+            loc_chosen: this.props.navigation.state.params.chosen,
         }
     }
 
     hopChosen = () => {
+        console.log(this.state.loc_chosen)
         this.setState({
             food_place: 'HOP'
         })
@@ -59,54 +62,85 @@ export class Order_selection extends Component {
             }
         })
         .then((data) => {
-            this.props.navigation.navigate('OrderSearch',{
-                id: this.state.id,
-                name: this.state.name,
-                number: this.state.number,
-                email: this.state.email, 
-                password: this.state.password,
-                user_type: this.state.user_type,
-                food_place: this.state.food_place,
-            })
+            this.props.navigation.navigate('MapTest')
         })
         .catch(err => console.error(err));
     }
 
     render() {
-        return (
-            <View style={styles.container}>
-                <View style={styles.order_sel}>
-                    <Text style={styles.order_sel_text}>I want food from:</Text>
-                    <View style={styles.order_sel_place_options}>
-                        <View style={styles.order_sel_single_place}>
-                            <Button color='black' title='HOP' onPress={this.hopChosen}></Button>
+        if (!this.state.loc_chosen) {
+            return (
+                <View style={styles.container}>
+                    <View style={styles.order_sel}>
+                        <Text style={styles.order_sel_text}>I want food from:</Text>
+                        <View style={styles.order_sel_place_options}>
+                            <View style={styles.order_sel_single_place}>
+                                <Button color='black' title='HOP' onPress={this.hopChosen}></Button>
+                            </View>
+                            <View style={styles.order_sel_single_place}>
+                                <Button color='black' title='Collis' onPress={this.collisChosen}></Button>
+                            </View>
                         </View>
-                        <View style={styles.order_sel_single_place}>
-                            <Button color='black' title='Collis' onPress={this.collisChosen}></Button>
+                    </View>
+                    <View style={styles.order_sel_input}>
+                        <Text style={styles.order_sel_text}>Deliver to:</Text>
+                        <View style={styles.order_sel_input_box}>
+                            <Button title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
+                            {/* <TextInput style={styles.single_input} placeholder='del_loc name or street address' onChangeText={text => this.setState({del_loc: text})}></TextInput> */}
+                            <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => this.setState({room: text})}></TextInput>
+                            <TextInput style={styles.single_input} placeholder={this.state.number} onChangeText={text => this.setState({number: text})}></TextInput>
                         </View>
                     </View>
-                </View>
-                <View style={styles.order_sel_input}>
-                    <Text style={styles.order_sel_text}>Deliver to:</Text>
-                    <View style={styles.order_sel_input_box}>
-                        <Button title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
-                        {/* <TextInput style={styles.single_input} placeholder='building name or street address' onChangeText={text => this.setState({building: text})}></TextInput> */}
-                        <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => this.setState({room: text})}></TextInput>
-                        <TextInput style={styles.single_input} placeholder={this.state.number} onChangeText={text => this.setState({number: text})}></TextInput>
+                    <View style={styles.order_sel}>
+                        <Text style={styles.order_sel_text}>I want my food between</Text>
+                        <View style={styles.order_sel_times}>
+                            <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
+                            <Text style={styles.order_sel_times_text}>and</Text>
+                            <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
+                        </View>
                     </View>
+                    <Button title="Confirm" onPress={this.sendOrdererInfo}></Button>
+                
+                    <StatusBar style="auto" />
                 </View>
-                <View style={styles.order_sel}>
-                    <Text style={styles.order_sel_text}>I want my food between</Text>
-                    <View style={styles.order_sel_times}>
-                        <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
-                        <Text style={styles.order_sel_times_text}>and</Text>
-                        <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
+            )
+        } else {
+            return (
+                <View style={styles.container}>
+                    <View style={styles.order_sel}>
+                        <Text style={styles.order_sel_text}>I want food from:</Text>
+                        <View style={styles.order_sel_place_options}>
+                            <View style={styles.order_sel_single_place}>
+                                <Button color='black' title='HOP' onPress={this.hopChosen}></Button>
+                            </View>
+                            <View style={styles.order_sel_single_place}>
+                                <Button color='black' title='Collis' onPress={this.collisChosen}></Button>
+                            </View>
+                        </View>
                     </View>
+                    <View style={styles.order_sel_input}>
+                        <Text style={styles.order_sel_text}>Deliver to:</Text>
+                        <View style={styles.order_sel_input_box}>
+                            {/* <Button title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button> */}
+                            <Text>{this.state.del_loc}</Text>
+                            <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => this.setState({room: text})}></TextInput>
+                            <TextInput style={styles.single_input} placeholder={this.state.number} onChangeText={text => this.setState({number: text})}></TextInput>
+                        </View>
+                    </View>
+                    <View style={styles.order_sel}>
+                        <Text style={styles.order_sel_text}>I want my food between</Text>
+                        <View style={styles.order_sel_times}>
+                            <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
+                            <Text style={styles.order_sel_times_text}>and</Text>
+                            <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
+                        </View>
+                    </View>
+                    <Button title="Confirm" onPress={this.sendOrdererInfo}></Button>
+                
+                    <StatusBar style="auto" />
                 </View>
-                <Button title="Confirm" onPress={this.sendOrdererInfo}></Button>
-            
-                <StatusBar style="auto" />
-            </View>
-        )
+            )
+        }
+        
     }
 }

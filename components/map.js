@@ -15,7 +15,7 @@ import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 
 // export class Map_test extends Component {
-const Map_test = (props) => {
+const Map_test = ({navigation}) => {
   //render() {
   const [pin, setPin] = React.useState({
     latitude: 43.704483237221815,
@@ -114,7 +114,11 @@ const Map_test = (props) => {
       <Button
         styles={{ flex: 1 }}
         title="Confirm"
-        onPress={() => props.navigation.navigate("OrderSelection")}
+        onPress={() => navigation.navigate("OrderSelection", {
+          chosen: true,
+          lat: region.latitude,
+          long: region.longitude,
+        })}
       ></Button>
       {/* <Button
         title="Cancel"
