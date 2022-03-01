@@ -41,6 +41,7 @@ export class Signup extends Component {
                     name: this.state.name,
                     password: this.state.password,
                     phone_num: this.state.number,
+                    test: true,
                 })
             })
             .then(response => response.json())

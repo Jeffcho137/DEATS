@@ -29,10 +29,49 @@ export class Order_selection extends Component {
 
     collisChosen = () => {
         this.setState({
-            food_place: 'Collis'
+            food_place: 'COLLIS'
         })
     }
-    
+
+    sendOrdererInfo = () => {
+        fetch('https://deats-backend-test.herokuapp.com/update_acc/',
+        {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: this.state.id,
+                res_location: this.state.food_place,
+            })
+        })
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data)
+            if (data.succeeded == true) {
+                this.setState({
+                    id: data.user_id,
+                    success: true,
+                });
+            } else {
+                console.log(data.msg);
+            }
+        })
+        .then((data) => {
+            this.props.navigation.navigate('OrderSearch',{
+                id: this.state.id,
+                name: this.state.name,
+                number: this.state.number,
+                email: this.state.email, 
+                password: this.state.password,
+                user_type: this.state.user_type,
+                food_place: this.state.food_place,
+            })
+        })
+        .catch(err => console.error(err));
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -50,7 +89,8 @@ export class Order_selection extends Component {
                 <View style={styles.order_sel_input}>
                     <Text style={styles.order_sel_text}>Deliver to:</Text>
                     <View style={styles.order_sel_input_box}>
-                        <TextInput style={styles.single_input} placeholder='building name or street address' onChangeText={text => this.setState({building: text})}></TextInput>
+                        <Button title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
+                        {/* <TextInput style={styles.single_input} placeholder='building name or street address' onChangeText={text => this.setState({building: text})}></TextInput> */}
                         <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => this.setState({room: text})}></TextInput>
                         <TextInput style={styles.single_input} placeholder={this.state.number} onChangeText={text => this.setState({number: text})}></TextInput>
                     </View>
@@ -63,7 +103,7 @@ export class Order_selection extends Component {
                         <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
                     </View>
                 </View>
-                <Button title="Confirm" onPress={() => this.props.navigation.navigate('OrderSearch')}></Button>
+                <Button title="Confirm" onPress={this.sendOrdererInfo}></Button>
             
                 <StatusBar style="auto" />
             </View>

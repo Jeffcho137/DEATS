@@ -48,7 +48,7 @@ export class Home extends Component {
     }
 
     sendUserType = () => {
-        fetch('https://deats-backend-test.herokuapp.com/create_acc/',
+        fetch('https://deats-backend-test.herokuapp.com/update_acc/',
         {
             method: 'POST',
             headers: {
@@ -57,11 +57,12 @@ export class Home extends Component {
             },
             body: JSON.stringify({
                 id: this.state.id,
-                user_type: this.user_id,
+                user_type: this.state.user_type,
             })
         })
         .then(response => response.json())
         .then((data) => {
+            console.log(this.state.user_type)
             console.log(data)
             if (data.succeeded == true) {
                 this.setState({
