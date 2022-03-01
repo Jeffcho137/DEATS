@@ -17,37 +17,43 @@ export class Home extends Component {
         }
     }
 
+    componentDidMount() {
+        console.log("componentDidMount fired");
+        console.log("STATE", this.state);
+    }
+
+    componentDidUpdate() {
+        console.log("componentDidUpdate fired");
+        console.log("STATE", this.state);
+    }
+
     setUserTypeOrder = () => {
-        this.setState({
-            user_type: 'orderer',
-        });
-        this.sendUserType();
+        const type = "orderer";
+        this.sendUserType(type);
         this.props.navigation.navigate('OrderSelection',{
             id: this.state.id,
             name: this.state.name,
             number: this.state.number,
             email: this.state.email, 
             password: this.state.password,
-            user_type: this.state.user_type,
+            user_type: type,
         })
     }
 
     setUserTypeDeliverer = () => {
-        this.setState({
-            user_type: 'deliverer',
-        });
-        this.sendUserType();
+        const type = "deliverer";
+        this.sendUserType(type);
         this.props.navigation.navigate('DeliverySelection',{
             id: this.state.id,
             name: this.state.name,
             number: this.state.number,
             email: this.state.email, 
             password: this.state.password,
-            user_type: this.state.user_type,
+            user_type: type,
         })
     }
 
-    sendUserType = () => {
+    sendUserType = (type) => {
         fetch('https://deats-backend-test.herokuapp.com/update_acc/',
         {
             method: 'POST',
@@ -57,18 +63,16 @@ export class Home extends Component {
             },
             body: JSON.stringify({
                 id: this.state.id,
-                user_type: this.state.user_type,
+                user_type: type,
             })
         })
         .then(response => response.json())
         .then((data) => {
-            console.log(this.state.user_type)
             console.log(data)
             if (data.succeeded == true) {
                 this.setState({
                     id: data.user_id,
-                    success: true,
-                });
+                })
             } else {
                 console.log(data.msg);
             }

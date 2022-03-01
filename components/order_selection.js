@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button, TextInput } from 'react-native';
 import styles from '../style';
-// import Map_test from "./map";
 
 export class Order_selection extends Component {
     constructor(props){
@@ -15,7 +14,8 @@ export class Order_selection extends Component {
             password: this.props.navigation.state.params.password,
             user_type: this.props.navigation.state.params.user_type,
             food_place: '',
-            del_loc: this.props.navigation.state.params.lat,
+            del_loc_lat: this.props.navigation.state.params.lat,
+            del_loc_long: this.props.navigation.state.params.long,
             room: '',
             start_time: 0,
             end_time: 0,
@@ -23,8 +23,17 @@ export class Order_selection extends Component {
         }
     }
 
+    componentDidMount() {
+        console.log("componentDidMount fired");
+        console.log("STATE", this.state);
+    }
+
+    componentDidUpdate() {
+        console.log("componentDidUpdate fired");
+        console.log("STATE", this.state);
+    }
+
     hopChosen = () => {
-        console.log(this.state.loc_chosen)
         this.setState({
             food_place: 'HOP'
         })
@@ -36,7 +45,7 @@ export class Order_selection extends Component {
         })
     }
 
-    sendOrdererInfo = () => {
+    sendOrdererInfo = (lat,long) => {
         fetch('https://deats-backend-test.herokuapp.com/update_acc/',
         {
             method: 'POST',
@@ -47,6 +56,10 @@ export class Order_selection extends Component {
             body: JSON.stringify({
                 id: this.state.id,
                 res_location: this.state.food_place,
+                fin_location: {
+                    x: lat,
+                    y: long
+                }
             })
         })
         .then(response => response.json())
@@ -55,20 +68,24 @@ export class Order_selection extends Component {
             if (data.succeeded == true) {
                 this.setState({
                     id: data.user_id,
-                    success: true,
+                    del_loc_lat: lat,
+                    del_loc_long: long,
                 });
             } else {
                 console.log(data.msg);
             }
         })
-        .then((data) => {
-            this.props.navigation.navigate('MapTest')
-        })
+        // .then((data) => {
+        //     this.props.navigation.navigate('OrderSearch')
+        // })
         .catch(err => console.error(err));
     }
 
     render() {
-        if (!this.state.loc_chosen) {
+        const  del_loc_lat = this.props.navigation.state.params.lat;
+        const del_loc_long = this.props.navigation.state.params.long;
+        const loc_chosen = this.props.navigation.state.params.chosen;
+        if (!loc_chosen) {
             return (
                 <View style={styles.container}>
                     <View style={styles.order_sel}>
@@ -122,7 +139,7 @@ export class Order_selection extends Component {
                         <Text style={styles.order_sel_text}>Deliver to:</Text>
                         <View style={styles.order_sel_input_box}>
                             {/* <Button title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button> */}
-                            <Text>{this.state.del_loc}</Text>
+                            <Text>{del_loc_lat},{del_loc_long}</Text>
                             <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => this.setState({room: text})}></TextInput>
                             <TextInput style={styles.single_input} placeholder={this.state.number} onChangeText={text => this.setState({number: text})}></TextInput>
                         </View>
@@ -135,7 +152,7 @@ export class Order_selection extends Component {
                             <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
                         </View>
                     </View>
-                    <Button title="Confirm" onPress={this.sendOrdererInfo}></Button>
+                    <Button title="Search" onPress={this.sendOrdererInfo(del_loc_lat,del_loc_long)}></Button>
                 
                     <StatusBar style="auto" />
                 </View>

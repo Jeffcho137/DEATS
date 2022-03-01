@@ -19,6 +19,16 @@ export class Delivery_selection extends Component {
         }
     }
 
+    componentDidMount() {
+        console.log("componentDidMount fired");
+        console.log("STATE", this.state);
+    }
+    
+    componentDidUpdate() {
+        console.log("componentDidUpdate fired");
+        console.log("STATE", this.state);
+    }
+
     hopChosen = () => {
         this.setState({
             food_place: 'HOP'

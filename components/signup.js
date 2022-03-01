@@ -17,12 +17,14 @@ export class Signup extends Component {
         }
     }
 
-    printID = () => {
-        if (this.state.id != '') {
-            console.log(this.state.id);
-        } else {
-            console.log("unsuccessful creation of account");
-        }
+    componentDidMount() {
+        console.log("componentDidMount fired");
+        console.log("STATE", this.state);
+    }
+    
+    componentDidUpdate() {
+        console.log("componentDidUpdate fired");
+        console.log("STATE", this.state);
     }
 
     sendAccInfo = () => {
