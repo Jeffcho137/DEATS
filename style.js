@@ -1,6 +1,7 @@
-import { StyleSheet, Dimensions } from 'react-native';
+import { StyleSheet, Dimensions } from "react-native";
 
 const styles = StyleSheet.create({
+  
     container: {
       flex: 1,
       backgroundColor: '#fff',
@@ -269,8 +270,9 @@ const styles = StyleSheet.create({
     },
 
     map: {
-      width: Dimensions.get('window').width,
-      height: Dimensions.get('window').height,
+      width: Dimensions.get("window").width,
+      height: "90%",
+    // height: Dimensions.get("window").height,
     },
 
 })

@@ -63,7 +63,7 @@ export class Order_selection extends Component {
                         <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
                     </View>
                 </View>
-                <Button title="Confirm" onPress={() => this.props.navigation.navigate('OrderSearch')}></Button>
+                <Button title="Confirm" onPress={() => this.props.navigation.navigate('MapTest')}></Button>
             
                 <StatusBar style="auto" />
             </View>
