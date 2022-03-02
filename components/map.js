@@ -13,9 +13,28 @@ import {
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
+import { region } from "caniuse-lite";
+
+const API_KEY = 'AIzaSyCCkDRzY3UvSoaZa1anF9ov43ztpe6GSFk';
+
+
+const get_location = (lat, long) => {
+  fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + long + '&key=' + API_KEY)
+  .then((response) => response.json())
+  .then((responseJson) => {
+      //console.log('Location: ' + JSON.stringify(responseJson));
+      const location_obj = JSON.parse(JSON.stringify(responseJson))
+      const address = location_obj.results[0].formatted_address
+      console.log(address)
+      return address
+
+})
+}
+
+
 
 // export class Map_test extends Component {
-const Map_test = ({navigation}) => {
+const Map_test = (props) => {
   //render() {
   const [pin, setPin] = React.useState({
     latitude: 43.704483237221815,
@@ -46,7 +65,9 @@ const Map_test = ({navigation}) => {
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           });
+
         }}
+
         query={{
           key: "AIzaSyCCkDRzY3UvSoaZa1anF9ov43ztpe6GSFk",
           language: "en",
@@ -99,6 +120,8 @@ const Map_test = ({navigation}) => {
               latitude: e.nativeEvent.coordinate.latitude,
               longitude: e.nativeEvent.coordinate.longitude,
             });
+
+            const location = get_location(pin.latitude, pin.longitude);
           }}
         >
           <Callout>
@@ -112,12 +135,12 @@ const Map_test = ({navigation}) => {
       </MapView>
 
       <Button
-        styles={{ flex: 1 }}
+        // styles={{ flex: 1 }}
         title="Confirm"
-        onPress={() => navigation.navigate("OrderSelection", {
+        onPress={() => props.navigation.navigate("OrderSelection",{
           chosen: true,
-          lat: region.latitude,
-          long: region.longitude,
+          lat: pin.latitude,
+          long: pin.longitude,
         })}
       ></Button>
       {/* <Button

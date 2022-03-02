@@ -45,10 +45,25 @@ export class Order_selection extends Component {
         })
     }
 
+    // numberEntered = () => {
+    //     if (this.state.number == '') {
+    //         return(
+    //             <TextInput style={styles.single_input} placeholder='number' onChangeText={text => this.setState({number: text})}></TextInput>
+    //         );
+    //     } else {
+    //         return(
+    //             <View>
+    //                 <Text>{this.state.number}</Text>
+    //                 <Button title="change number"></Button>
+    //             </View>
+    //         );
+    //     }
+    // }
+
+
     sendOrdererInfo = () => {
         const  lat = this.props.navigation.state.params.lat;
         const long = this.props.navigation.state.params.long;
-        console.log(lat,long);
         // const loc_chosen = this.props.navigation.state.params.chosen;
         fetch('https://deats-backend-test.herokuapp.com/update_acc/',
         {
@@ -120,6 +135,7 @@ export class Order_selection extends Component {
                             <Button title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
                             {/* <TextInput style={styles.single_input} placeholder='del_loc name or street address' onChangeText={text => this.setState({del_loc: text})}></TextInput> */}
                             <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => this.setState({room: text})}></TextInput>
+                            {/* {this.numberEntered()} */}
                             <TextInput style={styles.single_input} placeholder={this.state.number} onChangeText={text => this.setState({number: text})}></TextInput>
                         </View>
                     </View>
@@ -157,6 +173,7 @@ export class Order_selection extends Component {
                             <Text>{del_loc_lat},{del_loc_long}</Text>
                             <Button title='change my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
                             <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => this.setState({room: text})}></TextInput>
+                            {/* {this.numberEntered()} */}
                             <TextInput style={styles.single_input} placeholder='number' onChangeText={text => this.setState({number: text})}></TextInput>
                         </View>
                     </View>
