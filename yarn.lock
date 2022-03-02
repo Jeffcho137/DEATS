@@ -2557,6 +2557,15 @@
     "@expo/config-plugins" "^4.0.2"
     "uuid" "7.0.2"
 
+
+"expo-font@~10.0.5":
+  "integrity" "sha512-x9YwM0xLkDdSvFjeNbyuh33Q1Hk3uc2jbMuuAN5W2ZVcUZqG0M8GCX/KV/D/7rYqdXKbliQA5r44MyDwZe/XRw=="
+  "resolved" "https://registry.npmjs.org/expo-font/-/expo-font-10.0.5.tgz"
+  "version" "10.0.5"
+  dependencies:
+    "fontfaceobserver" "^2.1.0"
+
+
 "expo-keep-awake@~10.0.2":
   "integrity" "sha512-Ro1lgyKldbFs4mxhWM+goX9sg0S2SRR8FiJJeOvaRzf8xNhrZfWA00Zpr+/3ocCoWQ3eEL+X9UF4PXXHf0KoOg=="
   "resolved" "https://registry.npmjs.org/expo-keep-awake/-/expo-keep-awake-10.0.2.tgz"
@@ -3472,6 +3481,29 @@
   "integrity" "sha1-MeohpzS6ubuw8yRm2JOupR5KPGQ="
   "resolved" "https://registry.npmjs.org/kind-of/-/kind-of-3.2.2.tgz"
   "version" "3.2.2"
+  dependencies:
+    "is-buffer" "^1.1.5"
+
+"kind-of@^3.2.0":
+
+
+"jsonify@~0.0.0":
+  "integrity" "sha1-LHS27kHZPKUbe1qu6PUDYx0lKnM="
+  "resolved" "https://registry.npmjs.org/jsonify/-/jsonify-0.0.0.tgz"
+  "version" "0.0.0"
+
+"kind-of@^3.0.2", "kind-of@^3.0.3":
+
+  "integrity" "sha1-MeohpzS6ubuw8yRm2JOupR5KPGQ="
+  "resolved" "https://registry.npmjs.org/kind-of/-/kind-of-3.2.2.tgz"
+  "version" "3.2.2"
+  dependencies:
+    "is-buffer" "^1.1.5"
+
+"kind-of@^4.0.0":
+  "integrity" "sha1-IIE989cSkosgc3hpGkUGb65y3Vc="
+  "resolved" "https://registry.npmjs.org/kind-of/-/kind-of-4.0.0.tgz"
+  "version" "4.0.0"
   dependencies:
     "is-buffer" "^1.1.5"
 
@@ -5339,6 +5371,23 @@
   "integrity" "sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow=="
   "resolved" "https://registry.npmjs.org/supports-color/-/supports-color-5.5.0.tgz"
   "version" "5.5.0"
+
+  dependencies:
+    "has-flag" "^3.0.0"
+
+"supports-color@^7.0.0":
+  "integrity" "sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw=="
+  "resolved" "https://registry.npmjs.org/supports-color/-/supports-color-7.2.0.tgz"
+  "version" "7.2.0"
+  dependencies:
+    "has-flag" "^4.0.0"
+
+"supports-color@^7.1.0":
+  "integrity" "sha512-qpCAvRl9stuOHveKsn7HncJRvv501qIacKzQlO/+Lwxc9+0q2wLyv4Dfvt80/DPn2pqOBsJdDiogXGR9+OvwRw=="
+  "resolved" "https://registry.npmjs.org/supports-color/-/supports-color-7.2.0.tgz"
+  "version" "7.2.0"
+  dependencies:
+=======
   dependencies:
     "has-flag" "^3.0.0"
 

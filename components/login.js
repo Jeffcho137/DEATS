@@ -18,6 +18,16 @@ export class Login extends Component {
         }
     }
 
+    componentDidMount() {
+        console.log("componentDidMount fired");
+        console.log("STATE", this.state);
+    }
+
+    componentDidUpdate() {
+        console.log("componentDidUpdate fired");
+        console.log("STATE", this.state);
+    }
+
     sendLogin = () => {
         fetch('https://deats-backend-test.herokuapp.com/login/',
         {
@@ -35,11 +45,12 @@ export class Login extends Component {
         .then((data) => {
             console.log(data);
             if (data.succeeded == true) {
+                console.log("before",this.state);
                 this.setState({
                     id: data.id,
                     name: data.name,
                     number: data.phone_num,
-                });
+                }, console.log("after",this.state));
                 this.props.navigation.navigate('Home', {
                     id: this.state.id,
                     name: this.state.name,
