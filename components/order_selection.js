@@ -68,16 +68,16 @@ export class Order_selection extends Component {
             if (data.succeeded == true) {
                 this.setState({
                     id: data.user_id,
-                    del_loc_lat: lat,
-                    del_loc_long: long,
+                    // del_loc_lat: lat,
+                    // del_loc_long: long,
                 });
             } else {
                 console.log(data.msg);
             }
         })
-        // .then((data) => {
-        //     this.props.navigation.navigate('OrderSearch')
-        // })
+        .then((data) => {
+            this.props.navigation.navigate('OrderSearch')
+        })
         .catch(err => console.error(err));
     }
 
