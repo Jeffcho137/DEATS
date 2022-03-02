@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   
     container: {
       flex: 1,
-      backgroundColor: '#fff',
+      backgroundColor: '#2e8b57',
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -261,7 +261,7 @@ const styles = StyleSheet.create({
     }, 
 
     searching_text: {
-      flex: 0.5,
+      flex: 0.3,
       borderRadius: 5,
       borderWidth: 1,
       height: 50,
@@ -299,7 +299,49 @@ const styles = StyleSheet.create({
       display:'flex',
       alignItems:"center",
       justifyContent:'center'
-    }
+    },
+    centeredView: {
+      flex: 1,
+      justifyContent: "center",
+      alignItems: "center",
+      marginTop: 21
+    },
+    modalView: {
+      margin: 100,
+      backgroundColor: "white",
+      borderRadius: 20,
+      padding: 35,
+      alignItems: "center",
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: 2
+      },
+      shadowOpacity: 0.25,
+      shadowRadius: 4,
+      elevation: 5
+    },
+    button: {
+      borderRadius: 200,
+      padding: 10,
+      elevation: 2
+    },
+    buttonOpen: {
+      backgroundColor: "#F194FF",
+      marginBottom: 2
+    },
+    buttonClose: {
+      backgroundColor: "#2196F3",
+    },
+    textStyle: {
+      color: "white",
+      fontWeight: "bold",
+      textAlign: "center"
+    },
+    modalText: {
+      marginBottom: 100,
+      textAlign: "center"
+    },
 })
 
 export default styles;

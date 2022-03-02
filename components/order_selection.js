@@ -45,7 +45,7 @@ export class Order_selection extends Component {
         })
     }
 
-    sendOrdererInfo = (lat,long) => {
+    sendOrdererInfo = () => {
         fetch('https://deats-backend-test.herokuapp.com/update_acc/',
         {
             method: 'POST',
@@ -56,28 +56,28 @@ export class Order_selection extends Component {
             body: JSON.stringify({
                 id: this.state.id,
                 res_location: this.state.food_place,
-                fin_location: {
-                    x: lat,
-                    y: long
-                }
+                // fin_location: {
+                //     x: lat,
+                //     y: long
+                // }
             })
         })
         .then(response => response.json())
         .then((data) => {
             console.log(data)
-            if (data.succeeded == true) {
-                this.setState({
-                    id: data.user_id,
-                    del_loc_lat: lat,
-                    del_loc_long: long,
-                });
-            } else {
-                console.log(data.msg);
-            }
+            // if (data.succeeded == true) {
+            //     this.setState({
+            //         id: data.user_id,
+            //         del_loc_lat: lat,
+            //         del_loc_long: long,
+            //     });
+            // } else {
+            //     console.log(data.msg);
+            // }
         })
-        // .then((data) => {
-        //     this.props.navigation.navigate('OrderSearch')
-        // })
+        .then((data) => {
+            this.props.navigation.navigate('OrderSearch')
+        })
         .catch(err => console.error(err));
     }
 
@@ -152,7 +152,7 @@ export class Order_selection extends Component {
                             <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
                         </View>
                     </View>
-                    <Button title="Search" onPress={this.sendOrdererInfo(del_loc_lat,del_loc_long)}></Button>
+                    <Button title="Search" onPress={this.sendOrdererInfo}></Button>
                 
                     <StatusBar style="auto" />
                 </View>
