@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button, TextInput } from 'react-native';
 import styles from '../style';
+import ImageUpload from './image_upload';
 
 export class Signup extends Component {
 
@@ -72,6 +73,7 @@ export class Signup extends Component {
     render() {
         return (
             <View style={styles.container}>
+                <ImageUpload/>
                 <Text style={styles.signup_text}>Please enter your information below!</Text>
                 <View style={styles.signup_info}>
                     <TextInput style={styles.signup_input} placeholder='name' onChangeText={text => this.setState({name: text})}></TextInput>
@@ -87,6 +89,7 @@ export class Signup extends Component {
                         <Button title='I have an account already' onPress={() => this.props.navigation.navigate('Login')}></Button>
                     </View>
                 </View>
+                
                 <StatusBar style="auto" />
             </View>
         )
