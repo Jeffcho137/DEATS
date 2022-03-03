@@ -115,6 +115,7 @@ export class Order_selection extends Component {
         const  del_loc_lat = this.props.navigation.state.params.lat;
         const del_loc_long = this.props.navigation.state.params.long;
         const loc_chosen = this.props.navigation.state.params.chosen;
+        const address = this.props.navigation.state.params.address;
         if (!loc_chosen) {
             return (
                 <View style={styles.container}>
@@ -170,7 +171,8 @@ export class Order_selection extends Component {
                         <Text style={styles.order_sel_text}>Deliver to:</Text>
                         <View style={styles.order_sel_input_box}>
                             {/* <Button title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button> */}
-                            <Text>{del_loc_lat},{del_loc_long}</Text>
+                            {/* <Text>{del_loc_lat},{del_loc_long}</Text> */}
+                            <Text style={styles.order_sel_loc}>{address}</Text>
                             <Button title='change my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
                             <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => this.setState({room: text})}></TextInput>
                             {/* {this.numberEntered()} */}
