@@ -45,7 +45,26 @@ export class Order_selection extends Component {
         })
     }
 
+    // numberEntered = () => {
+    //     if (this.state.number == '') {
+    //         return(
+    //             <TextInput style={styles.single_input} placeholder='number' onChangeText={text => this.setState({number: text})}></TextInput>
+    //         );
+    //     } else {
+    //         return(
+    //             <View>
+    //                 <Text>{this.state.number}</Text>
+    //                 <Button title="change number"></Button>
+    //             </View>
+    //         );
+    //     }
+    // }
+
+
     sendOrdererInfo = () => {
+        const  lat = this.props.navigation.state.params.lat;
+        const long = this.props.navigation.state.params.long;
+        // const loc_chosen = this.props.navigation.state.params.chosen;
         fetch('https://deats-backend-test.herokuapp.com/update_acc/',
         {
             method: 'POST',
@@ -65,19 +84,30 @@ export class Order_selection extends Component {
         .then(response => response.json())
         .then((data) => {
             console.log(data)
-            // if (data.succeeded == true) {
-            //     this.setState({
-            //         id: data.user_id,
-            //         del_loc_lat: lat,
-            //         del_loc_long: long,
-            //     });
-            // } else {
-            //     console.log(data.msg);
-            // }
+            if (data.succeeded == true) {
+                if (this.state.room == '' || this.state.food_place == '' ) {
+                    console.log("fill everything out u fucker")
+                } else {
+                    this.props.navigation.navigate('OrderSearch', {
+                        id: this.state.id,
+                        name: this.state.name,
+                        number: this.state.number,
+                        email: this.state.email,
+                        password: this.state.password,
+                        user_type: this.state.user_type,
+                        food_place: this.state.food_place,
+                        del_loc_lat: lat,
+                        del_loc_long: long,
+                        room: this.state.room,
+                    })
+                }
+            } else {
+                console.log(data.msg);
+            }
         })
-        .then((data) => {
-            this.props.navigation.navigate('OrderSearch')
-        })
+        // .then((data) => {
+            
+        // })
         .catch(err => console.error(err));
     }
 
@@ -85,6 +115,7 @@ export class Order_selection extends Component {
         const  del_loc_lat = this.props.navigation.state.params.lat;
         const del_loc_long = this.props.navigation.state.params.long;
         const loc_chosen = this.props.navigation.state.params.chosen;
+        const address = this.props.navigation.state.params.address;
         if (!loc_chosen) {
             return (
                 <View style={styles.container}>
@@ -105,6 +136,7 @@ export class Order_selection extends Component {
                             <Button title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
                             {/* <TextInput style={styles.single_input} placeholder='del_loc name or street address' onChangeText={text => this.setState({del_loc: text})}></TextInput> */}
                             <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => this.setState({room: text})}></TextInput>
+                            {/* {this.numberEntered()} */}
                             <TextInput style={styles.single_input} placeholder={this.state.number} onChangeText={text => this.setState({number: text})}></TextInput>
                         </View>
                     </View>
@@ -139,9 +171,12 @@ export class Order_selection extends Component {
                         <Text style={styles.order_sel_text}>Deliver to:</Text>
                         <View style={styles.order_sel_input_box}>
                             {/* <Button title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button> */}
-                            <Text>{del_loc_lat},{del_loc_long}</Text>
+                            {/* <Text>{del_loc_lat},{del_loc_long}</Text> */}
+                            <Text style={styles.order_sel_loc}>{address}</Text>
+                            <Button title='change my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
                             <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => this.setState({room: text})}></TextInput>
-                            <TextInput style={styles.single_input} placeholder={this.state.number} onChangeText={text => this.setState({number: text})}></TextInput>
+                            {/* {this.numberEntered()} */}
+                            <TextInput style={styles.single_input} placeholder='number' onChangeText={text => this.setState({number: text})}></TextInput>
                         </View>
                     </View>
                     <View style={styles.order_sel}>
@@ -152,7 +187,7 @@ export class Order_selection extends Component {
                             <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
                         </View>
                     </View>
-                    <Button title="Search" onPress={this.sendOrdererInfo}></Button>
+                    <Button title="Search" onPress={this.sendOrdererInfo.bind(this)}></Button>
                 
                     <StatusBar style="auto" />
                 </View>

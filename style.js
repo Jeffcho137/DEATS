@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     },
 
     order_sel: {
-      flex: 0.25,
+      flex: 0.2,
       width: '90%',
       alignItems: 'center',
       marginBottom: 20,
@@ -208,10 +208,10 @@ const styles = StyleSheet.create({
     },
 
     order_sel_input: {
-      flex: 0.25,
+      flex: 0.35,
       width: '90%',
       flexDirection: 'row',
-      marginBottom: 10,
+      // marginBottom: 10,
 
     }, 
 
@@ -231,11 +231,12 @@ const styles = StyleSheet.create({
     single_input: {
       borderRadius: 3,
       borderWidth: 1,
-      height: '20%',
+      height: '15%',
       width: '100%',
       marginBottom: 10,
       fontSize: 15,
       textAlign: 'center',
+
     }, 
 
     order_sel_times: {
@@ -259,6 +260,12 @@ const styles = StyleSheet.create({
       fontSize: 15,
       textAlign: 'center',
     }, 
+
+    order_sel_loc: {
+      width: '95%',
+      textAlign: 'center',
+      fontSize: 17,
+    },
 
     searching_text: {
       flex: 0.3,

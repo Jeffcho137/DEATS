@@ -41,6 +41,60 @@ export class Delivery_selection extends Component {
         })
     }
 
+    sendDelivererInfo = () => {
+        const  lat = this.props.navigation.state.params.lat;
+        const long = this.props.navigation.state.params.long;
+        // const loc_chosen = this.props.navigation.state.params.chosen;
+        fetch('https://deats-backend-test.herokuapp.com/update_acc/',
+        {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                id: this.state.id,
+                res_location: this.state.food_place,
+                fin_loc: {
+                    x: lat,
+                    y: long
+                },
+                // start_loc: {
+                //     x: s_lat,
+                //     y; 
+                // }
+            })
+        })
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data)
+            if (data.succeeded == true) {
+                if (this.state.room == '' || this.state.food_place == '' ) {
+                    console.log("fill everything out u fucker")
+                } else {
+                    this.props.navigation.navigate('OrderSearch', {
+                        id: this.state.id,
+                        name: this.state.name,
+                        number: this.state.number,
+                        email: this.state.email,
+                        password: this.state.password,
+                        user_type: this.state.user_type,
+                        food_place: this.state.food_place,
+                        del_loc_lat: lat,
+                        del_loc_long: long,
+                        room: this.state.room,
+                    })
+                }
+            } else {
+                console.log(data.msg);
+            }
+        })
+        // .then((data) => {
+            
+        // })
+        .catch(err => console.error(err));
+    }
+
 
     render() {
         return (
@@ -59,17 +113,17 @@ export class Delivery_selection extends Component {
                 <View style={styles.deliver_sel_input}>
                     <Text style={styles.order_sel_text}>Leaving from:</Text>
                     <View style={styles.order_sel_input_box}>
-                        <TextInput style={styles.single_input} placeholder='building name or street address'></TextInput>
+                        <Button title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
                     </View>
                 </View>
                 <View style={styles.deliver_sel_input}>
                     <Text style={styles.order_sel_text}>Going to:</Text>
                     <View style={styles.order_sel_input_box}>
-                        <TextInput style={styles.single_input} placeholder='building name or street address'></TextInput>
+                        <Button title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
                     </View>
                 </View>
                 
-                <Button title="Begin Searching" onPress={() => this.props.navigation.navigate('DeliverSearch')}></Button>
+                <Button title="Begin Searching" onPress={this.sendDelivererInfo}></Button>
             
                 <StatusBar style="auto" />
             </View>
