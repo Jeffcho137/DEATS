@@ -75,10 +75,10 @@ export class Order_selection extends Component {
             body: JSON.stringify({
                 id: this.state.id,
                 res_location: this.state.food_place,
-                fin_location: {
-                    x: lat,
-                    y: long
-                }
+                // fin_location: {
+                //     x: lat,
+                //     y: long
+                // }
             })
         })
         .then(response => response.json())
