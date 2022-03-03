@@ -18,6 +18,7 @@ import Map_test from "./components/map";
 import Del_map from "./components/deliverer_map";
 import { Login } from "./components/login";
 import { Landing } from "./components/landing";
+import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
 
 const AppNavigator = createStackNavigator(
   {
