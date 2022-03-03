@@ -42,8 +42,10 @@ export class Delivery_selection extends Component {
     }
 
     sendDelivererInfo = () => {
-        const  lat = this.props.navigation.state.params.lat;
-        const long = this.props.navigation.state.params.long;
+        const start_lat = this.props.navigation.state.params.start_lat;
+        const start_long = this.props.navigation.state.params.start_long;
+        const fin_lat = this.props.navigation.state.params.fin_lat;
+        const fin_long = this.props.navigation.state.params.fin_long;
         // const loc_chosen = this.props.navigation.state.params.chosen;
         fetch('https://deats-backend-test.herokuapp.com/update_acc/',
         {
@@ -56,13 +58,13 @@ export class Delivery_selection extends Component {
                 id: this.state.id,
                 res_location: this.state.food_place,
                 fin_loc: {
-                    x: lat,
-                    y: long
+                    x: fin_lat,
+                    y: fin_long
                 },
-                // start_loc: {
-                //     x: s_lat,
-                //     y; 
-                // }
+                start_loc: {
+                    x: start_lat,
+                    y: start_long,
+                }
             })
         })
         .then(response => response.json())
@@ -80,8 +82,10 @@ export class Delivery_selection extends Component {
                         password: this.state.password,
                         user_type: this.state.user_type,
                         food_place: this.state.food_place,
-                        del_loc_lat: lat,
-                        del_loc_long: long,
+                        fin_lat: fin_lat,
+                        fin_long: fin_long,
+                        start_lat: start_lat,
+                        start_long: start_long,
                         room: this.state.room,
                     })
                 }
@@ -97,36 +101,77 @@ export class Delivery_selection extends Component {
 
 
     render() {
-        return (
-            <View style={styles.container}>
-                <View style={styles.order_sel}>
-                    <Text style={styles.order_sel_text}>I want to pick up food from:</Text>
-                    <View style={styles.order_sel_place_options}>
-                        <View style={styles.order_sel_single_place}>
-                            <Button color='black' title='HOP' onPress={this.hopChosen}></Button>
+        const loc_chosen = this.props.navigation.state.params.chosen;
+        const address1 = this.props.navigation.state.params.address1;
+        const address2 = this.props.navigation.state.params.address2;
+        if (!loc_chosen) {
+            return (
+                <View style={styles.container}>
+                    <View style={styles.order_sel}>
+                        <Text style={styles.order_sel_text}>I want to pick up food from:</Text>
+                        <View style={styles.order_sel_place_options}>
+                            <View style={styles.order_sel_single_place}>
+                                <Button color='black' title='HOP' onPress={this.hopChosen}></Button>
+                            </View>
+                            <View style={styles.order_sel_single_place}>
+                                <Button color='black' title='Collis' onPress={this.collisChosen}></Button>
+                            </View>
                         </View>
-                        <View style={styles.order_sel_single_place}>
-                            <Button color='black' title='Collis' onPress={this.collisChosen}></Button>
+                    </View>
+                    <View style={styles.deliver_sel_input}>
+                        {/* <Text style={styles.order_sel_text}>Leaving from:</Text> */}
+                        <View style={styles.order_sel_input_box}>
+                            <Button title='select my current location and final destination' onPress={() => this.props.navigation.navigate("DelMap")}></Button>
                         </View>
                     </View>
-                </View>
-                <View style={styles.deliver_sel_input}>
-                    <Text style={styles.order_sel_text}>Leaving from:</Text>
-                    <View style={styles.order_sel_input_box}>
-                        <Button title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
-                    </View>
-                </View>
-                <View style={styles.deliver_sel_input}>
-                    <Text style={styles.order_sel_text}>Going to:</Text>
-                    <View style={styles.order_sel_input_box}>
-                        <Button title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
-                    </View>
-                </View>
+                    {/* <View style={styles.deliver_sel_input}>
+                        <Text style={styles.order_sel_text}>Going to:</Text>
+                        <View style={styles.order_sel_input_box}>
+                            <Button title='select my location' onPress={() => this.props.navigation.navigate("DelMap")}></Button>
+                        </View>
+                    </View> */}
+                    
+                    <Button title="Begin Searching" onPress={this.sendDelivererInfo}></Button>
                 
-                <Button title="Begin Searching" onPress={this.sendDelivererInfo}></Button>
-            
-                <StatusBar style="auto" />
-            </View>
-        )
+                    <StatusBar style="auto" />
+                </View>
+            )
+        } else {
+            return (
+                <View style={styles.container}>
+                    <View style={styles.order_sel}>
+                        <Text style={styles.order_sel_text}>I want to pick up food from:</Text>
+                        <View style={styles.order_sel_place_options}>
+                            <View style={styles.order_sel_single_place}>
+                                <Button color='black' title='HOP' onPress={this.hopChosen}></Button>
+                            </View>
+                            <View style={styles.order_sel_single_place}>
+                                <Button color='black' title='Collis' onPress={this.collisChosen}></Button>
+                            </View>
+                        </View>
+                    </View>
+                    <View style={styles.deliver_sel_input}>
+                        <Text style={styles.order_sel_text}>Leaving from:</Text>
+                        <View style={styles.order_sel_input_box}>
+                            <Text>Leaving from: {address1}</Text>
+                            <Text>Going to: {address2}</Text>
+                            <Button title='change my starting location and final destination' onPress={() => this.props.navigation.navigate("DelMap")}></Button>
+                        </View>
+                    </View>
+                    {/* <View style={styles.deliver_sel_input}>
+                        <Text style={styles.order_sel_text}>Going to:</Text>
+                        <View style={styles.order_sel_input_box}>
+                            <Text>{address2}</Text>
+                            <Button title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
+                        </View>
+                    </View> */}
+                    
+                    <Button title="Begin Searching" onPress={this.sendDelivererInfo}></Button>
+                
+                    <StatusBar style="auto" />
+                </View>
+            )
+        }
+        
     }
 }

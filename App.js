@@ -15,6 +15,7 @@ import { Deliver_status } from "./components/deliver_status";
 import { Completed } from "./components/completed";
 import { Signup } from "./components/signup";
 import Map_test from "./components/map";
+import Del_map from "./components/deliverer_map";
 import { Login } from "./components/login";
 import { Landing } from "./components/landing";
 
@@ -36,6 +37,7 @@ const AppNavigator = createStackNavigator(
     DeliverStatus: { screen: Deliver_status },
     Completed: { screen: Completed },
     MapTest: { screen: Map_test },
+    DelMap: { screen: Del_map },
   },
   {
     initialRouteName: "Landing",

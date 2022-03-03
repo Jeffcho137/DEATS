@@ -62,7 +62,7 @@ export class Order_selection extends Component {
 
 
     sendOrdererInfo = () => {
-        const  lat = this.props.navigation.state.params.lat;
+        const lat = this.props.navigation.state.params.lat;
         const long = this.props.navigation.state.params.long;
         // const loc_chosen = this.props.navigation.state.params.chosen;
         fetch('https://deats-backend-test.herokuapp.com/update_acc/',
@@ -75,6 +75,7 @@ export class Order_selection extends Component {
             body: JSON.stringify({
                 id: this.state.id,
                 res_location: this.state.food_place,
+                number: this.state.number,
                 fin_location: {
                     x: lat,
                     y: long
@@ -112,8 +113,6 @@ export class Order_selection extends Component {
     }
 
     render() {
-        const  del_loc_lat = this.props.navigation.state.params.lat;
-        const del_loc_long = this.props.navigation.state.params.long;
         const loc_chosen = this.props.navigation.state.params.chosen;
         const address = this.props.navigation.state.params.address;
         if (!loc_chosen) {
