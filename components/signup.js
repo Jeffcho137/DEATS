@@ -83,10 +83,10 @@ export class Signup extends Component {
                 </View>
                 <View style={styles.singup_buttons}>
                     <View style={styles.signup_create}>
-                        <Button title="Create Account" onPress={this.sendAccInfo}></Button>
+                        <Button  color="#8a2be2" title="Create Account" onPress={this.sendAccInfo}></Button>
                     </View>
                     <View>
-                        <Button title='I have an account already' onPress={() => this.props.navigation.navigate('Login')}></Button>
+                        <Button  color="#8a2be2" title='I have an account already' onPress={() => this.props.navigation.navigate('Login')}></Button>
                     </View>
                 </View>
                 

@@ -26,13 +26,13 @@ export class Landing extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.landing_logo}>D-EATS</Text>
+                <Text style={styles.landing_logo}> D-EATS</Text>
                 <View style={styles.landing_buttons}>
                     <View style={styles.create_acc_button}>
-                        <Button style={styles.create_acc_button} title='Create an Account!' onPress={() => this.props.navigation.navigate('Signup')}></Button>
+                        <Button style={styles.create_acc_button} color="#8a2be2" title='Create an Account!' onPress={() => this.props.navigation.navigate('Signup')}></Button>
                     </View>
                     <View style={styles.login_button}>
-                        <Button title='Login with existing account!' onPress={() => this.props.navigation.navigate('Login')}></Button>
+                        <Button color="#8a2be2" title='Login with existing account!' onPress={() => this.props.navigation.navigate('Login')}></Button>
                     </View>
                 </View>
                  <StatusBar style="auto" />
