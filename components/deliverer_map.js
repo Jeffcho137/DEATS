@@ -40,6 +40,7 @@ const get_fin_location = (lat, long) => {
         const location_obj = JSON.parse(JSON.stringify(responseJson))
         // const address = location_obj.results[0].formatted_address
         fin_location = location_obj.results[0].formatted_address
+        console.log('get fin', fin_location)
   })
   }
 
@@ -56,7 +57,14 @@ const Del_map = (props) => {
     longitude: -72.28869350196095,
   });
 
-  const [region, setRegion] = React.useState({
+  const [startRegion, setstartRegion] = React.useState({
+    latitude: 43.704483237221815,
+    longitude: -72.28869350196095,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
+  });
+
+  const [finRegion, setfinRegion] = React.useState({
     latitude: 43.704483237221815,
     longitude: -72.28869350196095,
     latitudeDelta: 0.01,
@@ -73,13 +81,22 @@ const Del_map = (props) => {
         }}
         onPress={(data, details = null) => {
           // 'details' is provided when fetchDetails = true
-          console.log(data, details);
-          setRegion({
+          //console.log(data, details);
+          setstartRegion({
             latitude: details.geometry.location.lat,
             longitude: details.geometry.location.lng,
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           });
+          start_location = details.name +"\n"+ details.formatted_address
+          console.log("start_loc", start_location)
+        //   get_start_location(startPin.latitude, startPin.longitude);
+        //   console.log("search", start_location);
+
+        //   setstartPin({
+        //     latitude: details.geometry.location.lat,
+        //     longitude: details.geometry.location.lng,
+        //   })
 
         }}
 
@@ -88,13 +105,67 @@ const Del_map = (props) => {
           language: "en",
           components: "country:us",
           radius: 300,
-          location: `${region.latitude}, ${region.longitude}`,
+          location: `${startRegion.latitude}, ${startRegion.longitude}`,
           // types: establishment,
         }}
         styles={{
           container: {
             flex: 0,
-            position: "absolute",
+            // position: "absolute",
+            width: "100%",
+            zIndex: 1,
+          },
+          listView: { backgroundColor: "white" },
+        }}
+      />
+      <GooglePlacesAutocomplete
+        placeholder="Search"
+        fetchDetails={true}
+        GooglePlacesSearchQuery={{
+          rankby: "distance",
+        }}
+        onPress={(data, details = null) => {
+          // 'details' is provided when fetchDetails = true
+          console.log(data);
+          console.log('-----')
+          console.log(details)
+          setfinRegion({
+            latitude: details.geometry.location.lat,
+            longitude: details.geometry.location.lng,
+            latitudeDelta: 0.01,
+            longitudeDelta: 0.01,
+            
+          });
+          fin_location = details.name +"\n"+ details.formatted_address
+          console.log("finloc", fin_location)
+
+        //   setfinPin({
+        //     latitude: data.nativeEvent.coordinate.latitude,
+        //     longitude: data.nativeEvent.coordinate.longitude,
+        //     // latitude: details.geometry.location.lat,
+        //     // longitude: details.geometry.location.lng,
+        //   })
+          //get_fin_location(finPin.latitude, finPin.longitude);
+        //   get_fin;_location(finRegion.latitude, finRegion.longitude);
+
+
+        console.log("search", fin_location)
+
+
+        }}
+
+        query={{
+          key: "AIzaSyCCkDRzY3UvSoaZa1anF9ov43ztpe6GSFk",
+          language: "en",
+          components: "country:us",
+          radius: 300,
+          location: `${finRegion.latitude}, ${finRegion.longitude}`,
+          // types: establishment,
+        }}
+        styles={{
+          container: {
+            flex: 0,
+            // position: "absolute",
             width: "100%",
             zIndex: 1,
           },
@@ -110,7 +181,7 @@ const Del_map = (props) => {
           latitudeDelta: 0.01,
           longitudeDelta: 0.01,
         }}
-        region={region}
+        // region={startRegion}
       >
         {/* <Marker
           coordinate={{
@@ -121,8 +192,8 @@ const Del_map = (props) => {
         <Marker
           coordinate={startPin}
           coordinate={{
-            latitude: region.latitude,
-            longitude: region.longitude,
+            latitude: startRegion.latitude,
+            longitude: startRegion.longitude,
           }}
           draggable={true}
           onDragStart={(e) => {
@@ -142,7 +213,7 @@ const Del_map = (props) => {
           <Callout>
             <Text>This is my current location: </Text>
             <Text>
-              {region.latitude}, {region.longitude}
+              {startRegion.latitude}, {startRegion.longitude}
             </Text>
           </Callout>
         </Marker>
@@ -150,8 +221,8 @@ const Del_map = (props) => {
             style={{backgroundColor: 'blue'}}
           coordinate={finPin}
           coordinate={{
-            latitude: region.latitude,
-            longitude: region.longitude,
+            latitude: finRegion.latitude,
+            longitude: finRegion.longitude,
           }}
           draggable={true}
           onDragStart={(e) => {
@@ -171,7 +242,7 @@ const Del_map = (props) => {
           <Callout>
             <Text>This is my final destination after drop-off:</Text>
             <Text>
-              {region.latitude}, {region.longitude}
+              {finRegion.latitude}, {finRegion.longitude}
             </Text>
           </Callout>
         </Marker>

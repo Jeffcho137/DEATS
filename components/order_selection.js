@@ -35,37 +35,28 @@ export class Order_selection extends Component {
 
     hopChosen = () => {
         this.setState({
-            food_place: 'HOP'
+            food_place: {
+                x: 43.7020,
+                y: -72.2879,
+            }
         })
     }
 
     collisChosen = () => {
         this.setState({
-            food_place: 'COLLIS'
+            food_place: {
+                x: 43.7027,
+                y: -72.2898
+            }
         })
     }
-
-    // numberEntered = () => {
-    //     if (this.state.number == '') {
-    //         return(
-    //             <TextInput style={styles.single_input} placeholder='number' onChangeText={text => this.setState({number: text})}></TextInput>
-    //         );
-    //     } else {
-    //         return(
-    //             <View>
-    //                 <Text>{this.state.number}</Text>
-    //                 <Button title="change number"></Button>
-    //             </View>
-    //         );
-    //     }
-    // }
 
 
     sendOrdererInfo = () => {
         const lat = this.props.navigation.state.params.lat;
         const long = this.props.navigation.state.params.long;
         // const loc_chosen = this.props.navigation.state.params.chosen;
-        fetch('https://deats-backend-test.herokuapp.com/update_acc/',
+        fetch('https://deats-backend-test.herokuapp.com/order_del/',
         {
             method: 'POST',
             headers: {
@@ -74,12 +65,12 @@ export class Order_selection extends Component {
             },
             body: JSON.stringify({
                 id: this.state.id,
-                res_location: this.state.food_place,
-                number: this.state.number,
-                fin_location: {
+                drop_loc: {
                     x: lat,
                     y: long
-                }
+                },
+                pickup_loc: this.state.food_place,
+                // number: this.state.number,
             })
         })
         .then(response => response.json())
