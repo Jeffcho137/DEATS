@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   
     container: {
       flex: 1,
-      backgroundColor: '#2e8b57',
+      // backgroundColor: '#2e8b57',
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     },
 
     order_sel: {
-      flex: 0.2,
+      flex: 0.25,
       width: '90%',
       alignItems: 'center',
       marginBottom: 20,
@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
     }, 
 
     deliver_sel_input: {
-      flex: 0.2,
+      // flex: 0.2,
       width: '90%',
       flexDirection: 'row',
       marginBottom: 10,
@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
 
     map: {
       width: Dimensions.get("window").width,
-      height: "90%",
+      height: "80%",
     // height: Dimensions.get("window").height,
     },
 

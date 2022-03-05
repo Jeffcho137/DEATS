@@ -65,6 +65,9 @@ const Map_test = (props) => {
             longitudeDelta: 0.01,
           });
 
+          location = details.name +"\n"+ details.formatted_address
+          console.log("loc", location)
+
         }}
 
         query={{
