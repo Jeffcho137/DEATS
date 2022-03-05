@@ -76,9 +76,10 @@ export class Delivery_selection extends Component {
         })
         .then(response => response.json())
         .then((data) => {
-            console.log(data)
+            // console.log(data)
             // if (data.succeeded == true) {
-                // console.log(data.unmatched_orders[0])
+                console.log("type: ",Object.keys(data.unmatched_users).length)
+                console.log("these are my unmatched orders",data.unmatched_users)
                 this.props.navigation.navigate('DeliverSearch', {
                     id: this.state.id,
                     name: this.state.name,
@@ -90,7 +91,7 @@ export class Delivery_selection extends Component {
                     fin_long: fin_long,
                     start_lat: start_lat,
                     start_long: start_long,
-                    requests: data.unmatched_orders,
+                    requests: data.unmatched_users,
                 })
             // } else {
             //     console.log(data.msg);
