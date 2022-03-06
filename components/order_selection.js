@@ -70,6 +70,7 @@ export class Order_selection extends Component {
                     y: long
                 },
                 pickup_loc: this.state.food_place,
+                pickup_loc_name: "HOP",
                 // number: this.state.number,
             })
         })
