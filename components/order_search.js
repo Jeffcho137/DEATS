@@ -45,14 +45,14 @@ export class Order_search extends Component {
           <Text style={styles.textStyle}>Who's my Driver?</Text>
         </Pressable>
                 <View style={styles.order_sel}>
-                    <Text style={styles.searching_text}>SEARCHING</Text>
+                    <Text style={styles.searching_text}>SEARCHING...</Text>
                     
                 </View>
                 
                 
                 
-                <Button color="#8a2be2" title="Confirm" onPress={() => this.props.navigation.navigate('OrderMatch')}></Button>
-                <Button color="#8a2be2" title="Cancel" onPress={() => this.props.navigation.navigate('Home')}></Button>
+                <Button color="#006400" title="Confirm" onPress={() => this.props.navigation.navigate('OrderMatch')}></Button>
+                <Button color="#006400" title="Cancel" onPress={() => this.props.navigation.navigate('Home')}></Button>
 
             
                 <StatusBar style="auto" />

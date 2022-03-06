@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   
     container: {
       flex: 1,
-      backgroundColor: '#20b2aa',
+      backgroundColor: '#FFFFFF',
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -97,6 +97,7 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderRadius: 5,
       marginBottom: '5%',
+      textAlign: 'center',
     },
 
     login_buttons: {
@@ -270,7 +271,7 @@ const styles = StyleSheet.create({
     searching_text: {
       flex: 0.3,
       borderRadius: 5,
-      borderWidth: 1,
+      //borderWidth: 1,
       height: 50,
       fontSize: 40,
       textAlign: 'center',
@@ -334,11 +335,11 @@ const styles = StyleSheet.create({
       elevation: 2
     },
     buttonOpen: {
-      backgroundColor: "#F194FF",
+      backgroundColor: "#006400",
       marginBottom: 2
     },
     buttonClose: {
-      backgroundColor: "#2196F3",
+      backgroundColor: "#006400",
     },
     textStyle: {
       color: "white",
@@ -348,6 +349,12 @@ const styles = StyleSheet.create({
     modalText: {
       marginBottom: 100,
       textAlign: "center"
+    },
+
+    logo_image: {
+      height:120,
+      marginBottom:50,
+      width: Dimensions.get('window').width / 3 ,
     },
 })
 
