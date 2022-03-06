@@ -111,11 +111,11 @@ export class Delivery_selection extends Component {
                     <View style={styles.deliver_sel_input}>
                         {/* <Text style={styles.order_sel_text}>Leaving from:</Text> */}
                         <View style={styles.order_sel_input_box}>
-                            <Button title='select my current location and final destination' onPress={() => this.props.navigation.navigate("DelMap")}></Button>
+                            <Button color="#006400" title='select my current location and final destination' onPress={() => this.props.navigation.navigate("DelMap")}></Button>
                         </View>
                     </View>
                     
-                    <Button title="Begin Searching" onPress={this.sendDelivererInfo}></Button>
+                    <Button color="#006400" title="Begin Searching" onPress={this.sendDelivererInfo}></Button>
                 
                     <StatusBar style="auto" />
                 </View>
