@@ -15,6 +15,7 @@ export class Deliver_search extends Component {
             user_type: this.props.navigation.state.params.user_type,
             // start_loc: '',
             // fin_loc: '',
+            // requests: [],
             requests: this.props.navigation.state.params.requests,
             modal: false,
         }
@@ -45,33 +46,6 @@ export class Deliver_search extends Component {
         }
       };
 
-    // match = () => {
-    //     fetch('https://deats-backend-test.herokuapp.com/match/',
-    //     {
-    //         method: 'POST',
-    //         headers: {
-    //             'Accept': 'application/json',
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({
-    //             id: this.state.id,
-    //             user_type: type,
-    //         })
-    //     })
-    //     .then(response => response.json())
-    //     .then((data) => {
-    //         console.log(data)
-    //         if (data.succeeded == true) {
-    //             this.setState({
-    //                 id: data.user_id,
-    //             })
-    //         } else {
-    //             console.log(data.msg);
-    //         }
-    //     })
-    //     .catch(err => console.error(err));
-    // }
-    
     render() {
         if (Object.keys(this.state.requests).length == 0) {
             return (
