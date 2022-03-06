@@ -55,6 +55,7 @@ export class Order_selection extends Component {
     sendOrdererInfo = () => {
         const lat = this.props.navigation.state.params.lat;
         const long = this.props.navigation.state.params.long;
+        const address = this.props.navigation.state.params.address;
         // const loc_chosen = this.props.navigation.state.params.chosen;
         fetch('https://deats-backend-test.herokuapp.com/order_del/',
         {
@@ -71,6 +72,7 @@ export class Order_selection extends Component {
                 },
                 pickup_loc: this.state.food_place,
                 pickup_loc_name: "HOP",
+                drop_address: address,
                 // number: this.state.number,
             })
         })

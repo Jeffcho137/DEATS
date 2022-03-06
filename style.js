@@ -315,6 +315,7 @@ const styles = StyleSheet.create({
       marginTop: 21
     },
     modalView: {
+      width: '80%',
       margin: 100,
       backgroundColor: "white",
       borderRadius: 20,
@@ -356,6 +357,59 @@ const styles = StyleSheet.create({
       marginBottom:50,
       width: Dimensions.get('window').width / 3 ,
     },
+    del_search_current_requests: {
+      fontSize: 30,
+      marginBottom: '10%',
+    },
+    del_search_all_requests: {
+      flex: 0.8,
+      width: '90%',
+      alignItems:'center',
+      // backgroundColor: 'coral',
+    },
+
+    del_search_requests: {
+      width: '90%',
+    },  
+
+    del_search_single_request: {
+
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginBottom: '10%',
+      borderWidth: 1,
+      borderRadius: 3,
+    },
+    del_modal_text: {
+      marginBottom: '10%',
+      width: '80%',
+      // backgroundColor: 'coral',
+    },
+    del_modal_buttons: {
+      flexDirection: 'row',
+      width: '80%',
+      justifyContent: 'space-evenly',
+      // backgroundColor: 'coral',
+    },
+
+    del_modaL_cancel: {
+      borderRadius: 3,
+      borderWidth: 1,
+      width: 80,
+      paddingTop: 5,
+      paddingBottom: 5,
+      // height: 30,
+    },
+
+    del_modaL_match: {
+      borderRadius: 3,
+      borderWidth: 1,
+      width: 80,
+      paddingTop: 5,
+      paddingBottom: 5,
+      // height: 30,
+    }
+
 })
 
 export default styles;
