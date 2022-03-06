@@ -4621,10 +4621,10 @@
   dependencies:
     "@types/geojson" "^7946.0.7"
 
-"react-native-reanimated@~2.3.1":
-  "integrity" "sha512-iJwnxroNhECGIB+XRLjQhLKJp3iVxuUtnRTGh6WYvPMZHRft0Mf/HvsKiqz2fEFuZgQgGBB9N26Og85cb1HjTA=="
-  "resolved" "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-2.3.2.tgz"
-  "version" "2.3.2"
+"react-native-reanimated@^2.4.1":
+  "integrity" "sha512-kvf7ylGlwa5hxMQ+wpPFjQrI2c6eexf53/xRo+dvXBNefGmSYaYR5sFtD0XMMzIPQlkCB9tJ0Pu9+2WCQUY7Cg=="
+  "resolved" "https://registry.npmjs.org/react-native-reanimated/-/react-native-reanimated-2.4.1.tgz"
+  "version" "2.4.1"
   dependencies:
     "@babel/plugin-transform-object-assign" "^7.10.4"
     "@types/invariant" "^2.2.35"

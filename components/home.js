@@ -47,7 +47,7 @@ export class Home extends Component {
             id: this.state.id,
             name: this.state.name,
             number: this.state.number,
-            email: this.state.email, 
+            email: this.state.email.trim(), 
             password: this.state.password,
             user_type: type,
         })

@@ -86,7 +86,7 @@ export class Signup extends Component {
                         <Button  color="#8a2be2" title="Create Account" onPress={this.sendAccInfo}></Button>
                     </View>
                     <View>
-                        <Button  color="#8a2be2" title='I have an account already' onPress={() => this.props.navigation.navigate('Login')}></Button>
+                        <Button color="#8a2be2" title='I have an account already' onPress={() => this.props.navigation.navigate('Landing')}></Button>
                     </View>
                 </View>
                 
