@@ -132,20 +132,6 @@ export class Delivery_selection extends Component {
                         </View>
                     </View>
                     <Button title="Begin Searching" onPress={this.sendDelivererInfo}></Button>
-                    <Button title="next" onPress={() => this.props.navigation.navigate('DeliverSearch', {
-                        id: this.state.id,
-                        name: this.state.name,
-                        number: this.state.number,
-                        email: this.state.email,
-                        password: this.state.password,
-                        user_type: this.state.user_type,
-                        // fin_lat: fin_lat,
-                        // fin_long: fin_long,
-                        // start_lat: start_lat,
-                        // start_long: start_long,
-                        // requests: data.unmatched_orders,
-                    })}></Button>
-
                     <StatusBar style="auto" />
                 </View>
             )
