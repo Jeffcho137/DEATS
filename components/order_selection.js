@@ -124,7 +124,7 @@ export class Order_selection extends Component {
                     <View style={styles.order_sel_input}>
                         <Text style={styles.order_sel_text}>Deliver to:</Text>
                         <View style={styles.order_sel_input_box}>
-                            <Button title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
+                            <Button color="#8a2be2" title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
                             {/* <TextInput style={styles.single_input} placeholder='del_loc name or street address' onChangeText={text => this.setState({del_loc: text})}></TextInput> */}
                             <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => this.setState({room: text})}></TextInput>
                             {/* {this.numberEntered()} */}
@@ -139,7 +139,7 @@ export class Order_selection extends Component {
                             <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
                         </View>
                     </View>
-                    <Button title="Confirm" onPress={this.sendOrdererInfo}></Button>
+                    <Button color="#8a2be2" title="Confirm" onPress={this.sendOrdererInfo}></Button>
                 
                     <StatusBar style="auto" />
                 </View>

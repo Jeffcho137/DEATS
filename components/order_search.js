@@ -51,8 +51,8 @@ export class Order_search extends Component {
                 
                 
                 
-                <Button title="Confirm" onPress={() => this.props.navigation.navigate('OrderMatch')}></Button>
-                <Button title="Cancel" onPress={() => this.props.navigation.navigate('Home')}></Button>
+                <Button color="#8a2be2" title="Confirm" onPress={() => this.props.navigation.navigate('OrderMatch')}></Button>
+                <Button color="#8a2be2" title="Cancel" onPress={() => this.props.navigation.navigate('Home')}></Button>
 
             
                 <StatusBar style="auto" />

@@ -95,10 +95,10 @@ export class Home extends Component {
                 </View>
                 <View style={styles.home_options}>
                     <View style={styles.home_buttons}>
-                        <Button title="Order Delivery" onPress={this.setUserTypeOrder}></Button>
+                        <Button color="#8a2be2" title="Order Delivery" onPress={this.setUserTypeOrder}></Button>
                     </View>
                     <View style={styles.home_buttons}>
-                        <Button title="Make Delivery"onPress={this.setUserTypeDeliverer}></Button>
+                        <Button color="#8a2be2"title="Make Delivery"onPress={this.setUserTypeDeliverer}></Button>
                     </View>
                 </View>
                 <StatusBar style="auto" />

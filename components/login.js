@@ -80,10 +80,10 @@ export class Login extends Component {
                     </View>
                     <View style={styles.login_buttons}>
                         <View style={styles.login}>
-                            <Button title="Login" onPress={this.sendLogin}></Button>
+                            <Button color="#8a2be2" title="Login" onPress={this.sendLogin}></Button>
                         </View>
                         <View>
-                            <Button title='I dont have an account yet' onPress={() => this.props.navigation.navigate('Signup')}></Button>
+                            <Button color="#8a2be2"title='I dont have an account yet' onPress={() => this.props.navigation.navigate('Signup')}></Button>
                         </View>
                     </View>
                     <StatusBar style="auto" />
