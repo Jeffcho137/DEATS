@@ -276,7 +276,7 @@ const styles = StyleSheet.create({
       borderRadius: 5,
       //borderWidth: 1,
       height: 50,
-      fontSize: 40,
+      fontSize: 22,
       textAlign: 'center',
     },
 

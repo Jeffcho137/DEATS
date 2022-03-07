@@ -15,8 +15,10 @@ export class Order_search extends Component {
         password: this.props.navigation.state.params.password,
         user_type: this.props.navigation.state.params.user_type,
         order_id: this.props.navigation.state.params.order_id,
+        food_place_name: this.props.navigation.state.params.food_place_name,
         modalVisible: false,
-        del_info: ''
+        del_info: null,
+        del_id: null
     }
   }
 
@@ -52,7 +54,8 @@ export class Order_search extends Component {
             console.log(data.deliverer_info)
             if (data.succeeded == true) {
               this.setState({
-                del_info: data.deliverer_info
+                del_info: data.deliverer_info,
+                del_id: data.deliverer_id
               })
               this.setModalVisible(true)
               // this.props.navigation.navigate('OrderMatch');
@@ -79,17 +82,22 @@ export class Order_search extends Component {
                 <View style={styles.centeredView}>
                     <View style={styles.modalView}>
                       <View style={styles.modal_text}>
-                        <Text style={styles.modalText}>Deliverer found!</Text>
-                        <Text style={styles.deliverer_is}>Your deliverer is: {this.state.del_info.name}</Text>
-                        <Text style={styles.deliverer_is}>delivery fee: $3.00</Text>
+                        <Text style={styles.modalText}>{this.state.del_id ? "Deliverer found!" : "Sorry, no deliverer is available yet"}</Text>
+                        <Text style={styles.deliverer_is}> {this.state.del_id ? "Your deliverer is " + this.state.del_info.name : "Check again later"} {}</Text>
+                        <Text style={styles.deliverer_is}> {this.state.del_id ? "Delivery fee: $3.00" : ""} </Text>
                       </View>
                       {/* <Button title='Accept' onPress={this.props.navigation.navigate('OrderMatch')}></Button> */}
                       <Pressable
                           style={[styles.button, styles.buttonClose]}
                           // onPress={() => this.setModalVisible(!modalVisible)}
-                          onPress={() => {this.setModalVisible(!modalVisible); this.props.navigation.navigate('OrderMatch')}}
+                          onPress={() => {this.setModalVisible(!modalVisible); {this.state.del_id ? this.props.navigation.navigate('OrderMatch', 
+                          {
+                            del_id: this.state.del_id,
+                            del_info: this.state.del_info,
+                            food_place_name: this.state.food_place_name
+                        }) : ""}}}
                       >
-                        <Text style={styles.textStyle}>Accept Delivery</Text>
+                        <Text style={styles.textStyle}> {this.state.del_id ? "Accept Delivery" : "Go back"} </Text>
                       </Pressable>
                       <Pressable
                           // onPress={() => this.setModalVisible(!modalVisible)}

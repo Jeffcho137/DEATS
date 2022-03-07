@@ -98,6 +98,7 @@ export class Order_selection extends Component {
                         del_loc_long: long,
                         room: this.state.room,
                         order_id: data.order_id,
+                        food_place_name: this.state.food_place_name
                     })
                 }
             } else {
