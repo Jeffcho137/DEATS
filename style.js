@@ -123,7 +123,9 @@ const styles = StyleSheet.create({
 
     home_profile_button: {
       flex: 0.25,
-      alignSelf: 'flex-start',
+      // alignSelf: 'flex-start',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
       margin: 10,
     },
 
@@ -227,12 +229,13 @@ const styles = StyleSheet.create({
     order_sel_input_box: {
       flex: 1,
       marginLeft: '2%',
+      marginBottom: 150
     }, 
 
     single_input: {
       borderRadius: 3,
       borderWidth: 1,
-      height: '15%',
+      //height: '15%',
       width: '100%',
       marginBottom: 10,
       fontSize: 15,
@@ -355,8 +358,18 @@ const styles = StyleSheet.create({
     logo_image: {
       height:120,
       marginBottom:50,
-      width: Dimensions.get('window').width / 3 ,
+      width: Dimensions.get('window').width / 2.8 ,
     },
+
+    logo_image_small: {
+      height: 70,
+      marginBottom: 50,
+      marginLeft: 170,
+      marginRight: -50,
+      resizeMode: 'contain',
+      width: Dimensions.get('window').width/2,
+    },
+
     del_search_current_requests: {
       fontSize: 30,
       marginBottom: '10%',
