@@ -44,33 +44,6 @@ export class Deliver_search extends Component {
           console.error(error);
         }
       };
-
-    // match = () => {
-    //     fetch('https://deats-backend-test.herokuapp.com/match/',
-    //     {
-    //         method: 'POST',
-    //         headers: {
-    //             'Accept': 'application/json',
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({
-    //             id: this.state.id,
-    //             user_type: type,
-    //         })
-    //     })
-    //     .then(response => response.json())
-    //     .then((data) => {
-    //         console.log(data)
-    //         if (data.succeeded == true) {
-    //             this.setState({
-    //                 id: data.user_id,
-    //             })
-    //         } else {
-    //             console.log(data.msg);
-    //         }
-    //     })
-    //     .catch(err => console.error(err));
-    // }
     
     render() {
         if (Object.keys(this.state.requests).length == 0) {
@@ -90,8 +63,9 @@ export class Deliver_search extends Component {
             const displayModal = (bool) => {
                 this.setState({modal: bool})
             }
-            const match = (customerId) => {
-                console.log(customerId)
+            const match = (orderId) => {
+                console.log(orderId)
+                console.log(this.state.id)
                 fetch('https://deats-backend-test.herokuapp.com/match/',
                 {
                     method: 'POST',
@@ -100,8 +74,8 @@ export class Deliver_search extends Component {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        customer_id: customerId,
                         id: this.state.id,
+                        order_id: orderId,
                     })
                 })
                 .then(response => response.json())
@@ -122,7 +96,6 @@ export class Deliver_search extends Component {
                         <View style={styles.del_search_requests}>
                             {React.Children.toArray(
                                 this.state.requests.map(function(customer,i){
-                                    // console.log(customer.drop_loc.x)
                                 return(
                                     <View>
                                         <Modal
@@ -135,7 +108,7 @@ export class Deliver_search extends Component {
                                                     <View style={styles.del_modal_text}>
                                                         <Text style={{fontSize: 18}}>{customer.name}</Text>
                                                         <Text style={{fontSize: 18}}>Picking up from: {customer.pickup_loc_name}</Text>
-                                                        <Text style={{fontSize: 18}}>Going to: </Text>
+                                                        <Text style={{fontSize: 18}}>Going to: {customer.drop_loc_name}</Text>
                                                     </View>
                                                     <View style={styles.del_modal_buttons}>
                                                         <Pressable style={styles.del_modaL_cancel} onPress={() => displayModal(false)}>
@@ -151,7 +124,7 @@ export class Deliver_search extends Component {
                                         <Pressable onPress={() => displayModal(true)} style={styles.del_search_single_request}>
                                             <Text style={{fontSize: 18}}>{customer.name}</Text>
                                             <Text style={{fontSize: 18}}>Picking up from: {customer.pickup_loc_name}</Text>
-                                            <Text style={{fontSize: 18}}>Going to: </Text>
+                                            <Text style={{fontSize: 18}}>Going to: {customer.drop_loc_name}</Text>
                                             {/* <Button title="get" onPress={}></Button> */}
 
                                         </Pressable>

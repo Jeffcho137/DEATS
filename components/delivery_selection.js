@@ -66,7 +66,7 @@ export class Delivery_selection extends Component {
                     x: fin_lat,
                     y: fin_long
                 },
-                num: 2
+                num: 3
                 // res_location: this.state.food_place,
                 // start_loc: {
                 //     x: start_lat,

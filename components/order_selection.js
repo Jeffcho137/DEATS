@@ -14,6 +14,7 @@ export class Order_selection extends Component {
             password: this.props.navigation.state.params.password,
             user_type: this.props.navigation.state.params.user_type,
             food_place: '',
+            food_place_name: '',
             del_loc_lat: this.props.navigation.state.params.lat,
             del_loc_long: this.props.navigation.state.params.long,
             room: '',
@@ -38,7 +39,8 @@ export class Order_selection extends Component {
             food_place: {
                 x: 43.7020,
                 y: -72.2879,
-            }
+            },
+            food_place_name: "HOP",
         })
     }
 
@@ -47,7 +49,8 @@ export class Order_selection extends Component {
             food_place: {
                 x: 43.7027,
                 y: -72.2898
-            }
+            }, 
+            food_place_name: "Collis"
         })
     }
 
@@ -71,8 +74,8 @@ export class Order_selection extends Component {
                     y: long
                 },
                 pickup_loc: this.state.food_place,
-                pickup_loc_name: "HOP",
-                drop_address: address,
+                pickup_loc_name: this.state.food_place_name,
+                drop_loc_name: address,
                 // number: this.state.number,
             })
         })
