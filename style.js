@@ -350,9 +350,20 @@ const styles = StyleSheet.create({
       fontWeight: "bold",
       textAlign: "center"
     },
+
+    modal_text: {
+      marginBottom: '10%',
+    },
+
     modalText: {
-      marginBottom: 100,
-      textAlign: "center"
+      marginBottom: 10,
+      textAlign: "center", 
+      fontSize: 30,
+    },
+
+    deliverer_is: {
+      textAlign: "center", 
+      fontSize: 17,
     },
 
     logo_image: {
