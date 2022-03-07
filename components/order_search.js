@@ -15,6 +15,7 @@ export class Order_search extends Component {
         password: this.props.navigation.state.params.password,
         user_type: this.props.navigation.state.params.user_type,
         order_id: this.props.navigation.state.params.order_id,
+        food_place_name: this.props.navigation.state.params.food_place_name,
         modalVisible: false,
         del_info: null,
         del_id: null
@@ -89,7 +90,12 @@ export class Order_search extends Component {
                       <Pressable
                           style={[styles.button, styles.buttonClose]}
                           // onPress={() => this.setModalVisible(!modalVisible)}
-                          onPress={() => {this.setModalVisible(!modalVisible); {this.state.del_id ? this.props.navigation.navigate('OrderMatch') : ""}}}
+                          onPress={() => {this.setModalVisible(!modalVisible); {this.state.del_id ? this.props.navigation.navigate('OrderMatch', 
+                          {
+                            del_id: this.state.del_id,
+                            del_info: this.state.del_info,
+                            food_place_name: this.state.food_place_name
+                        }) : ""}}}
                       >
                         <Text style={styles.textStyle}> {this.state.del_id ? "Accept Delivery" : "Go back"} </Text>
                       </Pressable>
