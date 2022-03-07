@@ -63,6 +63,7 @@ export class Deliver_search extends Component {
         } else {
             const error_msg = this.state.error_msg;
             const modal = this.state.modal;
+            let customers = []
             const displayModal = (bool,customer=null,i=null) => {
                 console.log("customer",customer)
                 // console.log("i:",i)
@@ -87,7 +88,6 @@ export class Deliver_search extends Component {
                 .then((data) => {
                     console.log(data)
                     if (data.succeeded == 1) {
-                        displayModal(false);
                         this.props.navigation.navigate('DeliverMatch')
                     } else {
                         console.log(data.msg);
@@ -98,7 +98,6 @@ export class Deliver_search extends Component {
                 })
                 .catch(err => console.error(err));
             }
-            let customers = []
             return (
                 <View style={styles.container}>
                     <View style={styles.del_search_all_requests}>
@@ -138,7 +137,8 @@ export class Deliver_search extends Component {
                                         <Pressable style={styles.del_modaL_cancel} onPress={() => displayModal(false,customers[this.state.i].name,this.state.i)}>
                                             <Text style={{fontSize: 15, textAlign: 'center'}}>Cancel</Text>
                                         </Pressable>
-                                        <Pressable style={styles.del_modaL_match} onPress={() => match(customers[this.state.i].order_id)}>
+                                        {/* <Pressable style={styles.del_modaL_match} onPress={() => {displayModal(false); match(customers[this.state.i].order_id)}}> */}
+                                        <Pressable style={styles.del_modaL_cancel} onPress={() => {displayModal(false,customers[this.state.i].name,this.state.i);match(customers[this.state.i].order_id); }}>
                                             <Text style={{fontSize: 15, textAlign: 'center'}}>Match!</Text>
                                         </Pressable>
                                     </View>
