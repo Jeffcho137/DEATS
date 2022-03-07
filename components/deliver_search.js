@@ -65,12 +65,12 @@ export class Deliver_search extends Component {
             const modal = this.state.modal;
             const displayModal = (bool,customer=null,i=null) => {
                 console.log("customer",customer)
-                console.log("i:",i)
+                // console.log("i:",i)
                 this.setState({modal: bool, i: i})
             }
             const match = (orderId) => {
-                console.log(orderId)
-                console.log(this.state.id)
+                // console.log(orderId)
+                // console.log(this.state.id)
                 fetch('https://deats-backend-test.herokuapp.com/match/',
                 {
                     method: 'POST',
@@ -98,7 +98,7 @@ export class Deliver_search extends Component {
                 })
                 .catch(err => console.error(err));
             }
-            let customers=[]
+            let customers = []
             return (
                 <View style={styles.container}>
                     <View style={styles.del_search_all_requests}>
@@ -135,10 +135,10 @@ export class Deliver_search extends Component {
                                         <Text style={{color:'red'}}>{error_msg}</Text>
                                     </View>
                                     <View style={styles.del_modal_buttons}>
-                                        <Pressable style={styles.del_modaL_cancel} onPress={() => displayModal(false,customers[this.state.i].pickup_loc_name,this.state.i)}>
+                                        <Pressable style={styles.del_modaL_cancel} onPress={() => displayModal(false,customers[this.state.i].name,this.state.i)}>
                                             <Text style={{fontSize: 15, textAlign: 'center'}}>Cancel</Text>
                                         </Pressable>
-                                        <Pressable style={styles.del_modaL_match} onPress={() => match(customer.order_id)}>
+                                        <Pressable style={styles.del_modaL_match} onPress={() => match(customers[this.state.i].order_id)}>
                                             <Text style={{fontSize: 15, textAlign: 'center'}}>Match!</Text>
                                         </Pressable>
                                     </View>
