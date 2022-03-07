@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button } from 'react-native';
 import styles from '../style';
+import  Logo  from './image_small.js';
+
 
 export class Home extends Component {
 
@@ -85,20 +87,25 @@ export class Home extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.home_profile_button}>
-                    <Button title="Profile" onPress={() => this.props.navigation.navigate('Profile',{
+                    <Button color="#006400" title="Profile" onPress={() => this.props.navigation.navigate('Profile',{
                         id: this.state.id,
                         name: this.state.name,
                         number: this.state.number,
                         email: this.state.email, 
                         password: this.state.password,
                     })}></Button>
+                                    <Logo/>
+
                 </View>
+
+
+                
                 <View style={styles.home_options}>
                     <View style={styles.home_buttons}>
-                        <Button title="Order Delivery" onPress={this.setUserTypeOrder}></Button>
+                        <Button color="#006400" title="Order Delivery" onPress={this.setUserTypeOrder}></Button>
                     </View>
                     <View style={styles.home_buttons}>
-                        <Button title="Make Delivery"onPress={this.setUserTypeDeliverer}></Button>
+                        <Button color="#006400"title="Make Delivery"onPress={this.setUserTypeDeliverer}></Button>
                     </View>
                 </View>
                 <StatusBar style="auto" />

@@ -13,11 +13,9 @@ export class Deliver_search extends Component {
             email: this.props.navigation.state.params.email,
             password: this.props.navigation.state.params.password,
             user_type: this.props.navigation.state.params.user_type,
-            // start_loc: '',
-            // fin_loc: '',
-            // requests: [],
             requests: this.props.navigation.state.params.requests,
             modal: false,
+            error_msg: '',
         }
     }
 
@@ -45,7 +43,7 @@ export class Deliver_search extends Component {
           console.error(error);
         }
       };
-
+    
     render() {
         if (Object.keys(this.state.requests).length == 0) {
             return (
@@ -60,12 +58,14 @@ export class Deliver_search extends Component {
                 </View>
             )
         } else {
+            const error_msg = this.state.error_msg;
             const modal = this.state.modal;
             const displayModal = (bool) => {
                 this.setState({modal: bool})
             }
-            const match = (customerId) => {
-                console.log(customerId)
+            const match = (orderId) => {
+                console.log(orderId)
+                console.log(this.state.id)
                 fetch('https://deats-backend-test.herokuapp.com/match/',
                 {
                     method: 'POST',
@@ -74,18 +74,22 @@ export class Deliver_search extends Component {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        customer_id: customerId,
                         id: this.state.id,
+                        order_id: orderId,
                     })
                 })
                 .then(response => response.json())
                 .then((data) => {
                     console.log(data)
-                    // if (data.succeeded == true) {
-                    //     console.lo
-                    // } else {
-                    //     console.log(data.msg);
-                    // }
+                    if (data.succeeded == 1) {
+                        displayModal(false);
+                        this.props.navigation.navigate('DeliverMatch')
+                    } else {
+                        console.log(data.msg);
+                        this.setState({
+                            error_msg: data.msg,
+                        })
+                    }
                 })
                 .catch(err => console.error(err));
             }
@@ -96,7 +100,6 @@ export class Deliver_search extends Component {
                         <View style={styles.del_search_requests}>
                             {React.Children.toArray(
                                 this.state.requests.map(function(customer,i){
-                                    // console.log(customer.drop_loc.x)
                                 return(
                                     <View>
                                         <Modal
@@ -109,7 +112,8 @@ export class Deliver_search extends Component {
                                                     <View style={styles.del_modal_text}>
                                                         <Text style={{fontSize: 18}}>{customer.name}</Text>
                                                         <Text style={{fontSize: 18}}>Picking up from: {customer.pickup_loc_name}</Text>
-                                                        <Text style={{fontSize: 18}}>Going to: </Text>
+                                                        <Text style={{fontSize: 18}}>Going to: {customer.drop_loc_name}</Text>
+                                                        <Text style={{color:'red'}}>{error_msg}</Text>
                                                     </View>
                                                     <View style={styles.del_modal_buttons}>
                                                         <Pressable style={styles.del_modaL_cancel} onPress={() => displayModal(false)}>
@@ -123,9 +127,9 @@ export class Deliver_search extends Component {
                                             </View>
                                         </Modal>
                                         <Pressable onPress={() => displayModal(true)} style={styles.del_search_single_request}>
-                                            <Text style={{fontSize: 18}}>{customer.name}</Text>
-                                            <Text style={{fontSize: 18}}>Picking up from: {customer.pickup_loc_name}</Text>
-                                            <Text style={{fontSize: 18}}>Going to: </Text>
+                                            <Text style={{fontSize: 18, textAlign: 'center'}}>{customer.name}</Text>
+                                            <Text style={{fontSize: 18, textAlign: 'center'}}>Picking up from: {customer.pickup_loc_name}</Text>
+                                            <Text style={{fontSize: 18, textAlign: 'center'}}>Going to: {customer.drop_loc_name}</Text>
                                             {/* <Button title="get" onPress={}></Button> */}
 
                                         </Pressable>

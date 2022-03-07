@@ -18,6 +18,7 @@ import Map_test from "./components/map";
 import Del_map from "./components/deliverer_map";
 import { Login } from "./components/login";
 import { Landing } from "./components/landing";
+import { Logo } from './components/image.js';
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
 
 const AppNavigator = createStackNavigator(
@@ -37,40 +38,11 @@ const AppNavigator = createStackNavigator(
     OrderStatus: { screen: Order_status },
     DeliverStatus: { screen: Deliver_status },
     Completed: { screen: Completed },
+    
     MapTest: { screen: Map_test },
     DelMap: { screen: Del_map },
   },
-  // {
-  //   Landing: { screen: Landing,
-  //     navigationOptions: {
-  //       header: null,
-  //     } },
-  //   Signup: { screen: Signup,
-  //     navigationOptions: {
-  //       header: null,
-  //     } },
-  //   Login: { screen: Login,
-  //     navigationOptions: {
-  //       header: null,
-  //     } },
-  //   Home: { screen: Home,
-  //     navigationOptions: {
-  //       header: null,
-  //     } },
-  //   Profile: { screen: Profile },
-  //   OrderSelection: { screen: Order_selection },
-  //   DeliverySelection: { screen: Delivery_selection },
-  //   OrderSearch: { screen: Order_search },
-  //   DeliverSearch: { screen: Deliver_search },
-  //   DeliverMatch: { screen: Deliver_match },
-  //   OrderMatch: { screen: Order_match },
-  //   OrderCode: { screen: Order_code },
-  //   OrderStatus: { screen: Order_status },
-  //   DeliverStatus: { screen: Deliver_status },
-  //   Completed: { screen: Completed },
-  //   MapTest: { screen: Map_test },
-  //   DelMap: { screen: Del_map },
-  // },
+
   {
     initialRouteName: "Landing",
   }

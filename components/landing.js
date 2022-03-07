@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, Button, TextInput } from 'react-native';
+import { Text, View, Button, TextInput, Image, } from 'react-native';
 import styles from '../style';
+import  Logo  from './image.js';
+
 
 export class Landing extends Component {
 
@@ -94,19 +96,20 @@ export class Landing extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.landing_logo}>D-EATS</Text>
-
+        
+                {/* <Logo style={styles.logo_image}/> */}
+                <Logo/>
                 <View style={styles.login_info}>
                     <TextInput style={styles.login_input} placeholder='email' onChangeText={text => this.setState({email: text})}></TextInput>
                     <TextInput style={styles.login_input} placeholder='password' onChangeText={text => this.setState({password: text})}></TextInput>
                 </View>
                 <View style={styles.landing_buttons}>
                     <View style={styles.login_button}>
-                        <Button title='Sign-in' onPress={this.sendLogin}></Button>
+                        <Button color="#006400" title='Sign-in' onPress={this.sendLogin}></Button>
                     </View>
                     {this.renderErrorMessage()}
                     <View style={styles.create_acc_button}>
-                        <Button style={styles.create_acc_button} title='Sign-up' onPress={() => this.props.navigation.navigate('Signup')}></Button>
+                        <Button color="#006400" style={styles.create_acc_button} title='Sign-up' onPress={() => this.props.navigation.navigate('Signup')}></Button>
                     </View>
                 </View>
                  <StatusBar style="auto" />

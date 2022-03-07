@@ -14,6 +14,7 @@ export class Order_selection extends Component {
             password: this.props.navigation.state.params.password,
             user_type: this.props.navigation.state.params.user_type,
             food_place: '',
+            food_place_name: '',
             del_loc_lat: this.props.navigation.state.params.lat,
             del_loc_long: this.props.navigation.state.params.long,
             room: '',
@@ -38,7 +39,8 @@ export class Order_selection extends Component {
             food_place: {
                 x: 43.7020,
                 y: -72.2879,
-            }
+            },
+            food_place_name: "HOP",
         })
     }
 
@@ -47,7 +49,8 @@ export class Order_selection extends Component {
             food_place: {
                 x: 43.7027,
                 y: -72.2898
-            }
+            }, 
+            food_place_name: "Collis"
         })
     }
 
@@ -71,8 +74,8 @@ export class Order_selection extends Component {
                     y: long
                 },
                 pickup_loc: this.state.food_place,
-                pickup_loc_name: "HOP",
-                drop_address: address,
+                pickup_loc_name: this.state.food_place_name,
+                drop_loc_name: address,
                 // number: this.state.number,
             })
         })
@@ -94,6 +97,8 @@ export class Order_selection extends Component {
                         del_loc_lat: lat,
                         del_loc_long: long,
                         room: this.state.room,
+                        order_id: data.order_id,
+                        food_place_name: this.state.food_place_name
                     })
                 }
             } else {
@@ -116,17 +121,17 @@ export class Order_selection extends Component {
                         <Text style={styles.order_sel_text}>I want food from:</Text>
                         <View style={styles.order_sel_place_options}>
                             <View style={styles.order_sel_single_place}>
-                                <Button color='black' title='HOP' onPress={this.hopChosen}></Button>
+                                <Button color='#006400' title='HOP' onPress={this.hopChosen}></Button>
                             </View>
                             <View style={styles.order_sel_single_place}>
-                                <Button color='black' title='Collis' onPress={this.collisChosen}></Button>
+                                <Button color='#006400' title='Collis' onPress={this.collisChosen}></Button>
                             </View>
                         </View>
                     </View>
                     <View style={styles.order_sel_input}>
                         <Text style={styles.order_sel_text}>Deliver to:</Text>
                         <View style={styles.order_sel_input_box}>
-                            <Button title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
+                            <Button color="#006400" title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
                             {/* <TextInput style={styles.single_input} placeholder='del_loc name or street address' onChangeText={text => this.setState({del_loc: text})}></TextInput> */}
                             <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => this.setState({room: text})}></TextInput>
                             {/* {this.numberEntered()} */}
@@ -141,7 +146,7 @@ export class Order_selection extends Component {
                             <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
                         </View>
                     </View>
-                    <Button title="Confirm" onPress={this.sendOrdererInfo}></Button>
+                    <Button color="#006400" title="Confirm" onPress={this.sendOrdererInfo}></Button>
                 
                     <StatusBar style="auto" />
                 </View>
@@ -153,10 +158,10 @@ export class Order_selection extends Component {
                         <Text style={styles.order_sel_text}>I want food from:</Text>
                         <View style={styles.order_sel_place_options}>
                             <View style={styles.order_sel_single_place}>
-                                <Button color='black' title='HOP' onPress={this.hopChosen}></Button>
+                                <Button color="#006400" title='HOP' onPress={this.hopChosen}></Button>
                             </View>
                             <View style={styles.order_sel_single_place}>
-                                <Button color='black' title='Collis' onPress={this.collisChosen}></Button>
+                                <Button color="#006400" title='Collis' onPress={this.collisChosen}></Button>
                             </View>
                         </View>
                     </View>
@@ -166,7 +171,7 @@ export class Order_selection extends Component {
                             {/* <Button title='select my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button> */}
                             {/* <Text>{del_loc_lat},{del_loc_long}</Text> */}
                             <Text style={styles.order_sel_loc}>{address}</Text>
-                            <Button title='change my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
+                            <Button color="#006400" title='change my location' onPress={() => this.props.navigation.navigate("MapTest")}></Button>
                             <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => this.setState({room: text})}></TextInput>
                             {/* {this.numberEntered()} */}
                             <TextInput style={styles.single_input} placeholder='number' onChangeText={text => this.setState({number: text})}></TextInput>
