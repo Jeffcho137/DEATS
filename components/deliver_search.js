@@ -13,6 +13,9 @@ export class Deliver_search extends Component {
             email: this.props.navigation.state.params.email,
             password: this.props.navigation.state.params.password,
             user_type: this.props.navigation.state.params.user_type,
+            // start_loc: '',
+            // fin_loc: '',
+            // requests: [],
             requests: this.props.navigation.state.params.requests,
             modal: false,
             error_msg: '',
@@ -43,7 +46,6 @@ export class Deliver_search extends Component {
           console.error(error);
         }
       };
-    
     render() {
         if (Object.keys(this.state.requests).length == 0) {
             return (
