@@ -13,9 +13,13 @@ export class Deliver_search extends Component {
             email: this.props.navigation.state.params.email,
             password: this.props.navigation.state.params.password,
             user_type: this.props.navigation.state.params.user_type,
+            // start_loc: '',
+            // fin_loc: '',
+            // requests: [],
             requests: this.props.navigation.state.params.requests,
             modal: false,
             error_msg: '',
+            i: 0,
         }
     }
 
@@ -43,7 +47,6 @@ export class Deliver_search extends Component {
           console.error(error);
         }
       };
-    
     render() {
         if (Object.keys(this.state.requests).length == 0) {
             return (
@@ -60,8 +63,10 @@ export class Deliver_search extends Component {
         } else {
             const error_msg = this.state.error_msg;
             const modal = this.state.modal;
-            const displayModal = (bool) => {
-                this.setState({modal: bool})
+            const displayModal = (bool,customer=null,i=null) => {
+                console.log("customer",customer)
+                console.log("i:",i)
+                this.setState({modal: bool, i: i})
             }
             const match = (orderId) => {
                 console.log(orderId)
@@ -93,6 +98,7 @@ export class Deliver_search extends Component {
                 })
                 .catch(err => console.error(err));
             }
+            let customers=[]
             return (
                 <View style={styles.container}>
                     <View style={styles.del_search_all_requests}>
@@ -100,33 +106,11 @@ export class Deliver_search extends Component {
                         <View style={styles.del_search_requests}>
                             {React.Children.toArray(
                                 this.state.requests.map(function(customer,i){
+                                customers[i] = customer;
+                                console.log(i)
                                 return(
                                     <View>
-                                        <Modal
-                                            // animationType="slide"
-                                            visible={modal}
-                                            transparent={true}
-                                        >
-                                            <View style={styles.centeredView}>
-                                                <View style={styles.modalView}>
-                                                    <View style={styles.del_modal_text}>
-                                                        <Text style={{fontSize: 18}}>{customer.name}</Text>
-                                                        <Text style={{fontSize: 18}}>Picking up from: {customer.pickup_loc_name}</Text>
-                                                        <Text style={{fontSize: 18}}>Going to: {customer.drop_loc_name}</Text>
-                                                        <Text style={{color:'red'}}>{error_msg}</Text>
-                                                    </View>
-                                                    <View style={styles.del_modal_buttons}>
-                                                        <Pressable style={styles.del_modaL_cancel} onPress={() => displayModal(false)}>
-                                                            <Text style={{fontSize: 15, textAlign: 'center'}}>Cancel</Text>
-                                                        </Pressable>
-                                                        <Pressable style={styles.del_modaL_match} onPress={() => match(customer.order_id)}>
-                                                            <Text style={{fontSize: 15, textAlign: 'center'}}>Match!</Text>
-                                                        </Pressable>
-                                                    </View>
-                                                </View>
-                                            </View>
-                                        </Modal>
-                                        <Pressable onPress={() => displayModal(true)} style={styles.del_search_single_request}>
+                                        <Pressable onPress={() => displayModal(true,customers[i].pickup_loc_name,i)} style={styles.del_search_single_request}>
                                             <Text style={{fontSize: 18, textAlign: 'center'}}>{customer.name}</Text>
                                             <Text style={{fontSize: 18, textAlign: 'center'}}>Picking up from: {customer.pickup_loc_name}</Text>
                                             <Text style={{fontSize: 18, textAlign: 'center'}}>Going to: {customer.drop_loc_name}</Text>
@@ -136,7 +120,31 @@ export class Deliver_search extends Component {
                                     </View>
                                 )
                             }))}
-                        </View>                        
+                        </View>          
+                        <Modal
+                            // animationType="slide"
+                            visible={modal}
+                            transparent={true}
+                        >
+                            <View style={styles.centeredView}>
+                                <View style={styles.modalView}>
+                                    <View style={styles.del_modal_text}>
+                                        <Text style={{fontSize: 18}}>{customers[this.state.i].name}</Text>
+                                        <Text style={{fontSize: 18}}>Picking up from: {customers[this.state.i].pickup_loc_name}</Text>
+                                        <Text style={{fontSize: 18}}>Going to: {customers[this.state.i].drop_loc_name}</Text>
+                                        <Text style={{color:'red'}}>{error_msg}</Text>
+                                    </View>
+                                    <View style={styles.del_modal_buttons}>
+                                        <Pressable style={styles.del_modaL_cancel} onPress={() => displayModal(false,customers[this.state.i].pickup_loc_name,this.state.i)}>
+                                            <Text style={{fontSize: 15, textAlign: 'center'}}>Cancel</Text>
+                                        </Pressable>
+                                        <Pressable style={styles.del_modaL_match} onPress={() => match(customer.order_id)}>
+                                            <Text style={{fontSize: 15, textAlign: 'center'}}>Match!</Text>
+                                        </Pressable>
+                                    </View>
+                                </View>
+                            </View>
+                        </Modal>              
                     </View>
                     <Button title="Cancel" onPress={() => this.props.navigation.navigate('Home')}></Button>
     
