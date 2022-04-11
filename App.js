@@ -20,6 +20,8 @@ import { Login } from "./components/login";
 import { Landing } from "./components/landing";
 import { Logo } from './components/image.js';
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 const AppNavigator = createStackNavigator(
   {
@@ -51,6 +53,10 @@ const AppNavigator = createStackNavigator(
 const AppContainer = createAppContainer(AppNavigator);
 export default class App extends Component {
   render() {
-    return <AppContainer />;
+    return (
+      <Provider store={store}>
+        <AppContainer/>
+      </Provider>
+    );
   }
 }
