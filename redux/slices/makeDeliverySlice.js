@@ -34,4 +34,4 @@ export const selectSetDestination = (state) => state.makeDeliverySlice.destinati
 export const selectSetUnmatchedCustomers = (state) => state.makeDeliverySlice.unmatchedCustomers
 export const selectSetSelectedCustomer = (state) => state.makeDeliverySlice.selectedCustomer
 export const { setStartingPoint, setDestination, setUnmatchedCustomers, setSelectedCustomer } = makeDeliverySlice.actions
-export default userSlice.reducer
+export default makeDeliverySlice.reducer
