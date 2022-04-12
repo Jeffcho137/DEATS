@@ -44,13 +44,13 @@ export function Landing (props) {
         console.log(data);
         if (data.succeeded == true) {
             console.log("before");
-            setId(data.id)
-            setName(data.name)
-            setNumber(data.phone_num)
+            // setId(data.id)
+            // setName(data.name)
+            // setNumber(data.phone_num)
             props.navigation.navigate('Home', {
-                id: id,
-                name: name,
-                number: number,
+                id: data.id,
+                name: data.name,
+                number: data.phone_num,
                 email: email, 
                 password: password,
             });
