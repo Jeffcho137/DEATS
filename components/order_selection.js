@@ -90,6 +90,7 @@ export function Order_selection (props) {
 
     const loc_chosen = props.navigation.state.params.chosen;
     const address = props.navigation.state.params.address;
+    console.log("ADDRESS", address)
     if (!loc_chosen) {
         return (
             <View style={styles.container}>
