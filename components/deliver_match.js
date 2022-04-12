@@ -3,21 +3,34 @@ import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button, TextInput } from 'react-native';
 import styles from '../style';
 
-export class Deliver_match extends Component {
-    render() {
-        return (
-            <View style={styles.container}>
-                <View style={styles.order_sel}>
-                    <Text style={styles.searching_text}>Deliver to LSC from HOP</Text>
+export function Deliver_match (props) {
+    return (
+        <View style={styles.container}>
+            <View style={styles.order_sel}>
+                <Text style={styles.searching_text}>Deliver to LSC from HOP</Text>
+            </View>
+            <Button title="Confirm" onPress={() => props.navigation.navigate('DeliverStatus')}></Button>
+            <StatusBar style="auto" />
+        </View>
+    )
+}
+
+
+// export class Deliver_matchC extends Component {
+//     render() {
+//         return (
+//             <View style={styles.container}>
+//                 <View style={styles.order_sel}>
+//                     <Text style={styles.searching_text}>Deliver to LSC from HOP</Text>
                     
-                </View>
+//                 </View>
                 
                 
-                <Button title="Confirm" onPress={() => this.props.navigation.navigate('DeliverStatus')}></Button>
+//                 <Button title="Confirm" onPress={() => this.props.navigation.navigate('DeliverStatus')}></Button>
 
             
-                <StatusBar style="auto" />
-            </View>
-        )
-    }
-}
+//                 <StatusBar style="auto" />
+//             </View>
+//         )
+//     }
+// }
