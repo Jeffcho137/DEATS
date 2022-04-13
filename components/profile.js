@@ -2,6 +2,7 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button } from 'react-native';
 import styles from '../style';
+import ImageUpload from './image_upload';
 
 export function Profile (props) {
     const id = props.navigation.state.params.id
@@ -11,6 +12,7 @@ export function Profile (props) {
      
     return (
         <View style={styles.container}>
+            <ImageUpload/>
             <View style={styles.profile_heading}>
                 <View>
                     <Text style={styles.profile_name}>{name}</Text>
