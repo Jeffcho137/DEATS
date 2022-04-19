@@ -154,7 +154,7 @@ const Del_map = (props) => {
         }}
       />
       <MapView
-        style={styles.map}
+        style={styles.del_map}
         provider={PROVIDER_GOOGLE}
         initialRegion={{
           latitude: 43.704483237221815,
