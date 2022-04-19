@@ -141,6 +141,8 @@ const Map_test = (props) => {
           stopPropagation={true}
           onPress={(e) => {
             setCalloutMounted(true)
+            setBtnColor("blue");
+            setPinColor("red")
             console.log("Marker pressed", e.nativeEvent.coordinate)}}
         >
           <Callout>
