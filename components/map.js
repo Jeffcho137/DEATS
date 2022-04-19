@@ -18,7 +18,7 @@ import { region } from "caniuse-lite";
 const API_KEY = 'AIzaSyCCkDRzY3UvSoaZa1anF9ov43ztpe6GSFk';
 let location = '';
 
-const get_location = (lat, long) => {
+const get_location = (lat, long, setPinDragged) => {
   // let address;
   fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + long + '&key=' + API_KEY)
   .then((response) => response.json())
@@ -29,6 +29,7 @@ const get_location = (lat, long) => {
       location = location_obj.results[0].formatted_address
       console.log("Fetch", lat, long)
       console.log("Fetch:", location)
+      setPinDragged(false)
       
 })
 }
@@ -44,6 +45,7 @@ const Map_test = (props) => {
 
   let markerRef = useRef(null);
   const [calloutMounted, setCalloutMounted] = useState(false);
+  const [pinDragged, setPinDragged] = useState(false);
   const [pinColor, setPinColor] = useState("red");
   const [btnColor, setBtnColor] = useState("blue");
 
@@ -53,8 +55,8 @@ const Map_test = (props) => {
   });
 
   useEffect(() => {
-    get_location(region.latitude, region.longitude);
-  }, [region]);
+    get_location(region.latitude, region.longitude, setPinDragged);
+  }, [pinDragged]);
 
   return (
     <View styles={{ marginTop: 50, flex: 1 }}>
@@ -134,6 +136,7 @@ const Map_test = (props) => {
               latitudeDelta: 0.01,
               longitudeDelta: 0.01,
             });
+            setPinDragged(true);
           }}
           stopPropagation={true}
           onPress={(e) => {
