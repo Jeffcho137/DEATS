@@ -39,16 +39,19 @@ const get_fin_location = (lat, long, setFinPinDragged) => {
 
 // export class Map_test extends Component {
 const Del_map = (props) => {
-  let markerRef = useRef(null);
-  const [calloutMounted, setCalloutMounted] = useState(false);
+  let startMarkerRef = useRef(null);
+  let finMarkerRef = useRef(null);
+  const [startCalloutMounted, setStartCalloutMounted] = useState(false);
+  const [finCalloutMounted, setFinCalloutMounted] = useState(false);
   const [startPinDragged, setStartPinDragged] = useState(false);
   const [startPinSelected, setStartPinSelected] = useState(false);
   const [finPinDragged, setFinPinDragged] = useState(false);
   const [finPinSelected, setFinPinSelected] = useState(false);
 
   useEffect(() => {
-    console.log("callMounted:", calloutMounted);
-    markerRef.current && calloutMounted && markerRef.current.redrawCallout();
+    console.log("callMounted:", "start->", startCalloutMounted, "fin->", finCalloutMounted);
+    startMarkerRef.current && startCalloutMounted && startMarkerRef.current.redrawCallout();
+    finMarkerRef.current && finCalloutMounted && finMarkerRef.current.redrawCallout();
   });
 
   useEffect(() => {
@@ -150,6 +153,8 @@ const Del_map = (props) => {
         style={styles.del_map}
         provider={PROVIDER_GOOGLE}
         onPress={(e) => {
+          setStartCalloutMounted(false);
+          setFinCalloutMounted(false);
           setStartPinSelected(false);
           setFinPinSelected(false)}}
         initialRegion={{
@@ -160,6 +165,7 @@ const Del_map = (props) => {
         }}
       >
         <Marker
+          ref={startMarkerRef}
           pinColor={startPinSelected ? "blue" : "red"}
           coordinate={{
             latitude: startRegion.latitude,
@@ -171,6 +177,7 @@ const Del_map = (props) => {
             console.log("Drag start", e.nativeEvent.coordinate);
           }}
           onPress={(e) => {
+            setStartCalloutMounted(true);
             setStartPinSelected(false);
             console.log(e.nativeEvent.coordinate)}}
           onDragEnd={(e) => {
@@ -181,6 +188,7 @@ const Del_map = (props) => {
             });
             setStartPinDragged(true);
           }}
+          stopPropagation={true}
         >
           <Callout>
             <Text>This is my current location: </Text>
@@ -190,6 +198,7 @@ const Del_map = (props) => {
           </Callout>
         </Marker>
         <Marker
+          ref={finMarkerRef}
           pinColor={finPinSelected ? "blue" : "red"}
           coordinate={{
             latitude: finRegion.latitude,
@@ -201,6 +210,7 @@ const Del_map = (props) => {
             console.log("Drag start", e.nativeEvent.coordinate);
           }}
           onPress={(e) => {
+            setFinCalloutMounted(true);
             setFinPinSelected(false)
             console.log(e.nativeEvent.coordinate)}}
           onDragEnd={(e) => {
@@ -211,6 +221,7 @@ const Del_map = (props) => {
             });
             setFinPinDragged(true);
           }}
+          stopPropagation={true}
         >
           <Callout>
             <Text>This is my final destination after drop-off:</Text>
