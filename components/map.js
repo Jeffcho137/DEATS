@@ -33,8 +33,6 @@ const get_location = (lat, long) => {
 })
 }
 
-
-
 // export class Map_test extends Component {
 const Map_test = (props) => {
   const [region, setRegion] = React.useState({
@@ -46,6 +44,8 @@ const Map_test = (props) => {
 
   let markerRef = useRef(null);
   const [calloutMounted, setCalloutMounted] = useState(false);
+  const [pinColor, setPinColor] = useState("red");
+  const [btnColor, setBtnColor] = useState("blue");
 
   useEffect(() => {
     console.log("callMounted:", calloutMounted);
@@ -99,6 +99,8 @@ const Map_test = (props) => {
       <MapView
         style={styles.map}
         onPress={(e) => {{
+          setPinColor("red");
+          setBtnColor("blue");
           setCalloutMounted(false)}}}
         provider={PROVIDER_GOOGLE}
         initialRegion={{
@@ -113,6 +115,7 @@ const Map_test = (props) => {
           ref={markerRef}
           //tracksViewChanges={true}
           //tracksInfoWindowChanges={true}
+          pinColor={pinColor}
           coordinate={{
             latitude: region.latitude,
             longitude: region.longitude,
@@ -120,11 +123,9 @@ const Map_test = (props) => {
           draggable={true}
           onDragStart={(e) => {
             console.log("Drag start", e.nativeEvent.coordinate);
+            setPinColor("blue");
+            setBtnColor("gray");
           }}
-          stopPropagation={true}
-          onPress={(e) => {
-            setCalloutMounted(true)
-            console.log("Marker pressed", e.nativeEvent.coordinate)}}
           onDragEnd={(e) => {
             console.log("Drag end", e.nativeEvent.coordinate);
             setRegion({
@@ -134,6 +135,10 @@ const Map_test = (props) => {
               longitudeDelta: 0.01,
             });
           }}
+          stopPropagation={true}
+          onPress={(e) => {
+            setCalloutMounted(true)
+            console.log("Marker pressed", e.nativeEvent.coordinate)}}
         >
           <Callout>
             <Text>This is my location: </Text>
@@ -146,6 +151,7 @@ const Map_test = (props) => {
 
       <Button
         title="Confirm"
+        color={btnColor}
         onPress={() => 
           {console.log("button location", location)
           console.log("lattitude", region.latitude)
