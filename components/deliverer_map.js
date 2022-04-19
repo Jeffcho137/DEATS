@@ -19,28 +19,27 @@ const API_KEY = 'AIzaSyCCkDRzY3UvSoaZa1anF9ov43ztpe6GSFk';
 let start_location = '';
 let fin_location = '';
 
-const get_start_location = (lat, long) => {
+const get_start_location = (lat, long, setStartPinDragged) => {
   // let address;
   fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + long + '&key=' + API_KEY)
   .then((response) => response.json())
   .then((responseJson) => {
-      //console.log('Location: ' + JSON.stringify(responseJson));
       const location_obj = JSON.parse(JSON.stringify(responseJson))
-      // const address = location_obj.results[0].formatted_address
       start_location = location_obj.results[0].formatted_address
+      console.log('get start', start_location)
+      setStartPinDragged(false);
 })
 }
 
-const get_fin_location = (lat, long) => {
+const get_fin_location = (lat, long, setFinPinDragged) => {
     // let address;
     fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + long + '&key=' + API_KEY)
     .then((response) => response.json())
     .then((responseJson) => {
-        //console.log('Location: ' + JSON.stringify(responseJson));
         const location_obj = JSON.parse(JSON.stringify(responseJson))
-        // const address = location_obj.results[0].formatted_address
         fin_location = location_obj.results[0].formatted_address
         console.log('get fin', fin_location)
+        setFinPinDragged(false);
   })
   }
 
@@ -48,9 +47,9 @@ const get_fin_location = (lat, long) => {
 const Del_map = (props) => {
   let markerRef = useRef(null);
   const [calloutMounted, setCalloutMounted] = useState(false);
-  const [startPinDragged, setFinPinDragged] = useState(false);
+  const [startPinDragged, setStartPinDragged] = useState(false);
   const [startPinSelected, setStartPinSelected] = useState(false);
-  const [finPinDragged, setStartPinDragged] = useState(false);
+  const [finPinDragged, setFinPinDragged] = useState(false);
   const [finPinSelected, setFinPinSelected] = useState(false);
 
   useEffect(() => {
@@ -59,21 +58,21 @@ const Del_map = (props) => {
   });
 
   useEffect(() => {
-    get_start_location(startRegion.latitude, startRegion.longitude);
+    get_start_location(startRegion.latitude, startRegion.longitude, setStartPinDragged);
   }, [startPinDragged]);
 
   useEffect(() => {
-    get_fin_location(finRegion.latitude, finRegion.longitude);
+    get_fin_location(finRegion.latitude, finRegion.longitude, setFinPinDragged);
   }, [finPinDragged]);
 
-  const [startRegion, setStartRegion] = React.useState({
+  const [startRegion, setStartRegion] = useState({
     latitude: 43.704483237221815,
     longitude: -72.28869350196095,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   });
 
-  const [finRegion, setFinRegion] = React.useState({
+  const [finRegion, setFinRegion] = useState({
     latitude: 43.704483237221815,
     longitude: -72.28869350196095,
     latitudeDelta: 0.01,
@@ -179,6 +178,7 @@ const Del_map = (props) => {
               latitude: e.nativeEvent.coordinate.latitude,
               longitude: e.nativeEvent.coordinate.longitude,
             });
+            setStartPinDragged(true);
           }}
         >
           <Callout>
@@ -204,6 +204,7 @@ const Del_map = (props) => {
               latitude: e.nativeEvent.coordinate.latitude,
               longitude: e.nativeEvent.coordinate.longitude,
             });
+            setFinPinDragged(true);
           }}
         >
           <Callout>
