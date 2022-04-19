@@ -36,7 +36,7 @@ const get_location = (lat, long, setPinDragged) => {
 
 // export class Map_test extends Component {
 const Map_test = (props) => {
-  const [region, setRegion] = React.useState({
+  const [region, setRegion] = useState({
     latitude: 43.704483237221815,
     longitude: -72.28869350196095,
     latitudeDelta: 0.01,
@@ -46,8 +46,7 @@ const Map_test = (props) => {
   let markerRef = useRef(null);
   const [calloutMounted, setCalloutMounted] = useState(false);
   const [pinDragged, setPinDragged] = useState(false);
-  const [pinColor, setPinColor] = useState("red");
-  const [btnColor, setBtnColor] = useState("blue");
+  const [pinSelected, setPinSelected] = useState(false);
 
   useEffect(() => {
     console.log("callMounted:", calloutMounted);
@@ -101,23 +100,17 @@ const Map_test = (props) => {
       <MapView
         style={styles.map}
         onPress={(e) => {{
-          setPinColor("red");
-          setBtnColor("blue");
+          setPinSelected(false);
           setCalloutMounted(false)}}}
         provider={PROVIDER_GOOGLE}
-        initialRegion={{
-          latitude: 43.704483237221815,
-          longitude: -72.28869350196095,
-          latitudeDelta: 0.01,
-          longitudeDelta: 0.01,
-        }}
+        initialRegion={region}
         region={region}
       >
         <Marker
           ref={markerRef}
           //tracksViewChanges={true}
           //tracksInfoWindowChanges={true}
-          pinColor={pinColor}
+          pinColor={pinSelected ? "blue" : "red"}
           coordinate={{
             latitude: region.latitude,
             longitude: region.longitude,
@@ -125,8 +118,7 @@ const Map_test = (props) => {
           draggable={true}
           onDragStart={(e) => {
             console.log("Drag start", e.nativeEvent.coordinate);
-            setPinColor("blue");
-            setBtnColor("gray");
+            setPinSelected(true);
           }}
           onDragEnd={(e) => {
             console.log("Drag end", e.nativeEvent.coordinate);
@@ -141,8 +133,7 @@ const Map_test = (props) => {
           stopPropagation={true}
           onPress={(e) => {
             setCalloutMounted(true)
-            setBtnColor("blue");
-            setPinColor("red")
+            setPinSelected(false);
             console.log("Marker pressed", e.nativeEvent.coordinate)}}
         >
           <Callout>
@@ -156,7 +147,7 @@ const Map_test = (props) => {
 
       <Button
         title="Confirm"
-        color={btnColor}
+        color={pinSelected ? "gray" : "blue"}
         onPress={() => 
           {console.log("button location", location)
           console.log("lattitude", region.latitude)
