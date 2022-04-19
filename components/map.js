@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useRef, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Text, View, Button, TextInput, Dimensions } from "react-native";
 import styles from "../style";
@@ -34,17 +34,19 @@ const get_location = (lat, long) => {
 
 // export class Map_test extends Component {
 const Map_test = (props) => {
-  //render() {
-  const [pin, setPin] = React.useState({
-    latitude: 43.704483237221815,
-    longitude: -72.28869350196095,
-  });
-
   const [region, setRegion] = React.useState({
     latitude: 43.704483237221815,
     longitude: -72.28869350196095,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
+  });
+
+  let markerRef = useRef(null);
+  const [calloutMounted, setCalloutMounted] = useState(false);
+
+  useEffect(() => {
+    console.log("callMounted:", calloutMounted);
+    markerRef.current && calloutMounted && markerRef.current.redrawCallout();
   });
 
   return (
@@ -76,7 +78,6 @@ const Map_test = (props) => {
           components: "country:us",
           radius: 300,
           location: `${region.latitude}, ${region.longitude}`,
-          // types: establishment,
         }}
         styles={{
           container: {
@@ -90,6 +91,8 @@ const Map_test = (props) => {
       />
       <MapView
         style={styles.map}
+        onPress={(e) => {{
+          setCalloutMounted(false)}}}
         provider={PROVIDER_GOOGLE}
         initialRegion={{
           latitude: 43.704483237221815,
@@ -99,14 +102,10 @@ const Map_test = (props) => {
         }}
         region={region}
       >
-        {/* <Marker
-          coordinate={{
-            latitude: region.latitude,
-            longitude: region.longitude,
-          }}
-        /> */}
         <Marker
-          coordinate={pin}
+          ref={markerRef}
+          //tracksViewChanges={true}
+          //tracksInfoWindowChanges={true}
           coordinate={{
             latitude: region.latitude,
             longitude: region.longitude,
@@ -115,15 +114,20 @@ const Map_test = (props) => {
           onDragStart={(e) => {
             console.log("Drag start", e.nativeEvent.coordinate);
           }}
-          onPress={(e) => console.log(e.nativeEvent.coordinate)}
+          stopPropagation={true}
+          onPress={(e) => {
+            setCalloutMounted(true)
+            console.log("Marker pressed", e.nativeEvent.coordinate)}}
           onDragEnd={(e) => {
             console.log("Drag end", e.nativeEvent.coordinate);
-            setPin({
+            setRegion({
               latitude: e.nativeEvent.coordinate.latitude,
               longitude: e.nativeEvent.coordinate.longitude,
+              latitudeDelta: 0.01,
+              longitudeDelta: 0.01,
             });
 
-            get_location(pin.latitude, pin.longitude);
+            get_location(region.latitude, region.longitude);
           }}
         >
           <Callout>
@@ -133,26 +137,22 @@ const Map_test = (props) => {
             </Text>
           </Callout>
         </Marker>
-        {/* <Circle center={pin} radius={100} /> */}
       </MapView>
 
       <Button
-        // styles={{ flex: 1 }}
         title="Confirm"
-        onPress={() => props.navigation.navigate("OrderSelection",{
+        onPress={() => 
+          {console.log("button location", location)
+          console.log("lattitude", region.latitude)
+          console.log("longitude", region.longitude)
+          props.navigation.navigate("OrderSelection",{
           chosen: true,
-          lat: pin.latitude,
-          long: pin.longitude,
+          lat: region.latitude,
+          long: region.longitude,
           address: location,
-        })}
+        })}}
       ></Button>
-      {/* <Button
-        title="Cancel"
-        onPress={() => this.props.navigation.navigate("Home")}
-      ></Button>
-      <StatusBar style="auto" /> */}
     </View>
   );
-  //}
 };
 export default Map_test;
