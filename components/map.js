@@ -27,6 +27,9 @@ const get_location = (lat, long) => {
       const location_obj = JSON.parse(JSON.stringify(responseJson))
       // const address = location_obj.results[0].formatted_address
       location = location_obj.results[0].formatted_address
+      console.log("Fetch", lat, long)
+      console.log("Fetch:", location)
+      
 })
 }
 
@@ -48,6 +51,10 @@ const Map_test = (props) => {
     console.log("callMounted:", calloutMounted);
     markerRef.current && calloutMounted && markerRef.current.redrawCallout();
   });
+
+  useEffect(() => {
+    get_location(region.latitude, region.longitude);
+  }, [region]);
 
   return (
     <View styles={{ marginTop: 50, flex: 1 }}>
@@ -126,8 +133,6 @@ const Map_test = (props) => {
               latitudeDelta: 0.01,
               longitudeDelta: 0.01,
             });
-
-            get_location(region.latitude, region.longitude);
           }}
         >
           <Callout>
