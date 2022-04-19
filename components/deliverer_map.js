@@ -1,19 +1,13 @@
-import React, { Component, useEffect, useRef, useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import { Text, View, Button, TextInput, Dimensions } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Text, View, Button} from "react-native";
 import styles from "../style";
 import MapView from "react-native-maps";
 import {
   PROVIDER_GOOGLE,
   Marker,
   Callout,
-  nativeEvent,
-  Circle,
 } from "react-native-maps";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import { createAppContainer } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
-import { region } from "caniuse-lite";
 
 const API_KEY = 'AIzaSyCCkDRzY3UvSoaZa1anF9ov43ztpe6GSFk';
 let start_location = '';
@@ -155,6 +149,9 @@ const Del_map = (props) => {
       <MapView
         style={styles.del_map}
         provider={PROVIDER_GOOGLE}
+        onPress={(e) => {
+          setStartPinSelected(false);
+          setFinPinSelected(false)}}
         initialRegion={{
           latitude: 43.704483237221815,
           longitude: -72.28869350196095,
@@ -163,15 +160,19 @@ const Del_map = (props) => {
         }}
       >
         <Marker
+          pinColor={startPinSelected ? "blue" : "red"}
           coordinate={{
             latitude: startRegion.latitude,
             longitude: startRegion.longitude,
           }}
           draggable={true}
           onDragStart={(e) => {
+            setStartPinSelected(true);
             console.log("Drag start", e.nativeEvent.coordinate);
           }}
-          onPress={(e) => console.log(e.nativeEvent.coordinate)}
+          onPress={(e) => {
+            setStartPinSelected(false);
+            console.log(e.nativeEvent.coordinate)}}
           onDragEnd={(e) => {
             console.log("Drag end", e.nativeEvent.coordinate);
             setStartRegion({
@@ -189,15 +190,19 @@ const Del_map = (props) => {
           </Callout>
         </Marker>
         <Marker
+          pinColor={finPinSelected ? "blue" : "red"}
           coordinate={{
             latitude: finRegion.latitude,
             longitude: finRegion.longitude,
           }}
           draggable={true}
           onDragStart={(e) => {
+            setFinPinSelected(true)
             console.log("Drag start", e.nativeEvent.coordinate);
           }}
-          onPress={(e) => console.log(e.nativeEvent.coordinate)}
+          onPress={(e) => {
+            setFinPinSelected(false)
+            console.log(e.nativeEvent.coordinate)}}
           onDragEnd={(e) => {
             console.log("Drag end", e.nativeEvent.coordinate);
             setFinRegion({
@@ -218,6 +223,7 @@ const Del_map = (props) => {
 
       <Button
         title="Confirm"
+        color={startPinSelected || finPinSelected? "gray" : "blue"}
         onPress={() => props.navigation.navigate("DeliverySelection",{
           chosen: true,
           start_lat: startRegion.latitude,
@@ -228,11 +234,6 @@ const Del_map = (props) => {
           address2: fin_location,
         })}
       ></Button>
-      {/* <Button
-        title="Cancel"
-        onPress={() => this.props.navigation.navigate("Home")}
-      ></Button>
-      <StatusBar style="auto" /> */}
     </View>
   );
   //}
