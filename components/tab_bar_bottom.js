@@ -3,6 +3,24 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { MaterialIcons } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
+const items= [
+    {
+        name:"account-circle",
+        text:"Pofile",
+        navigateTo: "Profile"
+    },
+    {
+        name:"delivery-dining",
+        text:"Deliveries",
+        navigateTo: "Deliveries"
+    },
+    {
+        name:"receipt-long",
+        text:"Orders",
+        navigateTo: "Deliveries"
+    }
+]
+
 export default function TabBarBottom({navigation}) {
     return (
         <View style={{ 
@@ -12,36 +30,40 @@ export default function TabBarBottom({navigation}) {
                 backgroundColor: "white",
                 zIndex: 1,
              }}>
-            <TabMaterialCommunityIcons name="account-circle" text="Pofile" navigation={navigation}/>     
-            <TabMaterialIcons name="delivery-dining" text="Deliveries" navigation={navigation}/>
-            <TabMaterialIcons name="receipt-long" text="Orders" navigation={navigation}/>
+            <TabMaterialCommunityIcons index={0} navigation={navigation}/>     
+            <TabMaterialIcons index={1} navigation={navigation}/>
+            <TabMaterialIcons index={2} navigation={navigation}/>
         </View>
     )
 }
 
-const TabMaterialCommunityIcons = (props) => (
+const TabMaterialCommunityIcons = ({index, navigation}) => (
     <TouchableOpacity style={{
         padding: 25,
         alignItems: "center",
-    }}>
-        < MaterialCommunityIcons name={props.name} size={32} style={{ 
+        }}
+        onPress={() => navigation.navigate(items[index].navigateTo)}
+    >
+        < MaterialCommunityIcons name={items[index].name} size={32} style={{ 
             color: "green",
             marginBottom: 2, 
           
         }}/>
         <Text style={{ fontSize: 15 }}
-        >{props.text}</Text>
+        >{items[index].text}</Text>
     </TouchableOpacity>
 )
 
-const TabMaterialIcons = (props) => (
+const TabMaterialIcons = ({index, navigation}) => (
     <TouchableOpacity style={{
         padding: 25,
-        alignItems: "center"}}>
-        < MaterialIcons name={props.name} size={32} style={{ 
+        alignItems: "center"}}
+        onPress={() => navigation.navigate(items[index].navigateTo)}
+    >
+        < MaterialIcons name={items[index].name} size={32} style={{ 
             color: "green",
             marginBottom: 2, 
         }}/>
-        <Text>{props.text}</Text>
+        <Text>{items[index].text}</Text>
     </TouchableOpacity>  
 )
