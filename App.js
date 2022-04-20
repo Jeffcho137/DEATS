@@ -23,6 +23,7 @@ import { Logo } from './components/image.js';
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
+import Deliveries from "./deliveries";
 
 const AppNavigator = createStackNavigator(
   {
@@ -36,6 +37,7 @@ const AppNavigator = createStackNavigator(
     OrderSearch: { screen: Order_search },
     DeliverSearch: { screen: Deliver_search },
     DeliverMatch: { screen: Deliver_match },
+    Deliveries: { screen: Deliveries },
     OrderMatch: { screen: Order_match },
     OrderCode: { screen: Order_code },
     OrderStatus: { screen: Order_status },
