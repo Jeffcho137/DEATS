@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, Image, FlatList, TouchableOpacity} from "react-native";
 
-const orders = [
+const static_orders = [
     {
         id: "622273fd505bad64f71fc5a7",
         deliverer_name: "John Doe",
@@ -40,34 +40,67 @@ const orders = [
     }
 ]
 
-export default function Orders() {
+const retrieveOrders = (id, setUserOrders) => {
+    fetch('https://deats-backend-test.herokuapp.com/orders/',
+    {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            id: id,
+        })
+    })
+    .then(response => response.json())
+    .then((data) => {
+        console.log("data", data);
+        console.log("orders", data.orders);
+        setUserOrders(data.orders);
+    })
+    .catch((error) => console.log(error));
+  }
+
+export default function Orders({navigation}) {
+    const [user_orders, setUserOrders] = useState([]);
+    useEffect(() =>  { retrieveOrders(navigation.state.params.id, setUserOrders) });
+    
     return (
-        <FlatList
-            data={orders}
-            keyExtractor={(item) => item.id}
-            vertical
-            renderItem={({ item }) => (
-                <TouchableOpacity>
-                    <View style={{
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        padding: 45
-                    
-                    }}>
-                        <Image 
-                            style={{ width: "50%", height: "100%", borderRadius: 25, marginRight: 15}}
-                            source={{ uri: item.deliverer_img_url }} />
-                        <OrderDetail 
-                            pickUpLocation={item.pickup_loc_name}
-                            dropLocation={item.drop_loc_name}
-                            orderStatus={item.order_status} 
-                            delvererName={item.deliverer_name} 
-                            />
-                    </View>
-                </TouchableOpacity>
-            )}
-      />)
-    }
+        <>
+        {console.log("user_orders", user_orders.length, user_orders)}
+        {user_orders.length > 2 ? // debug why length of the empty list is non-zero later
+            (<FlatList
+                data={user_orders}
+                keyExtractor={(item) => item.id}
+                vertical
+                renderItem={({ item }) => (
+                    <TouchableOpacity>
+                        <View style={{
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            padding: 45
+                        
+                        }}>
+                            <Image 
+                                style={{ width: "50%", height: "100%", borderRadius: 25, marginRight: 15}}
+                                source={{ uri: item.deliverer_img_url }} />
+                            <OrderDetail 
+                                pickUpLocation={item.pickup_loc_name}
+                                dropLocation={item.drop_loc_name}
+                                orderStatus={item.order_status} 
+                                delvererName={item.deliverer_name} 
+                                />
+                        </View>
+                    </TouchableOpacity>
+                )}
+            />) : 
+            <Text style={{
+                fontSize: 20,
+                fontWeight: "bold"
+            }} >No orders</Text>}
+       </>
+    )
+}
     
 const OrderDetail = ({pickUpLocation, dropLocation, orderStatus, delvererName }) => (
     <View style={{ width: "50%", marginLeft: 15}}>

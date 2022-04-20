@@ -21,7 +21,7 @@ const items= [
     }
 ]
 
-export default function TabBarBottom(props) {
+export default function TabBarBottom({navigation, id, name, number, email, password}) {
     return (
         <View style={{ 
                 flexDirection: "row",
@@ -31,41 +31,42 @@ export default function TabBarBottom(props) {
                 zIndex: 1,
              }}>
             <TabMaterialCommunityIcons index={0} 
-                navigation={props.navigation}
-                id={props.navigation.state.params.id}
-                name={props.navigation.state.params.name}
-                number={props.navigation.state.params.number}
-                email={props.navigation.state.params.email} 
-                password={props.navigation.state.params.password}/>     
+                navigation={navigation}
+                id={id}
+                name={name}
+                number={number}
+                email={email}
+                password={password}
+                />     
             <TabMaterialIcons index={1} 
-                navigation={props.navigation}
-                id={props.navigation.state.params.id}
-                name={props.navigation.state.params.name}
-                number={props.navigation.state.params.number}
-                email={props.navigation.state.params.email} 
-                password={props.navigation.state.params.password}/>
+                navigation={navigation}
+                id={id}
+                name={name}
+                number={number}
+                email={email}
+                password={password}/>
             <TabMaterialIcons index={2} 
-                navigation={props.navigation}
-                id={props.navigation.state.params.id}
-                name={props.navigation.state.params.name}
-                number={props.navigation.state.params.number}
-                email={props.navigation.state.params.email} 
-                password={props.navigation.state.params.password}/>
+                navigation={navigation}
+                id={id}
+                name={name}
+                number={number}
+                email={email}
+                password={password}/>
         </View>
     )
 }
 
-const TabMaterialCommunityIcons = ({index, navigation, ...props}) => (
+const TabMaterialCommunityIcons = ({index, navigation, id, name, number, email, password}) => (
     <TouchableOpacity style={{
         padding: 25,
         alignItems: "center",
         }}
         onPress={() => navigation.navigate(items[index].navigateTo, 
-            {id: navigation.state.params.id,
-            name: navigation.state.params.name,
-            number: navigation.state.params.number,
-            email: navigation.state.params.email, 
-            password: navigation.state.params.password})}
+            {id: id,
+            name: name,
+            number: number,
+            email: email, 
+            password: password})}
     >
         < MaterialCommunityIcons name={items[index].name} size={32} style={{ 
             color: "green",
@@ -77,11 +78,16 @@ const TabMaterialCommunityIcons = ({index, navigation, ...props}) => (
     </TouchableOpacity>
 )
 
-const TabMaterialIcons = ({index, navigation, ...props}) => (
+const TabMaterialIcons = ({index, navigation, id, name, number, email, password}) => (
     <TouchableOpacity style={{
         padding: 25,
         alignItems: "center"}}
-        onPress={() => navigation.navigate(items[index].navigateTo, )}
+        onPress={() => navigation.navigate(items[index].navigateTo, 
+            {id: id,
+            name: name,
+            number: number,
+            email: email, 
+            password: password})}
     >
         < MaterialIcons name={items[index].name} size={32} style={{ 
             color: "green",
