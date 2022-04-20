@@ -54,6 +54,7 @@ const retrieveOrders = (id, setUserOrders) => {
     })
     .then(response => response.json())
     .then((data) => {
+        console.log("id", id);
         console.log("data", data);
         console.log("orders", data.orders);
         setUserOrders(data.orders);
