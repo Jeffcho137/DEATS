@@ -20,10 +20,9 @@ import Del_map from "./components/deliverer_map";
 import { Login } from "./components/login";
 import { Landing } from "./components/landing";
 import { Logo } from './components/image.js';
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from "react-native";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
-import Deliveries from "./deliveries";
+import Deliveries from "./components/deliveries";
 
 const AppNavigator = createStackNavigator(
   {
