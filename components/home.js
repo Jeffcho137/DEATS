@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, Button } from 'react-native';
+import { View, Button } from 'react-native';
 import styles from '../style';
 import  Logo  from './image_small.js';
+import TabBarBottom from './tab_bar_bottom';
 
 export function Home (props) {
     const setUserTypeOrder = () => {
@@ -77,6 +78,7 @@ export function Home (props) {
                 </View>
             </View>
             <StatusBar style="auto" />
+            <TabBarBottom/>
         </View>
     )
 }

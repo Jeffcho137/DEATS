@@ -90,7 +90,7 @@ export function Landing (props) {
                   <Button color="#006400" style={styles.create_acc_button} title='Sign-up' onPress={() => props.navigation.navigate('Signup')}></Button>
               </View>
           </View>
-            <StatusBar style="auto" />
+          <StatusBar style="auto" />
       </View>
   )
 }
