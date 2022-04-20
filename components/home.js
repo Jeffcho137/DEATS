@@ -78,7 +78,13 @@ export function Home (props) {
                 </View>
             </View>
             <StatusBar style="auto" />
-            <TabBarBottom/>
+            <TabBarBottom 
+                navigation={props.navigation}
+                id={props.navigation.state.params.id}
+                name={props.navigation.state.params.name}
+                number={props.navigation.state.params.number}
+                email={props.navigation.state.params.email} 
+                password={props.navigation.state.params.password}/>
         </View>
     )
 }
