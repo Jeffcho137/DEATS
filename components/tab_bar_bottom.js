@@ -5,19 +5,19 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const items= [
     {
-        name:"account-circle",
-        text:"Pofile",
+        name: "account-circle",
+        text: "Pofile",
         navigateTo: "Profile"
     },
     {
-        name:"delivery-dining",
-        text:"Deliveries",
+        name: "delivery-dining",
+        text: "Deliveries",
         navigateTo: "Deliveries"
     },
     {
-        name:"receipt-long",
-        text:"Orders",
-        navigateTo: "Deliveries"
+        name: "receipt-long",
+        text: "Orders",
+        navigateTo: "Orders"
     }
 ]
 

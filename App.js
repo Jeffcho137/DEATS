@@ -10,6 +10,7 @@ import { Deliver_search } from "./components/deliver_search";
 import { Deliver_match } from "./components/deliver_match";
 import { Order_match } from "./components/order_match";
 import { Order_code } from "./components/order_code";
+import Orders from "./components/orders";
 import { Order_status } from "./components/order_status";
 import { Deliver_status } from "./components/deliver_status";
 import { Completed } from "./components/completed";
@@ -38,6 +39,7 @@ const AppNavigator = createStackNavigator(
     OrderMatch: { screen: Order_match },
     OrderCode: { screen: Order_code },
     OrderStatus: { screen: Order_status },
+    Orders: { screen: Orders },
     DeliverStatus: { screen: Deliver_status },
     Completed: { screen: Completed },
     
