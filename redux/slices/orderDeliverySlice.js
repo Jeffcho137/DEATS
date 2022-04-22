@@ -24,8 +24,8 @@ export const orderDeliverySlice = createSlice({
     }
 })
 
-export const selectSetPickupLocation = (state) => state.orderDeliverySlice.pickupLocation
-export const selectSetDropLocation = (state) => state.orderDeliverySlice.destination
-export const selectSetOrderId = (state) => state.orderDeliverySlice.orderId
+export const selectPickupLocation = (state) => state.orderDeliverySlice.pickupLocation
+export const selectDropLocation = (state) => state.orderDeliverySlice.destination
+export const selectOrderId = (state) => state.orderDeliverySlice.orderId
 export const { setPickupLocation, setDropLocation, setOrderId } = orderDeliverySlice.actions
 export default orderDeliverySlice.reducer

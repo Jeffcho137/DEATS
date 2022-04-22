@@ -29,9 +29,9 @@ export const makeDeliverySlice = createSlice({
     }
 })
 
-export const selectSetStartingPoint = (state) => state.makeDeliverySlice.startingPoint
-export const selectSetDestination = (state) => state.makeDeliverySlice.destination
-export const selectSetUnmatchedCustomers = (state) => state.makeDeliverySlice.unmatchedCustomers
-export const selectSetSelectedCustomer = (state) => state.makeDeliverySlice.selectedCustomer
+export const selectStartingPoint = (state) => state.makeDeliverySlice.startingPoint
+export const selectDestination = (state) => state.makeDeliverySlice.destination
+export const selectUnmatchedCustomers = (state) => state.makeDeliverySlice.unmatchedCustomers
+export const selectSelectedCustomer = (state) => state.makeDeliverySlice.selectedCustomer
 export const { setStartingPoint, setDestination, setUnmatchedCustomers, setSelectedCustomer } = makeDeliverySlice.actions
 export default makeDeliverySlice.reducer
