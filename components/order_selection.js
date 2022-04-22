@@ -33,43 +33,43 @@ export function Order_selection ({ navigation }) {
         }))
     }
 
-    const sendOrdererInfo = () => {    
-        fetch('https://deats-backend-test.herokuapp.com/order_del/',
-        {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                id: id,
-                drop_loc: {
-                    x: dropLocation.lat,
-                    y: dropLocation.long
+    const sendOrdererInfo = () => {  
+        if (room == '' || !pickupLocation) {
+            console.log("fill everything out u fucker")
+        } else {  
+            fetch('https://deats-backend-test.herokuapp.com/order_del/',
+            {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
                 },
-                pickup_loc: {
-                    x: pickupLocation.lat,
-                    y: pickupLocation.long
-                },
-                pickup_loc_name: pickupLocation.name,
-                drop_loc_name: dropLocation.address,
+                body: JSON.stringify({
+                    id: id,
+                    drop_loc: {
+                        x: dropLocation.lat,
+                        y: dropLocation.long
+                    },
+                    pickup_loc: {
+                        x: pickupLocation.lat,
+                        y: pickupLocation.long
+                    },
+                    pickup_loc_name: pickupLocation.name,
+                    drop_loc_name: dropLocation.address,
+                })
             })
-        })
-        .then(response => response.json())
-        .then((data) => {
-            console.log(data)
-            if (data.succeeded == true) {
-                if (room == '' || foodPlace == '' ) {
-                    console.log("fill everything out u fucker")
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data)
+                if (data.succeeded == true) {
+                navigation.navigate('OrderSearch') 
                 } else {
-                    navigation.navigate('OrderSearch')
+                    console.log(data.msg);
                 }
-            } else {
-                console.log(data.msg);
-            }
-        })
-        .catch(err => console.error(err));
-    }
+            })
+            .catch(err => console.error(err));
+        }
+    }   
 
     const loc_chosen = navigation.state.params.chosen;
     console.log("Drop location", dropLocation)
