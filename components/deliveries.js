@@ -65,7 +65,7 @@ const retrieveDeliveries = (id, setUserDeliveries) => {
 export default function Deliveries({navigation}) {
     console.log("navigation", navigation);
     const [user_deliveries, setUserDeliveries] = useState(static_deliveries);
-    useEffect(() =>  { retrieveDeliveries(navigation.state.params.id, setUserDeliveries) });
+    useEffect(() =>  { retrieveDeliveries(navigation.state.params.id, setUserDeliveries) }, [])
     
     return (
         <>

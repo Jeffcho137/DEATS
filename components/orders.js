@@ -64,7 +64,7 @@ const retrieveOrders = (id, setUserOrders) => {
 
 export default function Orders({navigation}) {
     const [user_orders, setUserOrders] = useState([]);
-    useEffect(() =>  { retrieveOrders(navigation.state.params.id, setUserOrders), []});
+    useEffect(() =>  { retrieveOrders(navigation.state.params.id, setUserOrders) }, [])
     
     return (
         <>
