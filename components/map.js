@@ -1,31 +1,24 @@
-import React, { Component, useState, useRef, useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
-import { Text, View, Button, TextInput, Dimensions } from "react-native";
+import React, { useState, useRef, useEffect } from "react";
+import { Text, View, Button } from "react-native";
 import styles from "../style";
 import MapView from "react-native-maps";
 import {
   PROVIDER_GOOGLE,
   Marker,
   Callout,
-  nativeEvent,
-  Circle,
 } from "react-native-maps";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
-import { createAppContainer } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
-import { region } from "caniuse-lite";
+import { useDispatch } from "react-redux";
+import { setDestination } from "../redux/slices/makeDeliverySlice";
 
 const API_KEY = 'AIzaSyCCkDRzY3UvSoaZa1anF9ov43ztpe6GSFk';
 let location = '';
 
 const get_location = (lat, long, setPinDragged) => {
-  // let address;
   fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + long + '&key=' + API_KEY)
   .then((response) => response.json())
   .then((responseJson) => {
-      //console.log('Location: ' + JSON.stringify(responseJson));
       const location_obj = JSON.parse(JSON.stringify(responseJson))
-      // const address = location_obj.results[0].formatted_address
       location = location_obj.results[0].formatted_address
       console.log("Fetch", lat, long)
       console.log("Fetch:", location)
@@ -34,7 +27,6 @@ const get_location = (lat, long, setPinDragged) => {
 })
 }
 
-// export class Map_test extends Component {
 const Map_test = (props) => {
   const [region, setRegion] = useState({
     latitude: 43.704483237221815,
@@ -47,6 +39,8 @@ const Map_test = (props) => {
   const [calloutMounted, setCalloutMounted] = useState(false);
   const [pinDragged, setPinDragged] = useState(false);
   const [pinSelected, setPinSelected] = useState(false);
+
+  dispatch = useDispatch();
 
   useEffect(() => {
     console.log("callMounted:", calloutMounted);
@@ -66,7 +60,6 @@ const Map_test = (props) => {
           rankby: "distance",
         }}
         onPress={(data, details = null) => {
-          // 'details' is provided when fetchDetails = true
           console.log(data, details);
           setRegion({
             latitude: details.geometry.location.lat,
@@ -149,15 +142,18 @@ const Map_test = (props) => {
         title="Confirm"
         color={pinSelected ? "gray" : "blue"}
         onPress={() => 
-          {console.log("button location", location)
-          console.log("lattitude", region.latitude)
-          console.log("longitude", region.longitude)
-          props.navigation.navigate("OrderSelection",{
-          chosen: true,
-          lat: region.latitude,
-          long: region.longitude,
-          address: location,
-        })}}
+          {
+            console.log("button location", location)
+            console.log("lattitude", region.latitude)
+            console.log("longitude", region.longitude)
+
+            dispatch(setDestination({
+              lat: region.latitude, 
+              long: region.longitude, 
+              name: location
+            }))
+
+            props.navigation.navigate("OrderSelection", {chosen: true})}}
       ></Button>
     </View>
   );
