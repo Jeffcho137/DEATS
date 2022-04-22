@@ -9,8 +9,6 @@ import { selectDestination, selectStartingPoint, setStartingPoint } from '../red
 export function Order_selection ({ navigation }) {
     const dispatch = useDispatch()
     const id = useSelector(selectId)
-    const startingPoint = useSelector(selectStartingPoint)
-    const destination = useSelector(selectDestination)
  
     const [room, setRoom] = useState("")
     const [startTime, setStartTime] = useState(0)
@@ -33,6 +31,9 @@ export function Order_selection ({ navigation }) {
     }
 
     const sendOrdererInfo = () => {    
+        const startingPoint = useSelector(selectStartingPoint)
+        const destination = useSelector(selectDestination)
+        
         fetch('https://deats-backend-test.herokuapp.com/order_del/',
         {
             method: 'POST',
