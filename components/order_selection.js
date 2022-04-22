@@ -3,12 +3,13 @@ import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button, TextInput } from 'react-native';
 import styles from '../style';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectId } from '../redux/slices/userSlice';
+import { selectId, selectPhoneNum } from '../redux/slices/userSlice';
 import { selectDestination, selectStartingPoint, setStartingPoint } from '../redux/slices/makeDeliverySlice';
 
 export function Order_selection ({ navigation }) {
     const dispatch = useDispatch()
     const id = useSelector(selectId)
+    const number = useSelector(selectPhoneNum)
  
     const [room, setRoom] = useState("")
     const [startTime, setStartTime] = useState(0)
@@ -72,7 +73,7 @@ export function Order_selection ({ navigation }) {
     }
 
     const loc_chosen = navigation.state.params.chosen;
-    console.log("ADDRESS", destination.name)
+    //console.log("ADDRESS", destination.name)
     if (!loc_chosen) {
         return (
             <View style={styles.container}>
