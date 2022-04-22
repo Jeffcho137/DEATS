@@ -9,19 +9,19 @@ import {
 } from "react-native-maps";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { useDispatch } from "react-redux";
-import { setDestination } from "../redux/slices/makeDeliverySlice";
+import { setDropLocation } from "../redux/slices/orderDeliverySlice";
 
 const API_KEY = 'AIzaSyCCkDRzY3UvSoaZa1anF9ov43ztpe6GSFk';
-let location = '';
+let address = '';
 
 const get_location = (lat, long, setPinDragged) => {
   fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + long + '&key=' + API_KEY)
   .then((response) => response.json())
   .then((responseJson) => {
       const location_obj = JSON.parse(JSON.stringify(responseJson))
-      location = location_obj.results[0].formatted_address
+      address = location_obj.results[0].formatted_address
       console.log("Fetch", lat, long)
-      console.log("Fetch:", location)
+      console.log("Fetch:", address)
       setPinDragged(false)
       
 })
@@ -40,7 +40,7 @@ const Map_test = (props) => {
   const [pinDragged, setPinDragged] = useState(false);
   const [pinSelected, setPinSelected] = useState(false);
 
-  dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log("callMounted:", calloutMounted);
@@ -68,8 +68,9 @@ const Map_test = (props) => {
             longitudeDelta: 0.01,
           });
 
-          location = details.name +"\n"+ details.formatted_address
-          console.log("loc", location)
+          //location = details.name +"\n"+ details.formatted_address
+          address = details.formatted_address
+          console.log("loc", address)
 
         }}
 
@@ -143,14 +144,14 @@ const Map_test = (props) => {
         color={pinSelected ? "gray" : "blue"}
         onPress={() => 
           {
-            console.log("button location", location)
+            console.log("button location", address)
             console.log("lattitude", region.latitude)
             console.log("longitude", region.longitude)
 
-            dispatch(setDestination({
+            dispatch(setDropLocation({
               lat: region.latitude, 
               long: region.longitude, 
-              name: location
+              address: address
             }))
 
             props.navigation.navigate("OrderSelection", {chosen: true})}}
