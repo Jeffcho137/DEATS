@@ -27,7 +27,7 @@ const get_location = (lat, long, setPinDragged) => {
 })
 }
 
-const Map_test = (props) => {
+const Map_test = ({ navigation }) => {
   const [region, setRegion] = useState({
     latitude: 43.704483237221815,
     longitude: -72.28869350196095,
@@ -145,7 +145,7 @@ const Map_test = (props) => {
         onPress={() => 
           {
             console.log("button location", address)
-            console.log("lattitude", region.latitude)
+            console.log("latitude", region.latitude)
             console.log("longitude", region.longitude)
 
             dispatch(setDropLocation({
@@ -153,8 +153,8 @@ const Map_test = (props) => {
               long: region.longitude, 
               address: address
             }))
-
-            props.navigation.navigate("OrderSelection", {chosen: true})}}
+            
+            navigation.navigate("OrderSelection", {chosen: true})}}
       ></Button>
     </View>
   );

@@ -4,37 +4,36 @@ import { Text, View, Button, TextInput } from 'react-native';
 import styles from '../style';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectId, selectPhoneNum } from '../redux/slices/userSlice';
-import { selectDestination, selectStartingPoint, setStartingPoint } from '../redux/slices/makeDeliverySlice';
+import { selectDropLocation, selectPickupLocation, setPickupLocation } from '../redux/slices/orderDeliverySlice';
 
 export function Order_selection ({ navigation }) {
     const dispatch = useDispatch()
     const id = useSelector(selectId)
     const number = useSelector(selectPhoneNum)
+    const dropLocation = useSelector(selectDropLocation)
+    const pickupLocation = useSelector(selectPickupLocation)
  
     const [room, setRoom] = useState("")
     const [startTime, setStartTime] = useState(0)
     const [endTime, setEndTime] = useState(0)
 
     const selectTheHop = () => {
-        dispatch(setStartingPoint({
-            x: 43.7020,
-            y: -72.2879,
+        dispatch(setPickupLocation({
+            lat: 43.7020,
+            long: -72.2879,
             name: "The Hop"
         }))
     }
 
     const selectCollis = () => {
-        dispatch(setStartingPoint({
-            x: 43.7027,
-            y: -72.2898,
+        dispatch(setPickupLocation({
+            lat: 43.7027,
+            long: -72.2898,
             name: "Collis"
         }))
     }
 
     const sendOrdererInfo = () => {    
-        const startingPoint = useSelector(selectStartingPoint)
-        const destination = useSelector(selectDestination)
-        
         fetch('https://deats-backend-test.herokuapp.com/order_del/',
         {
             method: 'POST',
@@ -45,15 +44,15 @@ export function Order_selection ({ navigation }) {
             body: JSON.stringify({
                 id: id,
                 drop_loc: {
-                    x: destination.lat,
-                    y: destination.long
+                    x: dropLocation.lat,
+                    y: dropLocation.long
                 },
                 pickup_loc: {
-                    x: startingPoint.lat,
-                    y: startingPoint.long
+                    x: pickupLocation.lat,
+                    y: pickupLocation.long
                 },
-                pickup_loc_name: startingPoint.name,
-                drop_loc_name: destination.name,
+                pickup_loc_name: pickupLocation.name,
+                drop_loc_name: dropLocation.address,
             })
         })
         .then(response => response.json())
@@ -73,7 +72,7 @@ export function Order_selection ({ navigation }) {
     }
 
     const loc_chosen = navigation.state.params.chosen;
-    //console.log("ADDRESS", destination.name)
+    console.log("Drop location", dropLocation)
     if (!loc_chosen) {
         return (
             <View style={styles.container}>
@@ -126,7 +125,7 @@ export function Order_selection ({ navigation }) {
                 <View style={styles.order_sel_input}>
                     <Text style={styles.order_sel_text}>Deliver to:</Text>
                     <View style={styles.order_sel_input_box}>
-                        <Text style={styles.order_sel_loc}>{address}</Text>
+                        <Text style={styles.order_sel_loc}>{dropLocation.address}</Text>
                         <Button color="#006400" title='change my location' onPress={() => navigation.navigate("MapTest")}></Button>
                         <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => setRoom(text)}></TextInput>
                         <TextInput style={styles.single_input} placeholder='number' onChangeText={text => {}}></TextInput>
