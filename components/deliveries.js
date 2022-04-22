@@ -85,7 +85,7 @@ export default function Deliveries({navigation}) {
                         }}>
                             <Image 
                                 style={{ width: "50%", height: "100%", borderRadius: 25, marginRight: 15}}
-                                source={{ uri: item.deliverer_img_url }} />
+                                source={{ uri: item.customer_img_url ? item.customer_img_url : static_deliveries[0].customer_img_url }} />
                             <OrderDetail 
                                 pickUpLocation={item.pickup_loc_name}
                                 dropLocation={item.drop_loc_name}
