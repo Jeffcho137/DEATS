@@ -14,7 +14,7 @@ export function Home ({ navigation }) {
             </View>
             <View style={styles.home_options}>
                 <View style={styles.home_buttons}>
-                    <Button color="#006400" title="Order Delivery" oonPress={() => navigation.navigate('OrderSelection')}></Button>
+                    <Button color="#006400" title="Order Delivery" onPress={() => navigation.navigate('OrderSelection')}></Button>
                 </View>
                 <View style={styles.home_buttons}>
                     <Button color="#006400"title="Make Delivery" onPress={() => navigation.navigate('DeliverySelection')}></Button>
