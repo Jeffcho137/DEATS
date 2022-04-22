@@ -64,12 +64,12 @@ const retrieveOrders = (id, setUserOrders) => {
 
 export default function Orders({navigation}) {
     const [user_orders, setUserOrders] = useState([]);
-    useEffect(() =>  { retrieveOrders(navigation.state.params.id, setUserOrders) });
+    useEffect(() =>  { retrieveOrders(navigation.state.params.id, setUserOrders), []});
     
     return (
         <>
         {console.log("user_orders", user_orders.length, user_orders)}
-        {user_orders.length > 2 ? // debug why length of the empty list is non-zero later
+        {user_orders?.length ?
             (<FlatList
                 data={user_orders}
                 keyExtractor={(item) => item.id}

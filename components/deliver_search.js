@@ -45,6 +45,7 @@ export function Deliver_search (props) {
             .then(response => response.json())
             .then((data) => {
                 console.log(data)
+                console.log("delivery search -> id:", data.id)
                 if (data.succeeded == 1) {
                     props.navigation.navigate('DeliverMatch')
                 } else {

@@ -11,11 +11,15 @@ export function Delivery_selection (props) {
     const password = props.navigation.state.params.password
     const user_type = props.navigation.state.params.user_type
 
+    console.log("delivery selection -> id:", id);
+
     const sendDelivererInfo = () => {
         const start_lat = props.navigation.state.params.start_lat;
         const start_long = props.navigation.state.params.start_long;
         const fin_lat = props.navigation.state.params.fin_lat;
         const fin_long = props.navigation.state.params.fin_long;
+
+        console.log("delivery selection -> send -> id:", id);
         
         fetch('https://deats-backend-test.herokuapp.com/make_del/',
         {

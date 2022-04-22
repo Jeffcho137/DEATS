@@ -70,7 +70,7 @@ export default function Deliveries({navigation}) {
     return (
         <>
         {console.log("user_deliveries", user_deliveries.length, user_deliveries)}
-        {user_deliveries.length > 2 ? // debug why length of the empty list is non-zero later
+        {user_deliveries?.length ? 
             (<FlatList
                 data={user_deliveries}
                 keyExtractor={(item) => item.id}
