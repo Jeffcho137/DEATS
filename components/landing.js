@@ -5,6 +5,7 @@ import { useState } from "react";
 import styles from '../style';
 import  Logo  from './image.js';
 import { useDispatch } from 'react-redux';
+import { setEmail, setId, setName, setPhoneNum } from '../redux/slices/userSlice';
 
 export function Landing ({ navigation }) {
   const dispatch = useDispatch()
@@ -36,7 +37,7 @@ export function Landing ({ navigation }) {
             dispatch(setId(data.id))
             dispatch(setEmail(data.email))
             dispatch(setName(data.name))
-            dispatch(setNumber(data.phoneNum))
+            dispatch(setPhoneNum(data.phoneNum))
            
             navigation.navigate('Home')
         } else {
