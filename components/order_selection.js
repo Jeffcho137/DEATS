@@ -4,7 +4,7 @@ import { Text, View, Button, TextInput } from 'react-native';
 import styles from '../style';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectId, selectPhoneNum } from '../redux/slices/userSlice';
-import { selectDropLocation, selectPickupLocation, setPickupLocation } from '../redux/slices/orderDeliverySlice';
+import { selectDropLocation, selectPickupLocation, setOrderId, setPickupLocation } from '../redux/slices/orderDeliverySlice';
 
 export function Order_selection ({ navigation }) {
     const dispatch = useDispatch()
@@ -62,7 +62,8 @@ export function Order_selection ({ navigation }) {
             .then((data) => {
                 console.log(data)
                 if (data.succeeded == true) {
-                navigation.navigate('OrderSearch') 
+                    dispatch(setOrderId(data.order_id))
+                    navigation.navigate('OrderSearch') 
                 } else {
                     console.log(data.msg);
                 }
