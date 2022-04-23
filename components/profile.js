@@ -4,7 +4,7 @@ import { Text, View, Button } from 'react-native';
 import styles from '../style';
 import ImageUpload from './image_upload';
 import { useSelector } from 'react-redux';
-import { selectId, selectName, selectPhoneNum } from '../redux/slices/userSlice';
+import { selectId, selectName, selectPhoneNum, selectEmail } from '../redux/slices/userSlice';
 
 export function Profile ({ navigation }) {
     const name = useSelector(selectName)

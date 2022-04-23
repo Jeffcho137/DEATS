@@ -37,7 +37,7 @@ export function Landing ({ navigation }) {
             dispatch(setId(data.id))
             dispatch(setEmail(data.email))
             dispatch(setName(data.name))
-            dispatch(setPhoneNum(data.phoneNum))
+            dispatch(setPhoneNum(data.phone_num))
            
             navigation.navigate('Home')
         } else {
