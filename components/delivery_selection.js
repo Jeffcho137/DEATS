@@ -2,11 +2,12 @@ import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button } from 'react-native';
 import styles from '../style';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectId, selectName } from '../redux/slices/userSlice';
-import { selectDestination, selectStartingPoint } from '../redux/slices/makeDeliverySlice';
+import { selectDestination, selectStartingPoint, setUnmatchedCustomers } from '../redux/slices/makeDeliverySlice';
 
 export function Delivery_selection ({ navigation }) {
+    const dispatch = useDispatch()
     const id = useSelector(selectId)
     const startPoint = useSelector(selectStartingPoint)
     const destination = useSelector(selectDestination)
@@ -36,7 +37,8 @@ export function Delivery_selection ({ navigation }) {
         .then((data) => {
             console.log("type: ",Object.keys(data.unmatched_users).length)
             console.log("these are my unmatched orders", data.unmatched_users)
-            
+
+            dispatch(setUnmatchedCustomers(data.unmatched_users))
             navigation.navigate('DeliverSearch')
         })
         .catch(err => console.error(err));
