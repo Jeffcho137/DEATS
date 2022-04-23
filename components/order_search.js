@@ -56,9 +56,10 @@ export function Order_search ({ navigation }) {
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                   <View style={styles.modal_text}>
-                    <Text style={styles.modalText}>{delivererId ? "Deliverer found!" : "Sorry, no deliverer is available yet"}</Text>
-                    <Text style={styles.deliverer_is}> {delivererId ? "Your deliverer is " + delivererInfo.name : "Check again later"}</Text>
-                    <Text style={styles.deliverer_is}> {delivererId ? "Delivery fee: $3.00" : ""} </Text>
+                    {/* Use delivererInfo, object of concern, for condition to avoid undefined errors when delivererId updates earlier and a re-render is triggered */}
+                    <Text style={styles.modalText}>{delivererInfo ? "Deliverer found!" : "Sorry, no deliverer is available yet"}</Text>
+                    <Text style={styles.deliverer_is}> {delivererInfo ? "Your deliverer is " + delivererInfo.name : "Check again later"}</Text>
+                    <Text style={styles.deliverer_is}> {delivererInfo ? "Delivery fee: $3.00" : ""} </Text>
                   </View>
                   <Pressable
                       style={[styles.button, styles.buttonClose]}
