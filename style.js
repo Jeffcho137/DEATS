@@ -282,8 +282,12 @@ const styles = StyleSheet.create({
 
     map: {
       width: Dimensions.get("window").width,
-      height: "80%",
-    // height: Dimensions.get("window").height,
+      height: "92%",
+    },
+
+    del_map: {
+      width: Dimensions.get("window").width,
+      height: "75%",
     },
 
     upload_container:{
