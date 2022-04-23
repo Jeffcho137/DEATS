@@ -5,7 +5,7 @@ import styles from '../style';
 import ImageUpload from './image_upload';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { setEmail, setId, setName } from '../redux/slices/userSlice';
+import { setEmail, setId, setName, setPhoneNum } from '../redux/slices/userSlice';
 
 export function Signup ({ navigation }) {
     const dispatch = useDispatch()
@@ -15,7 +15,7 @@ export function Signup ({ navigation }) {
     const [typedPassword, setTypedPassword] = useState("")
 
     const sendAccInfo = () => {
-        if (email == '' || password == '') {
+        if (typedEmail == '' || typedPassword == '') {
             console.log("cannot submit empty email/password");
         } else {
             fetch('https://deats-backend-test.herokuapp.com/create_acc/',
@@ -40,7 +40,7 @@ export function Signup ({ navigation }) {
                     dispatch(setId(data.user_id))
                     dispatch(setEmail(typedEmail))
                     dispatch(setName(typedName))
-                    dispatch(setNumber(typedNumber))
+                    dispatch(setPhoneNum(typedNumber))
                     
                     navigation.navigate('Home');
                 } else {
