@@ -42,7 +42,7 @@ export function Delivery_selection ({ navigation }) {
         .catch(err => console.error(err));
     }
 
-    if (navigation.state.params?.chosen) {
+    if (!navigation.state.params?.chosen) {
         return (
             <View style={styles.container}>
                 <View style={styles.deliver_sel_input}>
@@ -51,7 +51,7 @@ export function Delivery_selection ({ navigation }) {
                     </View>
                 </View>
                 
-                <Button color="#006400" title="Begin Searching" onPress={sendDelivererInfo}></Button>
+                <Button color="gray" title="Begin Searching"></Button>
             
                 <StatusBar style="auto" />
             </View>
