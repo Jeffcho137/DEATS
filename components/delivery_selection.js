@@ -62,8 +62,8 @@ export function Delivery_selection ({ navigation }) {
                 <View style={styles.deliver_sel_input}>
                     <Text style={styles.order_sel_text}>Leaving from:</Text>
                     <View style={styles.order_sel_input_box}>
-                        <Text>Leaving from: {startPoint?.address1}</Text>
-                        <Text>Going to: {destination?.address2}</Text>
+                        <Text>Leaving from: {startPoint?.address}</Text>
+                        <Text>Going to: {destination?.address}</Text>
                         <Button title='change my starting location and final destination' onPress={() => navigation.navigate("DelMap")}></Button>
                     </View>
                 </View>
