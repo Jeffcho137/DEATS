@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, FlatList, TouchableOpacity} from "react-native";
+import { useSelector } from "react-redux";
+import { selectId } from "../redux/slices/userSlice";
 
 const static_orders = [
     {
@@ -63,8 +65,9 @@ const retrieveOrders = (id, setUserOrders) => {
   }
 
 export default function Orders({navigation}) {
+    const  id = useSelector(selectId)
     const [user_orders, setUserOrders] = useState([]);
-    useEffect(() =>  { retrieveOrders(navigation.state.params.id, setUserOrders) }, [])
+    useEffect(() =>  { retrieveOrders(id, setUserOrders) }, [])
     
     return (
         <>

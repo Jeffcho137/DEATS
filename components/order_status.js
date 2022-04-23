@@ -1,59 +1,24 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, Button, TextInput } from 'react-native';
+import { Text, View, Button } from 'react-native';
 import styles from '../style';
+import { useSelector } from 'react-redux';
+import { selectDelivererInfo, selectPickupLocation } from '../redux/slices/orderDeliverySlice';
 
-export function Order_status (props) {
-    const delId = props.navigation.state.params.delId
-    const delInfo = props.navigation.state.params.delInfo
-    const foodPlaceName = props.navigation.state.params.food_place_name
-
+export function Order_status ({ navigation }) {
+    const delivererInfo = useSelector(selectDelivererInfo)
+    const pickUpLocation = useSelector(selectPickupLocation)
+  
     return (
         <View style={styles.container}>
             <View style={styles.order_sel}>
                 <Text style={styles.searching_text}>Delivery Confirmed!</Text>
-                <Text style={styles.searching_text}>{delInfo.name} is on his way to {
-                    foodPlaceName === "HOP" ? "the " : ""
-                } {foodPlaceName} </Text>
+                <Text style={styles.searching_text}>{delivererInfo.name} is on his way to {pickUpLocation.address}</Text>
                 <Text style={styles.searching_text}>Your food is picked up</Text>
                 <Text style={styles.searching_text}>Delivered</Text>
             </View>
-            <Button title="I got my food!" onPress={() => props.navigation.navigate('Completed')}></Button>
+            <Button title="I got my food!" onPress={() => navigation.navigate('Completed')}></Button>
             <StatusBar style="auto" />
         </View>
     )
 }
-
-
-// export class Order_statusC extends Component {
-//     constructor(props){
-//         super(props)
-//         this.state = {
-//             del_id: this.props.navigation.state.params.del_id,
-//             del_info: this.props.navigation.state.params.del_info,
-//             food_place_name: this.props.navigation.state.params.food_place_name
-//         }
-//       }
-
-//     render() {
-//         return (
-//             <View style={styles.container}>
-//                 <View style={styles.order_sel}>
-//                     <Text style={styles.searching_text}>Delivery Confirmed!</Text>
-//                     <Text style={styles.searching_text}>{this.state.del_info.name} is on his way to {
-//                         this.state.food_place_name === "HOP" ? "the " : ""
-//                     } {this.state.food_place_name} </Text>
-//                     <Text style={styles.searching_text}>Your food is picked up</Text>
-//                     <Text style={styles.searching_text}>Delivered</Text>
-
-//                 </View>
-                
-                
-//                 <Button title="I got my food!" onPress={() => this.props.navigation.navigate('Completed')}></Button>
-
-            
-//                 <StatusBar style="auto" />
-//             </View>
-//         )
-//     }
-// }

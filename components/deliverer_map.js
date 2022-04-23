@@ -8,37 +8,36 @@ import {
   Callout,
 } from "react-native-maps";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
+import { setDestination, setStartingPoint } from "../redux/slices/makeDeliverySlice";
+import { useDispatch } from "react-redux";
 
 const API_KEY = 'AIzaSyCCkDRzY3UvSoaZa1anF9ov43ztpe6GSFk';
-let start_location = '';
-let fin_location = '';
+let start_address = '';
+let destination_address = '';
 
 const get_start_location = (lat, long, setStartPinDragged) => {
-  // let address;
   fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + long + '&key=' + API_KEY)
   .then((response) => response.json())
   .then((responseJson) => {
       const location_obj = JSON.parse(JSON.stringify(responseJson))
-      start_location = location_obj.results[0].formatted_address
-      console.log('get start', start_location)
+      start_address = location_obj.results[0].formatted_address
+      console.log('get start', start_address)
       setStartPinDragged(false);
 })
 }
 
 const get_fin_location = (lat, long, setFinPinDragged) => {
-    // let address;
     fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + long + '&key=' + API_KEY)
     .then((response) => response.json())
     .then((responseJson) => {
         const location_obj = JSON.parse(JSON.stringify(responseJson))
-        fin_location = location_obj.results[0].formatted_address
-        console.log('get fin', fin_location)
+        destination_address = location_obj.results[0].formatted_address
+        console.log("destination address:", destination_address)
         setFinPinDragged(false);
   })
-  }
+}
 
-// export class Map_test extends Component {
-const Del_map = (props) => {
+const Del_map = ({ navigation }) => {
   let startMarkerRef = useRef(null);
   let finMarkerRef = useRef(null);
   const [startCalloutMounted, setStartCalloutMounted] = useState(false);
@@ -47,6 +46,8 @@ const Del_map = (props) => {
   const [startPinSelected, setStartPinSelected] = useState(false);
   const [finPinDragged, setFinPinDragged] = useState(false);
   const [finPinSelected, setFinPinSelected] = useState(false);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     console.log("callMounted:", "start->", startCalloutMounted, "fin->", finCalloutMounted);
@@ -91,8 +92,8 @@ const Del_map = (props) => {
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           });
-          start_location = details.name +"\n"+ details.formatted_address
-          console.log("start_loc", start_location)
+          start_address = details.formatted_address
+          console.log("start_loc", start_address)
         }}
 
         query={{
@@ -127,10 +128,10 @@ const Del_map = (props) => {
             latitudeDelta: 0.01,
             longitudeDelta: 0.01,
           });
-          fin_location = details.name +"\n"+ details.formatted_address
-          console.log("finloc", fin_location)
+          destination_address = details.formatted_address
+          console.log("finloc", destination_address)
 
-        console.log("search", fin_location)
+        console.log("search", destination_address)
         }}
 
         query={{
@@ -235,18 +236,25 @@ const Del_map = (props) => {
       <Button
         title="Confirm"
         color={startPinSelected || finPinSelected? "gray" : "blue"}
-        onPress={() => props.navigation.navigate("DeliverySelection",{
-          chosen: true,
-          start_lat: startRegion.latitude,
-          start_long: startRegion.longitude,
-          address1: start_location,
-          fin_lat: finRegion.latitude,
-          fin_long: finRegion.longitude,
-          address2: fin_location,
-        })}
+        onPress={() => 
+          {
+            dispatch(setStartingPoint({
+              lat: startRegion.latitude, 
+              long: startRegion.longitude, 
+              address: destination_address
+            }))
+
+            dispatch(setDestination({
+              lat: finRegion.latitude, 
+              long: finRegion.longitude, 
+              address: destination_address
+            }))
+
+          navigation.navigate("DeliverySelection", {chosen: true})
+        }
+      }
       ></Button>
     </View>
   );
-  //}
 };
 export default Del_map;

@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, FlatList, TouchableOpacity} from "react-native";
+import { useSelector } from "react-redux";
+import { selectId } from "../redux/slices/userSlice";
 
 const static_deliveries = [
     {
@@ -62,10 +64,10 @@ const retrieveDeliveries = (id, setUserDeliveries) => {
     .catch((error) => console.log(error));
   }
 
-export default function Deliveries({navigation}) {
-    console.log("navigation", navigation);
+export default function Deliveries({ navigation }) {
+    const id = useSelector(selectId)
     const [user_deliveries, setUserDeliveries] = useState(static_deliveries);
-    useEffect(() =>  { retrieveDeliveries(navigation.state.params.id, setUserDeliveries) }, [])
+    useEffect(() =>  { retrieveDeliveries(id, setUserDeliveries) }, [])
     
     return (
         <>
