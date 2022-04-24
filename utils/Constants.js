@@ -1,7 +1,9 @@
-// Server domain URL
-export const DEATS_SERVER_URL = "https://deats-server.herokuapp.com"
+/* Server Domain URLS */
+export const DEATS_SERVER_URL = "https://deats-server.herokuapp.com"  // Main
+//export const DEATS_SERVER_URL = "https://deats-backend-test.herokuapp.com"  // Test
 
-// Server paths
+
+/* Server paths */
 export const ROUTE_CREATE_ACC = "/create_acc/"
 export const ROUTE_UPDATE_ACC = "/update_acc/"
 export const ROUTE_DELETE_ACC = "/delete_acc/"
