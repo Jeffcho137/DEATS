@@ -7,6 +7,7 @@ import  Logo  from './image.js';
 import { useDispatch } from 'react-redux';
 import { setEmail, setId, setName, setPhoneNum } from '../redux/slices/userSlice';
 import { WebView } from 'react-native-webview';
+import { DEATS_SERVER_URL, ROUTE_LOGIN } from '../utils/Constants';
 
 export function Landing ({ navigation }) {
   const dispatch = useDispatch()
@@ -19,7 +20,7 @@ export function Landing ({ navigation }) {
 
 
   const sendLogin = () => {
-    fetch('https://deats-backend-test.herokuapp.com/login/',
+    fetch(`${DEATS_SERVER_URL}${ROUTE_LOGIN}`,
     {
         method: 'POST',
         headers: {

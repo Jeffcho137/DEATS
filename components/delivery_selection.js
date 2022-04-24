@@ -5,6 +5,7 @@ import styles from '../style';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectId, selectName } from '../redux/slices/userSlice';
 import { selectDestination, selectStartingPoint, setUnmatchedCustomers } from '../redux/slices/makeDeliverySlice';
+import { DEATS_SERVER_URL, ROUTE_MAKE_DEL } from '../utils/Constants';
 
 export function Delivery_selection ({ navigation }) {
     const dispatch = useDispatch()
@@ -17,7 +18,7 @@ export function Delivery_selection ({ navigation }) {
     const sendDelivererInfo = () => {
         console.log("delivery selection -> send -> id:", id);
         
-        fetch('https://deats-backend-test.herokuapp.com/make_del/',
+        fetch(`${DEATS_SERVER_URL}${ROUTE_MAKE_DEL}`,
         {
             method: 'POST',
             headers: {

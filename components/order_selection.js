@@ -5,6 +5,7 @@ import styles from '../style';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectId, selectPhoneNum } from '../redux/slices/userSlice';
 import { selectDropLocation, selectPickupLocation, setOrderId, setPickupLocation } from '../redux/slices/orderDeliverySlice';
+import { DEATS_SERVER_URL, ROUTE_ORDER_DEL } from '../utils/Constants';
 
 export function Order_selection ({ navigation }) {
     const dispatch = useDispatch()
@@ -37,7 +38,7 @@ export function Order_selection ({ navigation }) {
         if (room == '' || !pickupLocation) {
             console.log("Please fill out all forms")
         } else {  
-            fetch('https://deats-backend-test.herokuapp.com/order_del/',
+            fetch(`${DEATS_SERVER_URL}${ROUTE_ORDER_DEL}`,
             {
                 method: 'POST',
                 headers: {
