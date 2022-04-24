@@ -5,6 +5,7 @@ import styles from '../style';
 import { useSelector } from 'react-redux';
 import { selectId } from '../redux/slices/userSlice';
 import { selectUnmatchedCustomers } from '../redux/slices/makeDeliverySlice';
+import { DEATS_SERVER_URL, ROUTE_MATCH } from '../utils/Constants';
 
 export function Deliver_search ({ navigation }) {
    
@@ -33,7 +34,7 @@ export function Deliver_search ({ navigation }) {
         }
 
         const match = (orderId) => {
-            fetch('https://deats-backend-test.herokuapp.com/match/',
+            fetch(`${DEATS_SERVER_URL}${ROUTE_MATCH}`,
             {
                 method: 'POST',
                 headers: {
