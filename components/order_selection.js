@@ -35,7 +35,7 @@ export function Order_selection ({ navigation }) {
 
     const sendOrdererInfo = () => {  
         if (room == '' || !pickupLocation) {
-            console.log("fill everything out u fucker")
+            console.log("Please fill out all forms")
         } else {  
             fetch('https://deats-backend-test.herokuapp.com/order_del/',
             {
@@ -104,8 +104,8 @@ export function Order_selection ({ navigation }) {
                         <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
                     </View>
                 </View>
+                <Button color="#006400" title="GET" onPress={()=>navigation.navigate('OrderCode')}></Button>
                 <Button color="#006400" title="Confirm" onPress={sendOrdererInfo}></Button>
-            
                 <StatusBar style="auto" />
             </View>
         )

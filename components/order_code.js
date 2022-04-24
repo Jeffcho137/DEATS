@@ -1,19 +1,120 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, Button, TextInput } from 'react-native';
-import styles from '../style';
+import { Text, View, Button, TextInput, StyleSheet } from 'react-native';
+//import styles from '../style';
+import {
+    CodeField,
+    Cursor,
+    useBlurOnFulfill,
+    useClearByFocusCell,
+  } from 'react-native-confirmation-code-field';
+  
+  const styles = StyleSheet.create({
+    root: {flex: 1, padding: 20, },
+    title: {
+        textAlign: 'center', 
+        fontSize: 30, 
+        marginTop: '30%'},
+    codeFieldRoot: {
+        marginTop: '40%',
+    },
+    cell: {
+      width: 60,
+      height: 60,
+      lineHeight: 50,
+      fontSize: 30,
+      borderWidth: 2,
+      borderColor: '#006400',
+      textAlign: 'center',
+
+    },
+    focusCell: {
+      borderColor: '#000',
+    },
+  });
+  
 
 export function Order_code (props) {
+    const CELL_COUNT = 4;
+  
+    const [value, setValue] = useState('');
+    const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
+    const [args, getCellOnLayoutHandler] = useClearByFocusCell({
+      value,
+      setValue,
+    });
+   
+    const sendGETcode = () => {  
+        if (value.length != 4) {
+            console.log("Please enter the code")
+        } else {  
+            fetch('https://deats-backend-test.herokuapp.com/order_del/',
+            {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    code: value,
+                })
+            })
+            .then(response => response.json())
+            .then((data) => {
+                console.log(data)
+                // if (data.succeeded == true) {
+                //     // dispatch() // no need to dispatch
+                //     // navigation.navigate('OrderSearch') // navigate to Brian's update pages
+                // } else {
+                //     console.log(data.msg);
+                // }
+            })
+            .catch(err => console.error(err));
+        }
+    }   
+
+
     return (
-        <View style={styles.container}>
-            <View style={styles.order_sel}>
-                <Text style={styles.searching_text}>Enter your four digit code after ordering on GET</Text>
-                <Text style={styles.searching_text}>CODE</Text> 
-            </View>
-            <Button title="Confirm" onPress={() => props.navigation.navigate('Profile')}></Button>
-            <StatusBar style="auto" />
-        </View>
-    )
+        
+
+          <View style={styles.root}>
+            
+              
+            <Text style={styles.title}>Enter GET Code</Text>
+            <CodeField
+              ref={ref}
+              {...args}
+              // Use `caretHidden={false}` when users can't paste a text value, because context menu doesn't appear
+              value={value}
+              onChangeText={setValue}
+              cellCount={CELL_COUNT}
+              rootStyle={styles.codeFieldRoot}
+              keyboardType="number-pad"
+              textContentType="oneTimeCode"
+              renderCell={({index, symbol, isFocused}) => (
+                
+                <Text
+                  key={index}
+                  style={[styles.cell, isFocused && styles.focusCell]}
+                  onLayout={getCellOnLayoutHandler(index)}>
+                  {symbol || (isFocused ? <Cursor /> : null)}
+                </Text>
+              )}
+            />
+            <Button color="#006400" title="submit" onPress={sendGETcode}></Button>
+          </View>
+        );
+        // <View style={styles.container}>
+        //     <View style={styles.order_sel}>
+        //         <Text style={styles.searching_text}>Please enter your 4-digit GET code</Text>
+        //         <Text style={styles.searching_text}>CODE</Text> 
+        //     </View>
+        //     <Button title="Confirm" onPress={() => props.navigation.navigate('Profile')}></Button>
+        //     <StatusBar style="auto" />
+        // </View>
+
+        
+    
 }
 
 
