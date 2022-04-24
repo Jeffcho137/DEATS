@@ -5,6 +5,7 @@ import { Alert, Modal, Pressable, } from "react-native";
 import styles from '../style';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectDelivererId, selectDelivererInfo, selectOrderId, selectPickupLocation, setDelivererId, setDelivererInfo } from '../redux/slices/orderDeliverySlice';
+import { DEATS_SERVER_URL, ROUTE_MY_DELIVERER } from '../utils/Constants';
 
 export function Order_search ({ navigation }) {
     const dispatch = useDispatch()
@@ -16,7 +17,7 @@ export function Order_search ({ navigation }) {
     
     const findDrivers = () => {
       console.log("orderId", orderId)
-      fetch('https://deats-backend-test.herokuapp.com/my_deliverer/',
+      fetch(`${DEATS_SERVER_URL}${ROUTE_MY_DELIVERER}`,
         {
             method: 'POST',
             headers: {
