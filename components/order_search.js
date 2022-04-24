@@ -81,6 +81,7 @@ export function Order_search ({ navigation }) {
             </View>
             <Button color="#006400" title="Refresh" onPress={findDrivers}></Button>
             <Button color="#006400" title="Cancel" onPress={() => navigation.navigate('Home')}></Button>
+            <Button color="#006400"title="next page" onPress={() => navigation.navigate('Deliver_status')}></Button>
             <StatusBar style="auto" />
         </View> 
     )

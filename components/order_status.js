@@ -11,11 +11,11 @@ export function Order_status ({ navigation }) {
   
     return (
         <View style={styles.container}>
-            <View style={styles.order_sel}>
-                <Text style={styles.searching_text}>Delivery Confirmed!</Text>
-                <Text style={styles.searching_text}>{delivererInfo.name} is on his way to {pickUpLocation.address}</Text>
-                <Text style={styles.searching_text}>Your food is picked up</Text>
-                <Text style={styles.searching_text}>Delivered</Text>
+            <View style={styles.status}>
+                <Text style={styles.status_text}>Delivery Confirmed!</Text>
+                <Text style={styles.status_text}>{delivererInfo.name} is on his way to {pickUpLocation.address}</Text>
+                <Text style={styles.status_text}>Your food is picked up</Text>
+                <Text style={styles.status_text}>Delivered</Text>
             </View>
             <Button title="I got my food!" onPress={() => navigation.navigate('Completed')}></Button>
             <StatusBar style="auto" />
