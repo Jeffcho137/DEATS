@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, Image, FlatList, TouchableOpacity} from "react-native";
 import { useSelector } from "react-redux";
 import { selectId } from "../redux/slices/userSlice";
+import { DEATS_SERVER_URL, ROUTE_ORDERS } from "../utils/Constants";
 
 const static_orders = [
     {
@@ -43,7 +44,7 @@ const static_orders = [
 ]
 
 const retrieveOrders = (id, setUserOrders) => {
-    fetch('https://deats-backend-test.herokuapp.com/orders/',
+    fetch(`${DEATS_SERVER_URL}${ROUTE_ORDERS}`,
     {
         method: 'POST',
         headers: {

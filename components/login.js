@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button, TextInput } from 'react-native';
 import styles from '../style';
+import { DEATS_SERVER_URL, ROUTE_LOGIN } from '../utils/Constants';
 
 export class Login extends Component {
 
@@ -29,7 +30,7 @@ export class Login extends Component {
     }
 
     sendLogin = () => {
-        fetch('https://deats-backend-test.herokuapp.com/login/',
+        fetch(`${DEATS_SERVER_URL}${ROUTE_LOGIN}`,
         {
             method: 'POST',
             headers: {
