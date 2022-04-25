@@ -132,6 +132,7 @@ const styles = StyleSheet.create({
     home_options: {
       flex: 0.8,
       width: '60%',
+      marginTop: 110,
     },
 
     home_buttons: {
@@ -276,7 +277,7 @@ const styles = StyleSheet.create({
       borderRadius: 5,
       //borderWidth: 1,
       height: 50,
-      fontSize: 22,
+      fontSize: 20,
       textAlign: 'center',
     },
 
@@ -436,6 +437,35 @@ const styles = StyleSheet.create({
       paddingTop: 5,
       paddingBottom: 5,
       // height: 30,
+    },
+
+    status: {
+      flex: 0.7,
+      width: '100%',
+      //alignItems: 'center',
+      marginBottom: 20,
+    },
+
+    status_text:{
+      flex: 0.3,
+      fontSize: 24,
+      marginRight:70,
+      textAlign: 'left',
+      paddingLeft: 20,
+      //borderWidth: 1,
+      //borderRadius: 10,
+      //orderWidth:10,
+    },
+
+    status_yes_button:{
+      flex: 1,
+      //flexWrap,
+      width: '190%',
+      textAlign:'right',
+      justifyContent: 'space-between',
+      //paddingBottom: 0,
+      //borderWidth: 1,
+      //borderRadius: 5,
     }
 
 })
