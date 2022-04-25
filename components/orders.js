@@ -76,7 +76,7 @@ export default function Orders({navigation}) {
         {user_orders?.length ?
             (<FlatList
                 data={user_orders}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item._id.$oid}
                 vertical
                 renderItem={({ item }) => (
                     <TouchableOpacity>

@@ -67,7 +67,7 @@ const retrieveDeliveries = (id, setUserDeliveries) => {
 
 export default function Deliveries({ navigation }) {
     const id = useSelector(selectId)
-    const [user_deliveries, setUserDeliveries] = useState(static_deliveries);
+    const [user_deliveries, setUserDeliveries] = useState([]);
     useEffect(() =>  { retrieveDeliveries(id, setUserDeliveries) }, [])
     
     return (
@@ -76,7 +76,7 @@ export default function Deliveries({ navigation }) {
         {user_deliveries?.length ? 
             (<FlatList
                 data={user_deliveries}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item._id.$oid}
                 vertical
                 renderItem={({ item }) => (
                     <TouchableOpacity>
