@@ -241,7 +241,7 @@ const Del_map = ({ navigation }) => {
             dispatch(setStartingPoint({
               lat: startRegion.latitude, 
               long: startRegion.longitude, 
-              address: destination_address
+              address: start_address
             }))
 
             dispatch(setDestination({
