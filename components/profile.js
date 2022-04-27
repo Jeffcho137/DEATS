@@ -6,6 +6,7 @@ import styles from '../style';
 import ImageUpload from './image_upload';
 import { useSelector } from 'react-redux';
 import { selectId, selectName, selectPhoneNum, selectEmail } from '../redux/slices/userSlice';
+import { DEATS_SERVER_URL, ROUTE_DELETE_ACC } from '../utils/Constants';
 
 export function Profile ({ navigation }) {
     const id = useSelector(selectId)
@@ -15,7 +16,7 @@ export function Profile ({ navigation }) {
     const [ModalVisibleDeact, setModalVisibleDeact] = useState(false)
 
     const del_account = () => {
-        fetch('https://deats-backend-test.herokuapp.com/delete_acc/',
+        fetch('${DEATS_SERVER_URL}${ROUTE_DELETE_ACC}',
         {
             method: 'POST',
             headers: {
