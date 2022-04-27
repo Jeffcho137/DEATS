@@ -19,16 +19,18 @@ import Map_test from "./components/map";
 import Del_map from "./components/deliverer_map";
 import { Login } from "./components/login";
 import { Landing } from "./components/landing";
-import { Logo } from './components/image.js';
+import { Logo } from "./components/image.js";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import Deliveries from "./components/deliveries";
+import SSO from "./components/sso";
 
 const AppNavigator = createStackNavigator(
   {
     Landing: { screen: Landing },
     Signup: { screen: Signup },
     Login: { screen: Login },
+    SSO: { screen: SSO },
     Home: { screen: Home },
     Profile: { screen: Profile },
     OrderSelection: { screen: Order_selection },
@@ -43,7 +45,7 @@ const AppNavigator = createStackNavigator(
     Orders: { screen: Orders },
     DeliverStatus: { screen: Deliver_status },
     Completed: { screen: Completed },
-    
+
     MapTest: { screen: Map_test },
     DelMap: { screen: Del_map },
   },
@@ -58,7 +60,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <AppContainer/>
+        <AppContainer />
       </Provider>
     );
   }

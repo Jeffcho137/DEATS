@@ -2,19 +2,10 @@ import React, { Component, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { useDispatch, useSelector } from "react-redux";
 import { selectId, selectPhoneNum } from "../redux/slices/userSlice";
-import {
-  selectDropLocation,
-  selectPickupLocation,
-  selectOrderId,
-} from "../redux/slices/orderDeliverySlice";
+import { selectDropLocation, selectPickupLocation, selectOrderId } from "../redux/slices/orderDeliverySlice";
 import { Text, View, Button, TextInput, StyleSheet } from "react-native";
 //import styles from '../style';
-import {
-  CodeField,
-  Cursor,
-  useBlurOnFulfill,
-  useClearByFocusCell,
-} from "react-native-confirmation-code-field";
+import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from "react-native-confirmation-code-field";
 import { DEATS_SERVER_URL, ROUTE_UPDATE_ORDER } from "../utils/Constants";
 
 const styles = StyleSheet.create({
@@ -59,8 +50,10 @@ export function Order_code(props) {
   const order_id = useSelector(selectOrderId);
 
   const sendGETcode = () => {
-    if (value.length != 4) {
-      console.log("Please enter the code");
+    if (value.length != 4 || !id || !pickupLocation || !dropLocation) {
+      console.log("Please enter the code and select locations");
+    } else if (!order_id) {
+      console.log("Please begin your search first");
     } else {
       fetch(`${DEATS_SERVER_URL}${ROUTE_UPDATE_ORDER}`, {
         method: "POST",
@@ -86,8 +79,9 @@ export function Order_code(props) {
       })
         .then((response) => response.json())
         .then((data) => {
+          // console.log(data)
           if (data.succeeded == true) {
-            console.log("GET code sent to server", value);
+            console.log("GET code [", value, "] sent to server");
             // dispatch() // no need to dispatch
             // navigation.navigate('OrderSearch') // navigate to Brian's update pages
           } else {
@@ -121,7 +115,7 @@ export function Order_code(props) {
           </Text>
         )}
       />
-      <Button color="#006400" title="submit" onPress={sendGETcode}></Button>
+      <Button color="#006400" title="submit" onPress={sendGETcode} style={{ marginTop: 50 }}></Button>
     </View>
   );
   // <View style={styles.container}>
