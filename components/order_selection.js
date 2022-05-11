@@ -106,8 +106,6 @@ export function Order_selection ({ navigation }) {
                     </View>
                 </View>
                 <Button color="#006400" title="Confirm" onPress={sendOrdererInfo}></Button>
-                <Button color="#006400" title="GET" onPress={() => navigation.navigate("OrderCode")}></Button>
-
                 <StatusBar style="auto" />
             </View>
         )
@@ -143,8 +141,6 @@ export function Order_selection ({ navigation }) {
                     </View>
                 </View>
                 <Button title="Search" onPress={sendOrdererInfo}></Button>
-                <Button color="#006400" title="GET" onPress={() => navigation.navigate("OrderCode")}></Button>
-
                 <StatusBar style="auto" />
             </View>
         )
