@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button, Modal, Pressable} from 'react-native';
 import styles from '../style';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, dispatch } from 'react-redux';
 import { selectId } from '../redux/slices/userSlice';
-import { selectUnmatchedCustomers } from '../redux/slices/makeDeliverySlice';
+import { selectUnmatchedCustomers, setSelectedCustomer } from '../redux/slices/makeDeliverySlice';
 import { DEATS_SERVER_URL, ROUTE_MATCH } from '../utils/Constants';
 
 export function Deliver_search ({ navigation }) {
-   
+    ///
+    const dispatch = useDispatch()
+
     const id = useSelector(selectId)
     const unmatchedCustomers = useSelector(selectUnmatchedCustomers)
 
@@ -70,10 +72,13 @@ export function Deliver_search ({ navigation }) {
                             unmatchedCustomers.map(function(customer, i){
                             customers[i] = customer;
                             console.log(i)
+
+                            ///
+                            dispatch(setSelectedCustomer(customers[i]))
+
                             return(
                                 <View>
                                     <Pressable onPress={() => displayModal(true, customers[i].pickup_loc_name, i)} style={styles.del_search_single_request}>
-                                        {dispatch(setSelectedCustomer(customers[i]))}
                                         <Text style={{fontSize: 18, textAlign: 'center'}}>{customer.name}</Text>
                                         <Text style={{fontSize: 18, textAlign: 'center'}}>Picking up from: {customer.pickup_loc_name}</Text>
                                         <Text style={{fontSize: 18, textAlign: 'center'}}>Going to: {customer.drop_loc_name}</Text>
