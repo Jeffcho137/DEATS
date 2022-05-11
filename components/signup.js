@@ -27,10 +27,12 @@ export function Signup ({ navigation }) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    email: typedEmail,
-                    name: typedName,
+                    user_info: {
+                        email: typedEmail,
+                        name: typedName,
+                        phone_num: typedNumber,
+                    },
                     password: typedPassword,
-                    phone_num: typedNumber,
                     test: true,
                 })
             })
@@ -38,7 +40,7 @@ export function Signup ({ navigation }) {
             .then((data) => {
                 console.log(data)
                 if (data.succeeded == true) {
-                    dispatch(setId(data.user_id))
+                    dispatch(setId(data.user.user_id))
                     dispatch(setEmail(typedEmail))
                     dispatch(setName(typedName))
                     dispatch(setPhoneNum(typedNumber))
