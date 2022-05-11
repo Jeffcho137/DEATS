@@ -71,10 +71,10 @@ export function Deliver_search ({ navigation }) {
                             console.log(i)
                             return(
                                 <View>
-                                    <Pressable onPress={() => displayModal(true, customers[i].pickup_loc_name, i)} style={styles.del_search_single_request}>
-                                        <Text style={{fontSize: 18, textAlign: 'center'}}>{customer.name}</Text>
-                                        <Text style={{fontSize: 18, textAlign: 'center'}}>Picking up from: {customer.pickup_loc_name}</Text>
-                                        <Text style={{fontSize: 18, textAlign: 'center'}}>Going to: {customer.drop_loc_name}</Text>
+                                    <Pressable onPress={() => displayModal(true, customers[i].order.pickup_loc.name, i)} style={styles.del_search_single_request}>
+                                        <Text style={{fontSize: 18, textAlign: 'center'}}>{customer.customer.user_info.name}</Text>
+                                        <Text style={{fontSize: 18, textAlign: 'center'}}>Picking up from: {customer.order.pickup_loc.name}</Text>
+                                        <Text style={{fontSize: 18, textAlign: 'center'}}>Going to: {customer.order.drop_loc.name}</Text>
                                     </Pressable>
                                 </View>
                             )
