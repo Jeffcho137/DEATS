@@ -6,8 +6,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectId, selectPhoneNum } from '../redux/slices/userSlice';
 import { selectDropLocation, selectPickupLocation, setOrderId, setPickupLocation } from '../redux/slices/orderDeliverySlice';
 import { DEATS_SERVER_URL, ROUTE_ORDER_DEL } from '../utils/Constants';
+import { io } from 'socket.io-client';
 
 export function Order_selection ({ navigation }) {
+    let socket = io(DEATS_SERVER_URL, {
+       
+      });
+
+    socket.on("connect", () => {
+        console.log("connected", socket.id)
+    });
+
     const dispatch = useDispatch()
     const id = useSelector(selectId)
     const number = useSelector(selectPhoneNum)
@@ -65,6 +74,9 @@ export function Order_selection ({ navigation }) {
                 if (data.succeeded == true) {
                     dispatch(setOrderId(data.order_id))
                     navigation.navigate('OrderSearch') 
+
+                    
+
                 } else {
                     console.log(data.msg);
                 }
