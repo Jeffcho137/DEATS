@@ -18,7 +18,7 @@ export function Order_selection ({ navigation }) {
     });
 
     const dispatch = useDispatch()
-    const id = useSelector(selectId)
+    const user_id = useSelector(selectId)
     const number = useSelector(selectPhoneNum)
     const dropLocation = useSelector(selectDropLocation)
     const pickupLocation = useSelector(selectPickupLocation)
@@ -29,16 +29,20 @@ export function Order_selection ({ navigation }) {
 
     const selectTheHop = () => {
         dispatch(setPickupLocation({
-            lat: 43.7020,
-            long: -72.2879,
+            coordinates: {
+                lat: 43.7020,
+                long: -72.2879,
+            },
             name: "The Hop"
         }))
     }
 
     const selectCollis = () => {
         dispatch(setPickupLocation({
-            lat: 43.7027,
-            long: -72.2898,
+            coordinates: {
+                lat: 43.7027,
+                long: -72.2898,
+            },
             name: "Collis"
         }))
     }
@@ -55,27 +59,19 @@ export function Order_selection ({ navigation }) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    id: id,
-                    drop_loc: {
-                        x: dropLocation.lat,
-                        y: dropLocation.long
-                    },
-                    pickup_loc: {
-                        x: pickupLocation.lat,
-                        y: pickupLocation.long
-                    },
-                    pickup_loc_name: pickupLocation.name,
-                    drop_loc_name: dropLocation.address,
+                    user_id: user_id,
+                    order: {
+                        drop_loc: dropLocation,
+                        pickup_loc: pickupLocation
+                    }
                 })
             })
             .then(response => response.json())
             .then((data) => {
                 console.log(data)
                 if (data.succeeded == true) {
-                    dispatch(setOrderId(data.order_id))
+                    dispatch(setOrderId(data.order.order_id))
                     navigation.navigate('OrderSearch') 
-
-                    
 
                 } else {
                     console.log(data.msg);
