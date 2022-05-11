@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectId, selectPhoneNum } from '../redux/slices/userSlice';
 import { selectDropLocation, selectPickupLocation, setOrderId, setPickupLocation } from '../redux/slices/orderDeliverySlice';
 import { DEATS_SERVER_URL, ROUTE_ORDER_DEL } from '../utils/Constants';
+import { w3cwebsocket as W3CWebSocket } from "websocket";
 
 export function Order_selection ({ navigation }) {
     const dispatch = useDispatch()
@@ -147,3 +148,69 @@ export function Order_selection ({ navigation }) {
         )
     } 
 }
+
+// defining the socket on port 10001
+const listener = new W3CWebSocket('ws://127.0.0.1:10001');
+class App extends Component{
+
+    
+    // notifies when user joins
+    user = () => {
+        const username = this.username.value;
+    if (username.trim()) {
+        const data = {
+            username
+        };
+        this.setState({
+            ...data
+        }, () => {
+            listener.send(JSON.stringify({
+                ...data,
+                type: "userevent"
+            }));
+        });
+    }
+}
+
+    /* Notify when content changes */
+    stateUpdate = (text) => {
+        client.send(JSON.stringify({
+            type: "contentchange",
+            username: this.state.username,
+            content: text
+        }));
+    };
+
+    /** 
+     * 
+     *  Connecting with the backend websocket server
+     * 
+     */
+
+    componentWillMount() {
+
+        listener.onopen = () => {
+            console.log('WebSocket Client Connected');
+        };
+        
+        listener.onmessage = (message) => {
+        
+            const dataFromServer = JSON.parse(message.data);
+            const stateToChange = {};
+            
+            if (dataFromServer.type === "userevent") {
+                stateToChange.currentUsers = Object.values(dataFromServer.data.users);
+            } 
+            
+            else if (dataFromServer.type === "contentchange") {
+                stateToChange.text = dataFromServer.data.editorContent || contentDefaultMessage;
+            }
+            
+            stateToChange.userActivity = dataFromServer.data.userActivity;
+            this.setState({
+                ...stateToChange
+            });
+        };
+    }
+}
+
