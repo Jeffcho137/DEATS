@@ -149,9 +149,11 @@ const Map_test = ({ navigation }) => {
             console.log("longitude", region.longitude)
 
             dispatch(setDropLocation({
-              lat: region.latitude, 
-              long: region.longitude, 
-              address: address
+              coordinates: {
+                  lat: region.latitude, 
+                  long: region.longitude,
+              },
+              name: address
             }))
             
             navigation.navigate("OrderSelection", {chosen: true})}}
