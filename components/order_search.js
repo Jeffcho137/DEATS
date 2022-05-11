@@ -4,7 +4,7 @@ import { Text, View, Button } from 'react-native';
 import { Alert, Modal, Pressable, } from "react-native";
 import styles from '../style';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectDelivererId, selectDelivererInfo, selectOrderId, selectPickupLocation, setDelivererId, setDelivererInfo } from '../redux/slices/orderDeliverySlice';
+import { selectDelivererId, selectDelivererInfo, selectOrderId, setDelivererId, setDelivererInfo } from '../redux/slices/orderDeliverySlice';
 import { DEATS_SERVER_URL, ROUTE_MY_DELIVERER } from '../utils/Constants';
 
 export function Order_search ({ navigation }) {
@@ -31,10 +31,10 @@ export function Order_search ({ navigation }) {
         .then(response => response.json())
         .then((data) => {
             console.log(data)
-            console.log(data.deliverer_info)
+            console.log(data.deliverer)
             if (data.succeeded == true) {
-              dispatch(setDelivererInfo(data.deliverer_info))
-              dispatch(setDelivererId(data.deliverer_id))
+              dispatch(setDelivererInfo(data.deliverer?.user_info))
+              dispatch(setDelivererId(data.deliverer?.user_id))
               setModalVisible(true)
             } else {
                 console.log(data.msg);

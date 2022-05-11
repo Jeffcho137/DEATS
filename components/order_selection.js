@@ -9,13 +9,13 @@ import { DEATS_SERVER_URL, ROUTE_ORDER_DEL } from '../utils/Constants';
 import { io } from 'socket.io-client';
 
 export function Order_selection ({ navigation }) {
-    let socket = io(DEATS_SERVER_URL, {
+    // let socket = io(DEATS_SERVER_URL, {
        
-      });
+    //   });
 
-    socket.on("connect", () => {
-        console.log("connected", socket.id)
-    });
+    // socket.on("connect", () => {
+    //     console.log("connected", socket.id)
+    // });
 
     const dispatch = useDispatch()
     const user_id = useSelector(selectId)
