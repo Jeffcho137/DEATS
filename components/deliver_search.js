@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button, Modal, Pressable} from 'react-native';
 import styles from '../style';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectId } from '../redux/slices/userSlice';
 import { selectUnmatchedCustomers } from '../redux/slices/makeDeliverySlice';
 import { DEATS_SERVER_URL, ROUTE_MATCH } from '../utils/Constants';
@@ -52,6 +52,7 @@ export function Deliver_search ({ navigation }) {
                 console.log("delivery search -> id:", data.id)
                 if (data.succeeded == 1) {
                     navigation.navigate('DeliverMatch')
+                    
                 } else {
                     console.log(data.msg);
                     setErrorMsg(data.msg)
@@ -72,6 +73,7 @@ export function Deliver_search ({ navigation }) {
                             return(
                                 <View>
                                     <Pressable onPress={() => displayModal(true, customers[i].pickup_loc_name, i)} style={styles.del_search_single_request}>
+                                        {dispatch(setSelectedCustomer(customers[i]))}
                                         <Text style={{fontSize: 18, textAlign: 'center'}}>{customer.name}</Text>
                                         <Text style={{fontSize: 18, textAlign: 'center'}}>Picking up from: {customer.pickup_loc_name}</Text>
                                         <Text style={{fontSize: 18, textAlign: 'center'}}>Going to: {customer.drop_loc_name}</Text>
