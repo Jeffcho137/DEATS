@@ -18,18 +18,25 @@ const INJECTED_JAVASCRIPT = `(function() {
 export default function SSOLogin ({ navigation }) {
     return (
         <SafeAreaView style={styles.AndroidSafeArea}>
-             <WebView source={{ uri: 'https://d-testline.herokuapp.com/sso_login' }}
-             
-             onShouldStartLoadWithRequest={(request) => { 
-                console.log("onShouldStartLoadWithRequest:", request);
-                return true
-             }}
-             startInLoadingState={true}
-             injectedJavaScript={INJECTED_JAVASCRIPT}
-             onMessage={(event) => {
-               console.log("onMessage event:", event.nativeEvent.data, "this data:", event.nativeEvent.data)
-             }}
-             />
+            <WebView 
+                source={{ uri: "https://d-testline.herokuapp.com/sso_login" }}
+                onShouldStartLoadWithRequest={(request) => { 
+                    console.log("onShouldStartLoadWithRequest:", request);
+                    if (request.url.includes("ticket")) {
+                        console.log("ST url:", request.url)
+                        navigation.navigate('Home')
+                    }
+
+                    else{
+                        return true // continue loaading if service ticket is not included in the url
+                    }
+                }}
+                startInLoadingState={true}
+                injectedJavaScript={INJECTED_JAVASCRIPT}
+                onMessage={(event) => {
+                console.log("onMessage event:", event.nativeEvent.data, "this data:", event.nativeEvent.data)
+                }}
+            />
         </SafeAreaView>
     )
 }
