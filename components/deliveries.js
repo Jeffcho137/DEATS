@@ -43,7 +43,7 @@ const static_deliveries = [
     }
 ]
 
-const retrieveDeliveries = (id, setUserDeliveries) => {
+const retrieveDeliveries = (user_id, setUserDeliveries) => {
     fetch(`${DEATS_SERVER_URL}${ROUTE_DELIVERIES}`,
     {
         method: 'POST',
@@ -52,12 +52,12 @@ const retrieveDeliveries = (id, setUserDeliveries) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            id: id,
+            user_id: user_id,
         })
     })
     .then(response => response.json())
     .then((data) => {
-        console.log("id", id);
+        console.log("id", user_id);
         console.log("data", data);
         console.log("deliveries", data.deliveries);
         setUserDeliveries(data.deliveries);
@@ -76,7 +76,7 @@ export default function Deliveries({ navigation }) {
         {user_deliveries?.length ? 
             (<FlatList
                 data={user_deliveries}
-                keyExtractor={(item) => item._id.$oid}
+                keyExtractor={(item) => item._id}
                 vertical
                 renderItem={({ item }) => (
                     <TouchableOpacity>
@@ -90,10 +90,10 @@ export default function Deliveries({ navigation }) {
                                 style={{ width: "50%", height: "100%", borderRadius: 25, marginRight: 15}}
                                 source={{ uri: item.customer_img_url ? item.customer_img_url : static_deliveries[0].customer_img_url }} />
                             <OrderDetail 
-                                pickUpLocation={item.pickup_loc_name}
-                                dropLocation={item.drop_loc_name}
+                                pickUpLocation={item.pickup_loc.name}
+                                dropLocation={item.drop_loc.name}
                                 orderStatus={item.order_status} 
-                                customerName={item.customer_name} 
+                                customerName={item.customer.user_info.name} 
                                 />
                         </View>
                     </TouchableOpacity>
@@ -112,17 +112,17 @@ const OrderDetail = ({pickUpLocation, dropLocation, orderStatus, customerName })
         <Text style={{
             fontSize: 18,
             fontWeight: "bold",
-        }}>Picked up from: {pickUpLocation}</Text>
+        }}>From: {pickUpLocation}</Text>
         <Text style={{
             fontSize: 16,
             fontWeight: "500",
-        }}>Delivered to: {dropLocation}</Text>
+        }}>To: {dropLocation}</Text>
         <Text
             style={{
                 fontSize: 15,
                 fontWeight: "400",
             }}
-        >Delivery status: {orderStatus}</Text>
+        >Status: {orderStatus}</Text>
         <Text>Customer name: {customerName}</Text>
     </View>
 )
