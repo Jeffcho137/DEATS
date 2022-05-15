@@ -9,13 +9,13 @@ import { DEATS_SERVER_URL, ROUTE_ORDER_DEL } from '../utils/Constants';
 import { io } from 'socket.io-client';
 
 export function Order_selection ({ navigation }) {
-    // let socket = io(DEATS_SERVER_URL, {
+    let socket = io(DEATS_SERVER_URL, {
        
-    //   });
+      });
 
-    // socket.on("connect", () => {
-    //     console.log("connected", socket.id)
-    // });
+    socket.on("connect", () => {
+        console.log("connected", socket.id)
+    });
 
     const dispatch = useDispatch()
     const user_id = useSelector(selectId)
@@ -70,7 +70,15 @@ export function Order_selection ({ navigation }) {
             .then((data) => {
                 console.log(data)
                 if (data.succeeded == true) {
-                    dispatch(setOrderId(data.order.order_id))
+                    order_id = data.order.order_id
+
+                    // create a new room for the customer using the order_id
+                    socket.emit("join", order_id, (response) => {
+                        console.log("server join room response", response); 
+                    });
+
+                    dispatch(setOrderId(order_id))
+
                     navigation.navigate('OrderSearch') 
 
                 } else {
