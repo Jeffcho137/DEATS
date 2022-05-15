@@ -11,11 +11,9 @@ import { io } from 'socket.io-client';
 export function Order_selection ({ navigation }) {
     const [socket, setSocket] = useState(null)
     useEffect(() =>  { 
-        setSocket(io(DEATS_SERVER_URL, { }))
-    }, [])
+        const socket = io(DEATS_SERVER_URL, { })
 
-    useEffect(() =>  { 
-        socket?.on("connect", () => {
+        socket.on("connect", () => {
             console.log("socket id:", socket.id)
 
             const engine = socket.io.engine;
@@ -25,9 +23,10 @@ export function Order_selection ({ navigation }) {
                console.log("transport after upgrade:", engine.transport.name)
             })
         })
-    }, [socket])
-  
-    
+
+        setSocket(socket)
+    }, [])
+ 
     console.log("socket: ", socket)
     console.log("socket is connected:", socket?.connected)
     
