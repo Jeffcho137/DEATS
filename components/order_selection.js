@@ -114,7 +114,6 @@ export function Order_selection ({ navigation }) {
                     </View>
                 </View>
                 <Button color="#006400" title="Confirm" onPress={sendOrdererInfo}></Button>
-            
                 <StatusBar style="auto" />
             </View>
         )
