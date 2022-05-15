@@ -87,7 +87,12 @@ export function Order_selection ({ navigation }) {
                     order_id = data.order.order_id
 
                     // create a new room for the customer using the order_id
-                    socket.emit("join", order_id, (response) => {
+                    socket.emit("join", 
+                    {
+                        order_id: order_id, 
+                        user_id: user_id
+                    }, 
+                    (response) => {
                         console.log("server join room response", response); 
                     });
 
