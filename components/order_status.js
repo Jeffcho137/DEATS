@@ -13,10 +13,11 @@ export function Order_status ({ navigation }) {
         <View style={styles.container}>
             <View style={styles.order_sel}>
                 <Text style={styles.searching_text}>Delivery Confirmed!</Text>
-                <Text style={styles.searching_text}>{delivererInfo.name} is on his way to {pickUpLocation.address}</Text>
+                <Text style={styles.searching_text}>{delivererInfo.name} is on his way to {pickUpLocation.name}</Text>
                 <Text style={styles.searching_text}>Your food is picked up</Text>
                 <Text style={styles.searching_text}>Delivered</Text>
             </View>
+            <Button title="GET" onPress={() => navigation.navigate("OrderCode")}></Button>
             <Button title="I got my food!" onPress={() => navigation.navigate('Completed')}></Button>
             <StatusBar style="auto" />
         </View>
