@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button, TextInput } from 'react-native';
 import styles from '../style';
@@ -9,14 +9,28 @@ import { DEATS_SERVER_URL, ROUTE_ORDER_DEL } from '../utils/Constants';
 import { io } from 'socket.io-client';
 
 export function Order_selection ({ navigation }) {
-    let socket = io(DEATS_SERVER_URL, {
-       
-      });
+    const [socket, setSocket] = useState(null)
+    useEffect(() =>  { 
+        setSocket(io(DEATS_SERVER_URL, { }))
+    }, [])
 
-    socket.on("connect", () => {
-        console.log("connected", socket.id)
-    });
+    useEffect(() =>  { 
+        socket?.on("connect", () => {
+            console.log("socket id:", socket.id)
 
+            const engine = socket.io.engine;
+            console.log("transport before upgrade:", engine.transport.name)
+
+            engine.once("upgrade", () => {
+               console.log("transport after upgrade:", engine.transport.name)
+            })
+        })
+    }, [socket])
+  
+    
+    console.log("socket: ", socket)
+    console.log("socket is connected:", socket?.connected)
+    
     const dispatch = useDispatch()
     const user_id = useSelector(selectId)
     const number = useSelector(selectPhoneNum)
