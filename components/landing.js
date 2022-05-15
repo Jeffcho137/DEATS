@@ -26,8 +26,11 @@ export function Landing ({ navigation }) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            email: typedEmail,
-            password: typedPassword,
+            user_info: {
+              email: typedEmail,
+            },
+
+            password: typedPassword
         })
     })
     .then(response => response.json())
@@ -35,14 +38,14 @@ export function Landing ({ navigation }) {
         console.log("login status:", data.succeeded);
         if (data.succeeded == true) {
             console.log("login results:", data);
-            dispatch(setId(data.id))
-            dispatch(setEmail(data.email))
-            dispatch(setName(data.name))
-            dispatch(setPhoneNum(data.phoneNum))
+            dispatch(setId(data.user.user_id))
+            dispatch(setEmail(data.user.user_info.email))
+            dispatch(setName(data.user.user_info.name))
+            dispatch(setPhoneNum(data.user.user_info.phone_num))
            
             navigation.navigate('Home')
         } else {
-            console.log(data.msg);
+            console.log("server response", data);
             setSuccess(false)
             setMessage(data.msg)
         }

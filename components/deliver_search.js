@@ -44,7 +44,8 @@ export function Deliver_search ({ navigation }) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    id: id,
+                    user_info: {
+                    },
                     order_id: orderId,
                 })
             })
@@ -78,10 +79,10 @@ export function Deliver_search ({ navigation }) {
 
                             return(
                                 <View>
-                                    <Pressable onPress={() => displayModal(true, customers[i].pickup_loc_name, i)} style={styles.del_search_single_request}>
-                                        <Text style={{fontSize: 18, textAlign: 'center'}}>{customer.name}</Text>
-                                        <Text style={{fontSize: 18, textAlign: 'center'}}>Picking up from: {customer.pickup_loc_name}</Text>
-                                        <Text style={{fontSize: 18, textAlign: 'center'}}>Going to: {customer.drop_loc_name}</Text>
+                                    <Pressable onPress={() => displayModal(true, customers[i].order.pickup_loc.name, i)} style={styles.del_search_single_request}>
+                                        <Text style={{fontSize: 18, textAlign: 'center'}}>{customer.customer.user_info.name}</Text>
+                                        <Text style={{fontSize: 18, textAlign: 'center'}}>Picking up from: {customer.order.pickup_loc.name}</Text>
+                                        <Text style={{fontSize: 18, textAlign: 'center'}}>Going to: {customer.order.drop_loc.name}</Text>
                                     </Pressable>
                                 </View>
                             )
@@ -95,9 +96,9 @@ export function Deliver_search ({ navigation }) {
                         <View style={styles.centeredView}>
                             <View style={styles.modalView}>
                                 <View style={styles.del_modal_text}>
-                                    <Text style={{fontSize: 18}}>{customers[i].name}</Text>
-                                    <Text style={{fontSize: 18}}>Picking up from: {customers[i].pickup_loc_name}</Text>
-                                    <Text style={{fontSize: 18}}>Going to: {customers[i].drop_loc_name}</Text>
+                                    <Text style={{fontSize: 18}}>{customers[i].customer.user_info.name}</Text>
+                                    <Text style={{fontSize: 18}}>Picking up from: {customers[i].order.pickup_loc.name}</Text>
+                                    <Text style={{fontSize: 18}}>Going to: {customers[i].order.drop_loc.name}</Text>
                                     <Text style={{color:'red'}}>{errorMsg}</Text>
                                 </View>
                                 <View style={styles.del_modal_buttons}>
@@ -106,7 +107,7 @@ export function Deliver_search ({ navigation }) {
                                     </Pressable>
                                     <Pressable style={styles.del_modaL_cancel} onPress={() => {
                                         displayModal(false, customers[i].name, i);
-                                        match(customers[i].order_id);
+                                        match(customers[i].order.order_id);
                                         }}>
                                         <Text style={{fontSize: 15, textAlign: 'center'}}>Match!</Text>
                                     </Pressable>

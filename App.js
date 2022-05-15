@@ -23,11 +23,14 @@ import { Logo } from './components/image.js';
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import Deliveries from "./components/deliveries";
+import SSOLogin from "./components/sso_login";
 
 const AppNavigator = createStackNavigator(
   {
+    SSOLogin: { screen: SSOLogin },
     Landing: { screen: Landing },
     Signup: { screen: Signup },
+    
     Login: { screen: Login },
     Home: { screen: Home },
     Profile: { screen: Profile },
@@ -49,7 +52,7 @@ const AppNavigator = createStackNavigator(
   },
 
   {
-    initialRouteName: "Landing",
+    initialRouteParams: "SSSLogin",
   }
 );
 

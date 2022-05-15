@@ -43,7 +43,7 @@ const static_orders = [
     }
 ]
 
-const retrieveOrders = (id, setUserOrders) => {
+const retrieveOrders = (user_id, setUserOrders) => {
     fetch(`${DEATS_SERVER_URL}${ROUTE_ORDERS}`,
     {
         method: 'POST',
@@ -52,12 +52,12 @@ const retrieveOrders = (id, setUserOrders) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            id: id,
+            user_id: user_id,
         })
     })
     .then(response => response.json())
     .then((data) => {
-        console.log("id", id);
+        console.log("user_id", user_id);
         console.log("data", data);
         console.log("orders", data.orders);
         setUserOrders(data.orders);
@@ -76,7 +76,7 @@ export default function Orders({navigation}) {
         {user_orders?.length ?
             (<FlatList
                 data={user_orders}
-                keyExtractor={(item) => item.id}
+                keyExtractor={(item) => item._id}
                 vertical
                 renderItem={({ item }) => (
                     <TouchableOpacity>
@@ -90,10 +90,10 @@ export default function Orders({navigation}) {
                                 style={{ width: "50%", height: "100%", borderRadius: 25, marginRight: 15}}
                                 source={{ uri: item.deliverer_img_url ? item.deliverer_img_url : static_orders[0].deliverer_img_url}} />
                             <OrderDetail 
-                                pickUpLocation={item.pickup_loc_name}
-                                dropLocation={item.drop_loc_name}
+                                pickUpLocation={item.pickup_loc.name}
+                                dropLocation={item.drop_loc.name}
                                 orderStatus={item.order_status} 
-                                delvererName={item.deliverer_name} 
+                                delvererName={item.deliverer?.user_info?.name} 
                                 />
                         </View>
                     </TouchableOpacity>
@@ -112,17 +112,17 @@ const OrderDetail = ({pickUpLocation, dropLocation, orderStatus, delvererName })
         <Text style={{
             fontSize: 18,
             fontWeight: "bold",
-        }}>Picked up from: {pickUpLocation}</Text>
+        }}>From: {pickUpLocation}</Text>
         <Text style={{
             fontSize: 16,
             fontWeight: "500",
-        }}>Delivered to: {dropLocation}</Text>
+        }}>To: {dropLocation}</Text>
         <Text
             style={{
                 fontSize: 15,
                 fontWeight: "400",
             }}
-        >Delivery status: {orderStatus}</Text>
+        >Status: {orderStatus}</Text>
         <Text>Deliverer name: {delvererName}</Text>
     </View>
 )

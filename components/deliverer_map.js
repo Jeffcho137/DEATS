@@ -239,15 +239,19 @@ const Del_map = ({ navigation }) => {
         onPress={() => 
           {
             dispatch(setStartingPoint({
-              lat: startRegion.latitude, 
-              long: startRegion.longitude, 
-              address: start_address
+              coordinates: {
+                lat: startRegion.latitude, 
+                long: startRegion.longitude, 
+              },
+              name: start_address
             }))
 
             dispatch(setDestination({
-              lat: finRegion.latitude, 
-              long: finRegion.longitude, 
-              address: destination_address
+              coordinates: {
+                lat: finRegion.latitude, 
+                long: finRegion.longitude, 
+              },
+              name: destination_address
             }))
 
           navigation.navigate("DeliverySelection", {chosen: true})
