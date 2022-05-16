@@ -6,30 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectId, selectPhoneNum } from '../redux/slices/userSlice';
 import { selectDropLocation, selectPickupLocation, setOrderId, setPickupLocation } from '../redux/slices/orderDeliverySlice';
 import { DEATS_SERVER_URL, ROUTE_ORDER_DEL } from '../utils/Constants';
-import { io } from 'socket.io-client';
+import { useClientSocket } from './client_socket';
 
-export function Order_selection ({ navigation }) {
-    const [socket, setSocket] = useState(null)
-    useEffect(() =>  { 
-        const socket = io(DEATS_SERVER_URL, { })
 
-        socket.on("connect", () => {
-            console.log("socket id:", socket.id)
-
-            const engine = socket.io.engine;
-            console.log("transport before upgrade:", engine.transport.name)
-
-            engine.once("upgrade", () => {
-               console.log("transport after upgrade:", engine.transport.name)
-            })
-        })
-
-        setSocket(socket)
-    }, [])
- 
-    console.log("socket: ", socket)
-    console.log("socket is connected:", socket?.connected)
-    
+export function Order_selection ({ navigation }) { 
     const dispatch = useDispatch()
     const user_id = useSelector(selectId)
     const number = useSelector(selectPhoneNum)
@@ -39,6 +19,12 @@ export function Order_selection ({ navigation }) {
     const [room, setRoom] = useState("")
     const [startTime, setStartTime] = useState(0)
     const [endTime, setEndTime] = useState(0)
+
+    const [joinRoomForOrder] = useClientSocket({
+        userId: user_id,
+        orderId: null,
+        enabled: Boolean(user_id)
+    })
 
     const selectTheHop = () => {
         dispatch(setPickupLocation({
@@ -85,15 +71,7 @@ export function Order_selection ({ navigation }) {
                 if (data.succeeded == true) {
                     order_id = data.order.order_id
 
-                    // create a new room for the customer using the order_id
-                    socket.emit("join", 
-                    {
-                        order_id: order_id, 
-                        user_id: user_id
-                    }, 
-                    (response) => {
-                        console.log("server join room response", response); 
-                    });
+                    joinRoomForOrder(order_id)
 
                     dispatch(setOrderId(order_id))
 
