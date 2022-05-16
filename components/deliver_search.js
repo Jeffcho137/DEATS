@@ -6,17 +6,24 @@ import { useSelector, useDispatch, dispatch } from 'react-redux';
 import { selectId } from '../redux/slices/userSlice';
 import { selectUnmatchedCustomers, setSelectedCustomer } from '../redux/slices/makeDeliverySlice';
 import { DEATS_SERVER_URL, ROUTE_MATCH } from '../utils/Constants';
+import { useClientSocket } from './client_socket';
 
 export function Deliver_search ({ navigation }) {
     ///
     const dispatch = useDispatch()
 
-    const id = useSelector(selectId)
+    const user_id = useSelector(selectId)
     const unmatchedCustomers = useSelector(selectUnmatchedCustomers)
 
     const [modal, setModal] = useState(false)
     const [errorMsg, setErrorMsg] = useState("")
     const [i, setI] = useState(0)
+
+    const [joinRoomForOrder] = useClientSocket({
+        userId: user_id,
+        orderId: null,
+        enabled: Boolean(user_id)
+    })
 
     if (!Object.keys(unmatchedCustomers).length) {
         return (
@@ -54,6 +61,8 @@ export function Deliver_search ({ navigation }) {
                 console.log(data)
                 console.log("delivery search -> id:", data.id)
                 if (data.succeeded == 1) {
+                    // only add the deliverer to the order room only if they succeed in matching the customer
+                    joinRoomForOrder(orderId)
                     navigation.navigate('DeliverMatch')
                     
                 } else {
