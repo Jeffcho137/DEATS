@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, FlatList, TouchableOpacity} from "react-native";
+import { View, Text, Image, FlatList, TouchableOpacity, Pressable} from "react-native";
 import { useSelector } from "react-redux";
 import { selectId } from "../redux/slices/userSlice";
 import { DEATS_SERVER_URL, ROUTE_ORDERS } from "../utils/Constants";
+import styles from '../style'
 
 const static_orders = [
     {
@@ -99,10 +100,12 @@ export default function Orders({navigation}) {
                     </TouchableOpacity>
                 )}
             />) : 
-            <Text style={{
-                fontSize: 20,
-                fontWeight: "bold"
-            }} >No orders</Text>}
+            <View style={styles.past_deliveries_cont}>
+                <Text style={styles.past_deliveries_none} >No Orders Yet</Text>
+                <Pressable style={styles.past_del_make} onPress={() => navigation.navigate('OrderSelection',{})}>
+                    <Text style={{fontSize: 20, textAlign: 'center'}}>Make an order now!</Text>
+                </Pressable>
+            </View>}
        </>
     )
 }

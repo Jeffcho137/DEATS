@@ -9,7 +9,6 @@ export function Home ({ navigation }) {
     return (
         <View style={styles.container}>
             <View style={styles.home_profile_button}>
-                <Button color="#006400" title="Profile" onPress={() => navigation.navigate('Profile')}></Button>
                  <Logo/>
             </View>
             <View style={styles.home_options}>

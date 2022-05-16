@@ -122,21 +122,19 @@ const styles = StyleSheet.create({
     },
 
     home_profile_button: {
-      flex: 0.25,
-      // alignSelf: 'flex-start',
+      flex: 0.3,
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      justifyContent: 'flex-end',
       margin: 10,
     },
 
     home_options: {
       flex: 0.8,
       width: '60%',
-      marginTop: 110,
     },
 
     home_buttons: {
-      flex: 0.3,
+      flex: 0.4,
       justifyContent: 'center',
       borderWidth: 1,
       borderRadius: 10,
@@ -144,9 +142,10 @@ const styles = StyleSheet.create({
     },
 
     profile_heading: {
-      flex: 0.1,
+      // flex: 0.6,
       width: '90%',
       alignItems:'flex-end',
+      paddingTop: 20,
     },
 
     profile_name: {
@@ -154,15 +153,16 @@ const styles = StyleSheet.create({
     },
 
     phone_number: {
-      flex: 0.1,
+      flex: 0.9,
       width: '90%',
+      paddingTop: 20,
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       justifyContent: 'space-between',
     },
 
     profile_text: {
-      fontSize: 15,
+      fontSize: 18,
     },
 
     payment: {
@@ -179,9 +179,28 @@ const styles = StyleSheet.create({
       flex: 0.3,
     },
 
-    past_deliveries: {
-      width: '90%',
-      flex: 0.3,
+    past_deliveries_cont: {
+      backgroundColor: '#FFFFFF',
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      // marginTop: 50,
+    },
+
+    past_deliveries_none: {
+      fontSize: 20,
+      // backgroundColor: 'coral',
+      flex: 0.2,
+    },
+
+    past_del_make: {
+      flex: 0.2,
+      // backgroundColor: 'coral',
+      justifyContent: 'center',
+      width: '70%',
+      marginTop: 10,
+      borderRadius: 10,
+      borderWidth: 2,
     },
 
     order_sel: {
