@@ -1,8 +1,11 @@
 import {useEffect, useRef, useState} from 'react';
+import { useDispatch } from 'react-redux';
 import io from 'socket.io-client';
+import { setDelivererId, setDelivererInfo } from '../redux/slices/orderDeliverySlice';
 import { DEATS_SERVER_URL } from '../utils/Constants';
 
 export const useClientSocket = ({userId, orderId, enabled}) => {
+  const dispatch = useDispatch();
   const ref = useRef(null);
 
   const joinRoomForOrder = (orderId) => {
@@ -48,7 +51,9 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
     });
 
     socket.on('order:deliverer', (deliverer) => {
-      console.log("A deliverer has entered the room:", deliverer);
+      dispatch(setDelivererInfo(deliverer.user_info))
+      dispatch(setDelivererId(deliverer.user_id))
+      console.log(userId, "A deliverer has entered the room:", deliverer);
     });
 
     ref.current = socket;
