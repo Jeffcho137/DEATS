@@ -30,6 +30,7 @@ export function Deliver_status(props) {
 
   const track = (order_status) => {
     //console.log("orderId", orderId)
+    console.log("kdfhjdlkfjhldkfj", order_id)
     fetch(`${DEATS_SERVER_URL}${ROUTE_UPDATE_ORDER}`, {
       method: "POST",
       headers: {
@@ -37,13 +38,11 @@ export function Deliver_status(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: customer.customer_id,
-        order_id: customer.order_id,
-        pickup_loc: customer.pickup_loc,
-        pickup_loc_name: customer.pickup_loc_name,
-        drop_loc: customer.drop_loc,
-        drop_loc_name: customer.drop_loc_name,
-        order_status: order_status,
+        order: {
+          "order_status" : order_status,
+          "order_id": customer.order.order_id
+        },
+        user_id: id
       }),
     })
       .then((response) => response.json())
@@ -64,13 +63,13 @@ export function Deliver_status(props) {
   return (
     <View style={styles.container}>
       <View style={styles.status}>
-        <Text style={styles.status_text}>Are you on your way to {customer.pickup_loc_name} ?</Text>
+        <Text style={styles.status_text}>Are you on your way to {customer.order.pickup_loc.name} ?</Text>
         <View style={styles.status_yes_button}>
           <Button
             title="Yes!"
             onPress={() => {
               console.log("customer", customer);
-              track("C");
+              track(`heading ${customer.order.pickup_loc.name}`);
             }}
           ></Button>
         </View>
@@ -79,16 +78,16 @@ export function Deliver_status(props) {
           <Button
             title="Yes!"
             onPress={() => {
-              track("F");
+              track("picked_up");
             }}
           ></Button>
         </View>
-        <Text style={styles.status_text}>On your way to {customer.drop_loc_name} ?</Text>
+        <Text style={styles.status_text}>On your way to {customer.order.drop_loc.name} ?</Text>
         <View style={styles.status_yes_button}>
           <Button
             title="Yes!"
             onPress={() => {
-              track("M");
+              track(`heading ${customer.order.drop_loc.name}`);
             }}
           ></Button>
         </View>
@@ -102,7 +101,9 @@ export function Deliver_status(props) {
           ></Button>
         </View>
       </View>
-      <Button title="Food is delivered!" onPress={() => props.navigation.navigate("Completed")}></Button>
+      <Button title="Food is delivered!" onPress={() => {
+        track("delivered") 
+        props.navigation.navigate("Completed")}}></Button>
       <StatusBar style="auto" />
     </View>
   );
