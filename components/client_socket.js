@@ -47,6 +47,10 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
       console.log('user:', userId, 'message:', message);
     });
 
+    socket.on('order:deliverer', (deliverer) => {
+      console.log("A deliverer has entered the room:", deliverer);
+    });
+
     ref.current = socket;
 
     // disconnect after component unmount
