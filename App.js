@@ -24,11 +24,9 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import Deliveries from "./components/deliveries";
 import SSOLogin from "./components/sso_login";
-import { DateTime } from "./components/date_time";
 
 const AppNavigator = createStackNavigator(
   {
-    DateTime: { screen: DateTime },
     SSOLogin: { screen: SSOLogin },
     Landing: { screen: Landing },
     Signup: { screen: Signup },

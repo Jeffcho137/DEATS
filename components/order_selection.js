@@ -7,6 +7,7 @@ import { selectId, selectPhoneNum } from '../redux/slices/userSlice';
 import { selectDropLocation, selectPickupLocation, setOrderId, setPickupLocation } from '../redux/slices/orderDeliverySlice';
 import { DEATS_SERVER_URL, ROUTE_ORDER_DEL } from '../utils/Constants';
 import { useClientSocket } from './client_socket';
+import { DateTime } from './date_time';
 
 
 export function Order_selection ({ navigation }) { 
@@ -17,8 +18,7 @@ export function Order_selection ({ navigation }) {
     const pickupLocation = useSelector(selectPickupLocation)
  
     const [room, setRoom] = useState("")
-    const [startTime, setStartTime] = useState(0)
-    const [endTime, setEndTime] = useState(0)
+    const [date, setDate] = useState(new Date(Date.now()));
 
     const [joinRoomForOrder] = useClientSocket({
         userId: user_id,
@@ -109,13 +109,10 @@ export function Order_selection ({ navigation }) {
                         <TextInput style={styles.single_input} placeholder={number} onChangeText={text => {}}></TextInput>
                     </View>
                 </View>
-                <View style={styles.order_sel}>
-                    <Text style={styles.order_sel_text}>I want my food between</Text>
-                    <View style={styles.order_sel_times}>
-                        <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
-                        <Text style={styles.order_sel_times_text}>and</Text>
-                        <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
-                    </View>
+                <View style={{
+                    marginBottom: 30,
+                }} >
+                    <DateTime date={date} setDate={setDate}></DateTime>
                 </View>
                 <Button color="#006400" title="Confirm" onPress={sendOrdererInfo}></Button>
                 <StatusBar style="auto" />
@@ -144,13 +141,10 @@ export function Order_selection ({ navigation }) {
                         <TextInput style={styles.single_input} placeholder='number' onChangeText={text => {}}></TextInput>
                     </View>
                 </View>
-                <View style={styles.order_sel}>
-                    <Text style={styles.order_sel_text}>I want my food between</Text>
-                    <View style={styles.order_sel_times}>
-                        <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
-                        <Text style={styles.order_sel_times_text}>and</Text>
-                        <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
-                    </View>
+                <View style={{
+                    marginBottom: 30,
+                }} >
+                    <DateTime date={date} setDate={setDate}></DateTime>
                 </View>
                 <Button title="Search" onPress={sendOrdererInfo}></Button>
                 <StatusBar style="auto" />

@@ -230,7 +230,6 @@ const styles = StyleSheet.create({
     order_sel_input_box: {
       flex: 1,
       marginLeft: '2%',
-      marginBottom: 150
     }, 
 
     single_input: {
