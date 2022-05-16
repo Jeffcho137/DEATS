@@ -2,10 +2,10 @@ import {useEffect, useRef, useState} from 'react';
 import io from 'socket.io-client';
 import { DEATS_SERVER_URL } from '../utils/Constants';
 
-const useClientSocket = ({userId, orderId, enabled}) => {
+export const useClientSocket = ({userId, orderId, enabled}) => {
   const ref = useRef(null);
 
-  const joinRoomForOrder = (userId, orderId) => {
+  const joinRoomForOrder = (orderId) => {
     ref.current?.emit("join", {
         order_id: orderId, 
         user_id: userId
@@ -44,7 +44,7 @@ const useClientSocket = ({userId, orderId, enabled}) => {
     });
 
     socket.on('message', (message) => {
-      console.log('message:', message);
+      console.log('user:', userId, 'message:', message);
     });
 
     ref.current = socket;
@@ -53,8 +53,5 @@ const useClientSocket = ({userId, orderId, enabled}) => {
     return () => socket.disconnect();
   }, [enabled, orderId]);
 
-  return {
-    joinRoomForOrder,
-    messages,
-  };
+  return [joinRoomForOrder]
 };
