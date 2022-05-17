@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button, Modal, Pressable} from 'react-native';
 import styles from '../style';
 import { useSelector, useDispatch, dispatch } from 'react-redux';
 import { selectId } from '../redux/slices/userSlice';
-import { selectUnmatchedCustomers, setSelectedCustomer } from '../redux/slices/makeDeliverySlice';
+import { selectDestination, selectStartingPoint, selectUnmatchedCustomers, setSelectedCustomer } from '../redux/slices/makeDeliverySlice';
 import { DEATS_SERVER_URL, ROUTE_MATCH } from '../utils/Constants';
 import { useClientSocket } from './client_socket';
+import { makeDelivery } from './delivery_selection';
 
 export function Deliver_search ({ navigation }) {
     ///
     const dispatch = useDispatch()
 
-    const user_id = useSelector(selectId)
+    const userId = useSelector(selectId)
+    const startPoint = useSelector(selectStartingPoint)
+    const destination = useSelector(selectDestination)
     const unmatchedCustomers = useSelector(selectUnmatchedCustomers)
 
     const [modal, setModal] = useState(false)
@@ -20,10 +23,14 @@ export function Deliver_search ({ navigation }) {
     const [i, setI] = useState(0)
 
     const [joinRoomForOrder] = useClientSocket({
-        userId: user_id,
+        userId: userId,
         orderId: null,
-        enabled: Boolean(user_id)
+        enabled: Boolean(userId)
     })
+
+    useEffect(() => {
+        makeDelivery(userId, startPoint, destination, dispatch) 
+    }, [])
 
     if (!Object.keys(unmatchedCustomers).length) {
         return (
