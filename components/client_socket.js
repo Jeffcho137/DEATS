@@ -50,10 +50,62 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
       console.log('user:', userId, 'message:', message);
     });
 
-    socket.on('order:deliverer', (deliverer) => {
-      dispatch(setDelivererInfo(deliverer.user_info))
-      dispatch(setDelivererId(deliverer.user_id))
-      console.log(userId, "A deliverer has entered the room:", deliverer);
+    // FROM DELIVERER: announcements for customer 
+    socket.on('del:order_status:cus', (order_status) => {
+      
+      console.log(userId, "The deliverer has updated the order status to:", order_status);
+    });
+
+    socket.on('del:match:cus', (payload) => {
+      dispatch(setDelivererInfo(payload.deliverer.user_info))
+      dispatch(setDelivererId(payload.deliverer.user_id))
+      console.log(userId, "A deliverer has requested to match with your order:", payload);
+    });
+
+
+    // FROM DELIVERER: announcements for all connected clients 
+    socket.on('del:match:all', (order_id) => {
+      
+      console.log(userId, `The order, ${order_id}, has been matched`);
+    });
+
+
+    // FROM CUSTOMER: announcements for deliverer 
+    socket.on('cus:update:del', (updated_payload) => {
+      
+      console.log(userId, `The customer has updated the order with: ${updated_payload}`);
+    });
+
+    socket.on('cus:unmatch:del', (payload) => {
+      
+      console.log(userId, `The customer has unmatched you from the order: ${payload}`);
+    });
+
+    socket.on('cus:cancel:del', (payload) => {
+      
+      console.log(userId, `The customer has canceled the order: ${payload}`);
+    });
+
+    
+    // FROM CUSTOMER: announcements for all connected clients
+    socket.on('cus:new:all', (order_id) => {
+      
+      console.log(userId, "A new order has been created:", order_id);
+    });
+
+    socket.on('cus:update:all', (order_id) => {
+      
+      console.log(userId, `The order, ${order_id}, has been updated`);
+    });
+
+    socket.on('cus:unmatch:all', (order_id) => {
+      
+      console.log(userId, `The deliverer on the order, ${order_id}, has been unmatched`);
+    });
+
+    socket.on('cus:cancel:all', (order_id) => {
+      
+      console.log(userId, `The order, ${order_id}, has been canceled`);
     });
 
     ref.current = socket;
