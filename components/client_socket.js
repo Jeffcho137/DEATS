@@ -1,6 +1,7 @@
 import {useEffect, useRef, useState} from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
+import { selectSelectedCustomer, setSelectedCustomer } from '../redux/slices/makeDeliverySlice';
 import { setDelivererId, setDelivererInfo } from '../redux/slices/orderDeliverySlice';
 import { DEATS_SERVER_URL } from '../utils/Constants';
 
@@ -52,7 +53,8 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
 
     // FROM DELIVERER: announcements for customer 
     socket.on('del:order_status:cus', (order_status) => {
-      
+      const customer = useSelector(selectSelectedCustomer)
+      dispatch(setSelectedCustomer({...customer, order_status: order_status}))
       console.log(userId, "The deliverer has updated the order status to:", order_status);
     });
 
