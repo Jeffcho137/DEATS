@@ -8,6 +8,7 @@ import { selectDestination, selectStartingPoint, selectUnmatchedCustomers, setSe
 import { DEATS_SERVER_URL, ROUTE_MATCH } from '../utils/Constants';
 import { useClientSocket } from './client_socket';
 import { makeDelivery } from './delivery_selection';
+import { selectToggle } from '../redux/slices/socketSlice';
 
 export function Deliver_search ({ navigation }) {
     ///
@@ -17,6 +18,7 @@ export function Deliver_search ({ navigation }) {
     const startPoint = useSelector(selectStartingPoint)
     const destination = useSelector(selectDestination)
     const unmatchedCustomers = useSelector(selectUnmatchedCustomers)
+    const toggle = useSelector(selectToggle)
 
     const [modal, setModal] = useState(false)
     const [errorMsg, setErrorMsg] = useState("")
@@ -30,7 +32,7 @@ export function Deliver_search ({ navigation }) {
 
     useEffect(() => {
         makeDelivery(userId, startPoint, destination, dispatch) 
-    }, [])
+    }, [toggle])
 
     if (!Object.keys(unmatchedCustomers).length) {
         return (

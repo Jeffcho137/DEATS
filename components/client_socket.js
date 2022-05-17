@@ -1,14 +1,13 @@
-import {useEffect, useRef, useState} from 'react';
+import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
-import { selectDestination, selectSelectedCustomer, selectStartingPoint, setSelectedCustomer } from '../redux/slices/makeDeliverySlice';
-import { selectOrderId, setDelivererId, setDelivererInfo } from '../redux/slices/orderDeliverySlice';
-import { selectId } from '../redux/slices/userSlice';
+import { selectSelectedCustomer, setSelectedCustomer } from '../redux/slices/makeDeliverySlice';
+import { setDelivererId, setDelivererInfo } from '../redux/slices/orderDeliverySlice';
+import { selectToggle, setToggle } from '../redux/slices/socketSlice';
 import { DEATS_SERVER_URL } from '../utils/Constants';
 
 export const useClientSocket = ({userId, orderId, enabled}) => {
-  const startPoint = useSelector(selectStartingPoint)
-  const destination = useSelector(selectDestination)
+  const toggle = useSelector(selectToggle)
   
   const dispatch = useDispatch();
   const ref = useRef(null);
@@ -71,7 +70,7 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
 
     // FROM DELIVERER: announcements for all connected clients 
     socket.on('del:match:all', (order_id) => {
-
+      dispatch(setToggle(!toggle))
       console.log(`${userId},`, `The order, ${order_id}, has been matched`);
     });
 
@@ -95,7 +94,7 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
     
     // FROM CUSTOMER: announcements for all connected clients
     socket.on('cus:new:all', (order_id) => {
-      
+      dispatch(setToggle(!toggle))
       console.log(`${userId},`, "A new order has been created:", order_id);
     });
 
