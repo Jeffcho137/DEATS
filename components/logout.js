@@ -1,4 +1,5 @@
-import { Button } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const DEATSLogout = (logoutURL) => {
     fetch(logoutURL,
@@ -23,12 +24,19 @@ const DEATSLogout = (logoutURL) => {
 
 export default logout = ({  navigation }) => ({
     headerRight: () => (
-      <Button
-        title="Logout"
-        onPress={() => {
-            navigation.navigate("SSOLogout");
-        }}
-        color="#fff"
-      />
+      <LogoutButton navigation={navigation} />
     ),
 })
+
+const LogoutButton = ({navigation}) => (
+    <TouchableOpacity style={{
+        alignItems: "center",
+        }}
+        onPress={() => {navigation.navigate("SSOLogout")}}
+    >
+        < MaterialCommunityIcons name="logout" size={26} style={{ 
+            color: "white",
+            marginRight: 10,
+        }}/>
+    </TouchableOpacity>
+)
