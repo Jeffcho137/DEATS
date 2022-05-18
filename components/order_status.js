@@ -23,6 +23,8 @@ export function Order_status ({ navigation }) {
     // const order_status = useSelector(selectorder)
     joinRoomForOrder(orderId)
     const customer = useSelector(selectSelectedCustomer)
+    console.log("here userID", user_id)
+    console.log("here userID2", user_id)
 
     return (
 
@@ -33,6 +35,7 @@ export function Order_status ({ navigation }) {
                 <Text style={styles.searching_text}>Your food is picked up</Text>
                 <Text style={styles.searching_text}>Delivered</Text> */}
                 {customer?.order_status}
+                <Text style={styles.searching_text}>{customer?.order_status}</Text>
             </View>
             <Button title="GET" onPress={() => navigation.navigate("OrderCode")}></Button>
             <Button title="I got my food!" onPress={() => navigation.navigate('Completed')}></Button>
