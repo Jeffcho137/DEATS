@@ -485,7 +485,14 @@ const styles = StyleSheet.create({
       //paddingBottom: 0,
       //borderWidth: 1,
       //borderRadius: 5,
-    }
+    },
+
+    payment_button: {
+      width: '60%',
+      borderWidth: 1,
+      borderRadius: 5,
+      marginBottom: '5%',
+    },
 
 })
 

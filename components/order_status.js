@@ -19,6 +19,7 @@ export function Order_status ({ navigation }) {
             </View>
             <Button title="GET" onPress={() => navigation.navigate("OrderCode")}></Button>
             <Button title="I got my food!" onPress={() => navigation.navigate('Completed')}></Button>
+            <Button title="Go to Payment" onPress={() => navigation.navigate("Payment")}></Button>
             <StatusBar style="auto" />
         </View>
     )
