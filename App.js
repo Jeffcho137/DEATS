@@ -24,6 +24,7 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import Deliveries from "./components/deliveries";
 import SSOLogin from "./components/sso_login";
+import DelivererSearch from "./components/deliverer_search";
 
 const AppNavigator = createStackNavigator(
   {
@@ -38,6 +39,7 @@ const AppNavigator = createStackNavigator(
     DeliverySelection: { screen: Delivery_selection },
     OrderSearch: { screen: Order_search },
     DeliverSearch: { screen: Deliver_search },
+    DelivererSearch: { screen: DelivererSearch },
     DeliverMatch: { screen: Deliver_match },
     Deliveries: { screen: Deliveries },
     OrderMatch: { screen: Order_match },

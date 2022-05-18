@@ -465,7 +465,24 @@ const styles = StyleSheet.create({
       //paddingBottom: 0,
       //borderWidth: 1,
       //borderRadius: 5,
-    }
+    },
+
+    orderItemStyle: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-around",
+      margin: 25
+  },
+
+  usernameStyle: {
+      fontSize: 24,
+      fontWeight: "600"
+  },
+
+  locationStyle: {
+      fontSize: 15,
+      fontWeight: "500",
+  }
 
 })
 

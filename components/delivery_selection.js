@@ -31,7 +31,7 @@ export const makeDelivery = (userId, startPoint, destination, dispatch, navigati
         console.log("type: ",Object.keys(data.unmatched_users).length)
         console.log("these are my unmatched orders", data.unmatched_users)
         dispatch(setUnmatchedCustomers(data.unmatched_users))
-        navigation?.navigate('DeliverSearch')
+        navigation?.navigate('DelivererSearch')
     })
     .catch(err => console.error(err));
 }

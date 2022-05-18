@@ -20,6 +20,8 @@ export function Deliver_search ({ navigation }) {
     const unmatchedCustomers = useSelector(selectUnmatchedCustomers)
     const toggle = useSelector(selectToggle)
 
+    console.log(userId, "toggle:", toggle)
+
     const [modal, setModal] = useState(false)
     const [errorMsg, setErrorMsg] = useState("")
     const [i, setI] = useState(0)
@@ -34,7 +36,7 @@ export function Deliver_search ({ navigation }) {
         makeDelivery(userId, startPoint, destination, dispatch) 
     }, [toggle])
 
-    if (!Object.keys(unmatchedCustomers).length) {
+    if (unmatchedCustomers && !Object.keys(unmatchedCustomers).length) {
         return (
             <View style={styles.container}>
                 <View style={styles.order_sel}>
