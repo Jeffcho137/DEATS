@@ -25,10 +25,12 @@ import { store } from "./redux/store";
 import Deliveries from "./components/deliveries";
 import SSOLogin from "./components/sso_login";
 import DelivererSearch from "./components/deliverer_search";
+import SSOLogout from "./components/sso_logout";
 
 const AppNavigator = createStackNavigator(
   {
     SSOLogin: { screen: SSOLogin },
+    SSOLogout: { screen: SSOLogout },
     Landing: { screen: Landing },
     Signup: { screen: Signup },
     
