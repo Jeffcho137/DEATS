@@ -55,6 +55,15 @@ const AppNavigator = createStackNavigator(
 
   {
     initialRouteParams: "SSSLogin",
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: 'green',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    },
   }
 );
 
