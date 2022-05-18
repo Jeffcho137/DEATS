@@ -4,12 +4,12 @@ import { useSelector, useDispatch, dispatch } from 'react-redux';
 import styles from '../style';
 import { selectId } from '../redux/slices/userSlice';
 import { selectDestination, selectStartingPoint, selectUnmatchedCustomers, setSelectedCustomer } from '../redux/slices/makeDeliverySlice';
-import { DEATS_SERVER_URL, ROUTE_MATCH } from '../utils/Constants';
 import { useClientSocket } from './client_socket';
 import { makeDelivery } from './delivery_selection';
 import { selectToggle } from '../redux/slices/socketSlice';
 import { Divider } from 'react-native-elements';
 import { static_deliveries } from './deliveries';
+import SelectedCustomer from './selected_customer';
 
 export default function DelivererSearch({ navigation }) {
     const userId = useSelector(selectId)
@@ -18,42 +18,73 @@ export default function DelivererSearch({ navigation }) {
     const unmatchedCustomers = useSelector(selectUnmatchedCustomers)
     const toggle = useSelector(selectToggle)
 
+    console.log(userId, "toggle:", toggle)
+
+    const [modalVisible, setModalVisible] = useState(false)
+    const [selectedCustomer, setTempSelectedCustomer] = useState(null)
+
+    const dispatch = useDispatch()
+
+    const [joinRoomForOrder] = useClientSocket({
+        userId: userId,
+        orderId: null,
+        enabled: Boolean(userId)
+    })
+
+    useEffect(() => {
+        makeDelivery(userId, startPoint, destination, dispatch) 
+    }, [toggle])
+
     return (
-        <FlatList 
-            data={unmatchedCustomers}
-            keyExtractor={(item) => item.order.order_id}
-            ItemSeparatorComponent={() => {
-                return(
-                    <Divider 
-                        width={1.5} 
-                        style={{ marginHorizontal: 110}}/>
-                )}}
-            renderItem={({item: {customer, order}}) => (
-                <TouchableOpacity 
-                    style={styles.orderItemStyle}>
-                    <ImageCustomer customer={customer}/>
-                    <OrderDetail customer={customer} order={order}/>
-                </TouchableOpacity>
-            )}
-        />
+        <>
+            <FlatList 
+                data={unmatchedCustomers}
+                keyExtractor={(item) => item.order.order_id}
+                ItemSeparatorComponent={() => {
+                    return(
+                        <Divider 
+                            width={1.5} 
+                            style={{ marginHorizontal: 110}}/>
+                    )}}
+                renderItem={({item: customer}) => (
+                    <TouchableOpacity 
+                        style={styles.orderItemStyle}
+                        onPress={() => {
+                            setTempSelectedCustomer(customer)
+                            setModalVisible(true)
+                        }}>
+                        <ImageCustomer customer={customer.customer}/>
+                        <OrderDetail customer={customer}/>
+                    </TouchableOpacity>
+                )}
+            />
+            <SelectedCustomer 
+                modalVisible={modalVisible} 
+                setModalVisible={setModalVisible} 
+                selectedCustomer={selectedCustomer} 
+                joinRoomForOrder={joinRoomForOrder}
+                navigation={navigation}
+                />
+        </>
+       
     )        
 }
 
-const OrderDetail = ({ customer, order}) => (
+const OrderDetail = ({ customer }) => (
     <View style={{ width: 200, height: 80, justifyContent: "space-around" }}>
-        <Text style={styles.usernameStyle}>{customer.user_info.username}</Text>
-
-        <View style={{ flexDirection: "row" }}>
-            <Text style={ styles.locationStyle }>Pickup from:  </Text>
-            <Text>{order.pickup_loc.name.split(",")[0]}</Text>
-        </View>
-
-        <View style={{ flexDirection: "row"}}>
-            <Text style={ styles.locationStyle }>Drop at:  </Text>
-            <Text>{order.drop_loc.name.split(",")[0]}</Text>
-        </View>
+        <Text style={styles.usernameStyle}>{customer.customer.user_info.username}</Text>
+        <OrderInfo title="Pickup from" loc_name={customer.order.pickup_loc.name}/>
+        <OrderInfo title="Drop at" loc_name={customer.order.drop_loc.name}/>
     </View>
 )
+
+const OrderInfo = ({ title, loc_name }) => (
+    <View style={{ flexDirection: "row"}}>
+            <Text style={ styles.locationStyle }>{title}:  </Text>
+            <Text>{loc_name.split(",")[0]}</Text>
+    </View>
+)
+
 
 const ImageCustomer = ({ customer }) => (
     <Image 
