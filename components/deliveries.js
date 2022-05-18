@@ -73,7 +73,7 @@ export default function Deliveries({ navigation }) {
     
     return (
         <>
-        {console.log("user_deliveries", user_deliveries.length, user_deliveries)}
+        {/* {console.log("user_deliveries", user_deliveries.length, user_deliveries)} */}
         {user_deliveries?.length ? 
             (<FlatList
                 data={user_deliveries}
@@ -101,9 +101,9 @@ export default function Deliveries({ navigation }) {
                 )}
             />) : 
             <View style={styles.past_deliveries_cont}>
-                <Text style={styles.past_deliveries_none} >No Deliveries Yet</Text>
+                <Text style={styles.past_deliveries_none} >No Deliveries Yet!</Text>
                 <Pressable style={styles.past_del_make} onPress={() => navigation.navigate('DeliverySelection')}>
-                    <Text style={{fontSize: 20, textAlign: 'center'}}>Make a delivery now!</Text>
+                    <Text style={styles.past_text}>Make a delivery now!</Text>
                 </Pressable>
             </View>}
        </>

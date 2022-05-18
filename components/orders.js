@@ -73,7 +73,7 @@ export default function Orders({navigation}) {
     
     return (
         <>
-        {console.log("user_orders", user_orders.length, user_orders)}
+        {/* {console.log("user_orders", user_orders.length, user_orders)} */}
         {user_orders?.length ?
             (<FlatList
                 data={user_orders}
@@ -101,9 +101,9 @@ export default function Orders({navigation}) {
                 )}
             />) : 
             <View style={styles.past_deliveries_cont}>
-                <Text style={styles.past_deliveries_none} >No Orders Yet</Text>
+                <Text style={styles.past_deliveries_none} >No Orders Yet!</Text>
                 <Pressable style={styles.past_del_make} onPress={() => navigation.navigate('OrderSelection',{})}>
-                    <Text style={{fontSize: 20, textAlign: 'center'}}>Make an order now!</Text>
+                    <Text style={styles.past_text}>Make an order now!</Text>
                 </Pressable>
             </View>}
        </>

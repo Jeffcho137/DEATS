@@ -1,5 +1,5 @@
 /* Server Domain URLS */
-//export const DEATS_SERVER_URL = "https://deats-server.herokuapp.com"  // Main
+// export const DEATS_SERVER_URL = "https://deats-server.herokuapp.com"  // Main
 export const DEATS_SERVER_URL = "https://d-testline.herokuapp.com"  // Test
 
 
