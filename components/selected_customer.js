@@ -30,6 +30,7 @@ export default function SelectedCustomer({modalVisible, setModalVisible, selecte
             console.log("delivery search -> id:", data.id)
             if (data.succeeded == 1) {
                 // only add the deliverer to the order room only if they succeed in matching the customer
+                console.log('beforeroomjoin', orderId)
                 joinRoomForOrder(orderId)
                 console.log('selecteddebug', selectedCustomer)
                 dispatch(setSelectedCustomer(selectedCustomer))

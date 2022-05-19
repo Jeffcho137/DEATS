@@ -19,9 +19,13 @@ export function Order_status ({ navigation }) {
         orderId: orderId,
         enabled: Boolean(user_id)
     })
+    console.log("idcheck", user_id, orderId)
     joinRoomForOrder(orderId)
     const customer = useSelector(selectSelectedCustomer)
-    console.log('orderstatdebug', user_id, orderId, customer)
+    
+    if (customer) {
+        console.log('orderstatdebug', user_id, orderId, customer.customer)
+    }
     return (
         <View style={styles.container}>
             <View style={styles.order_sel}>
@@ -30,7 +34,7 @@ export function Order_status ({ navigation }) {
                 <Text style={styles.searching_text}>Your food is picked up</Text>
                 <Text style={styles.searching_text}>Delivered</Text>
              */}
-                {customer?.order_status}
+                {customer?.order.order_status}
 
             </View>
             <Button title="GET" onPress={() => navigation.navigate("OrderCode")}></Button>
