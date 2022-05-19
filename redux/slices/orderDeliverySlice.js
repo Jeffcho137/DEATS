@@ -5,7 +5,8 @@ const initialState = {
     dropLocation: null,
     orderId: null,
     delivererId: null,
-    delivererInfo: null
+    delivererInfo: null,
+    orderStatus: null
 }
 
 export const orderDeliverySlice = createSlice({
@@ -30,6 +31,10 @@ export const orderDeliverySlice = createSlice({
 
         setDelivererInfo: (state, action) => {
             state.delivererInfo = action.payload;
+        },
+
+        setOrderStatus: (state, action) => {
+            state.orderStatus = action.payload;
         }
     }
 })
@@ -39,5 +44,6 @@ export const selectDropLocation = (state) => state.orderDeliverySlice.dropLocati
 export const selectOrderId = (state) => state.orderDeliverySlice.orderId
 export const selectDelivererId = (state) => state.orderDeliverySlice.delivererId
 export const selectDelivererInfo = (state) => state.orderDeliverySlice.delivererInfo
-export const { setPickupLocation, setDropLocation, setOrderId, setDelivererId, setDelivererInfo } = orderDeliverySlice.actions
+export const selectOrderStatus = (state) => state.orderDeliverySlice.orderStatus
+export const { setPickupLocation, setDropLocation, setOrderId, setDelivererId, setDelivererInfo, setOrderStatus } = orderDeliverySlice.actions
 export default orderDeliverySlice.reducer
