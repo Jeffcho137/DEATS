@@ -3,6 +3,7 @@ import { StyleSheet, SafeAreaView, Platform, StatusBar } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { useDispatch } from 'react-redux';
 import { setEmail, setId, setName, setPhoneNum } from '../redux/slices/userSlice';
+import { DEATS_SERVER_URL, ROUTE_SSO_LOGIN } from '../utils/Constants';
 
 const styles = StyleSheet.create({
     AndroidSafeArea: {
@@ -44,7 +45,7 @@ export default function SSOLogin ({ navigation }) {
     return (
         <SafeAreaView style={styles.AndroidSafeArea}>
             <WebView 
-                source={{ uri: "https://d-testline.herokuapp.com/sso_login" }}
+                source={{ uri: `${DEATS_SERVER_URL}${ROUTE_SSO_LOGIN}` }}
                 onShouldStartLoadWithRequest={(request) => { 
                     console.log("onShouldStartLoadWithRequest:", request);
 
