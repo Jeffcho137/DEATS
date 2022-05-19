@@ -69,12 +69,11 @@ export function Order_selection ({ navigation }) {
             .then((data) => {
                 console.log(data)
                 if (data.succeeded == true) {
-                    order_id = data.order.order_id
+                    let order_id = data.order.order_id
 
                     joinRoomForOrder(order_id)
 
                     dispatch(setOrderId(order_id))
-
                     navigation.navigate('OrderSearch') 
 
                 } else {

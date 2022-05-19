@@ -27,9 +27,8 @@ export function Deliver_status(props) {
   const number = useSelector(selectPhoneNum);
   const order_id = useSelector(selectOrderId);
   const customer = useSelector(selectSelectedCustomer);
-
   const track = (order_status) => {
-    //console.log("orderId", orderId)
+    console.log('debug', order_id)
     fetch(`${DEATS_SERVER_URL}${ROUTE_UPDATE_ORDER}`, {
       method: "POST",
       headers: {
@@ -37,13 +36,12 @@ export function Deliver_status(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: customer.customer_id,
-        order_id: customer.order_id,
-        pickup_loc: customer.pickup_loc,
-        pickup_loc_name: customer.pickup_loc_name,
-        drop_loc: customer.drop_loc,
-        drop_loc_name: customer.drop_loc_name,
-        order_status: order_status,
+        order: {
+          order_id: order_id,
+          order_status: order_status,
+        },
+        user_id: id,
+
       }),
     })
       .then((response) => response.json())
