@@ -1,10 +1,14 @@
-import {useEffect, useRef, useState} from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
+import { selectSelectedCustomer, setSelectedCustomer } from '../redux/slices/makeDeliverySlice';
 import { setDelivererId, setDelivererInfo } from '../redux/slices/orderDeliverySlice';
+import { selectToggle, setToggle } from '../redux/slices/socketSlice';
 import { DEATS_SERVER_URL } from '../utils/Constants';
 
 export const useClientSocket = ({userId, orderId, enabled}) => {
+  const toggle = useSelector(selectToggle)
+  
   const dispatch = useDispatch();
   const ref = useRef(null);
 
@@ -50,10 +54,63 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
       console.log('user:', userId, 'message:', message);
     });
 
-    socket.on('order:deliverer', (deliverer) => {
-      dispatch(setDelivererInfo(deliverer.user_info))
-      dispatch(setDelivererId(deliverer.user_id))
-      console.log(userId, "A deliverer has entered the room:", deliverer);
+    // FROM DELIVERER: announcements for customer 
+    socket.on('del:order_status:cus', (order_status) => {
+      const customer = useSelector(selectSelectedCustomer)
+      dispatch(setSelectedCustomer({...customer, order_status: order_status}))
+      console.log(`${userId},`, "The deliverer has updated the order status to:", order_status);
+    });
+
+    socket.on('del:match:cus', (payload) => {
+      dispatch(setDelivererInfo(payload.deliverer.user_info))
+      dispatch(setDelivererId(payload.deliverer.user_id))
+      console.log(`${userId},`, "A deliverer has requested to match with your order:", payload);
+    });
+
+
+    // FROM DELIVERER: announcements for all connected clients 
+    socket.on('del:match:all', (order_id) => {
+      dispatch(setToggle(!toggle))
+      console.log(`${userId},`, `The order, ${order_id}, has been matched`);
+    });
+
+
+    // FROM CUSTOMER: announcements for deliverer 
+    socket.on('cus:update:del', (updated_payload) => {
+      
+      console.log(`${userId},`, `The customer has updated the order with: ${updated_payload}`);
+    });
+
+    socket.on('cus:unmatch:del', (payload) => {
+      
+      console.log(`${userId},`, `The customer has unmatched you from the order: ${payload}`);
+    });
+
+    socket.on('cus:cancel:del', (payload) => {
+      
+      console.log(`${userId},`, `The customer has canceled the order: ${payload}`);
+    });
+
+    
+    // FROM CUSTOMER: announcements for all connected clients
+    socket.on('cus:new:all', (order_id) => {
+      dispatch(setToggle(!toggle))
+      console.log(`${userId},`, "A new order has been created:", order_id);
+    });
+
+    socket.on('cus:update:all', (order_id) => {
+      
+      console.log(`${userId},`, `The order, ${order_id}, has been updated`);
+    });
+
+    socket.on('cus:unmatch:all', (order_id) => {
+      
+      console.log(`${userId},`, `The deliverer on the order, ${order_id}, has been unmatched`);
+    });
+
+    socket.on('cus:cancel:all', (order_id) => {
+      
+      console.log(`${userId},`, `The order, ${order_id}, has been canceled`);
     });
 
     ref.current = socket;
