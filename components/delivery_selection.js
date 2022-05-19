@@ -49,11 +49,11 @@ export function Delivery_selection ({ navigation }) {
     if (!navigation.state.params?.chosen) {
         return (
             <View style={styles.container}>
-                <View style={styles.deliver_sel_input}>
-                    <View style={styles.order_sel_input_box}>
+                {/* <View style={styles.deliver_sel_input}> */}
+                    <View style={styles.del_sel_input_box}>
                         <Button color="#006400" title='select my current location and final destination' onPress={() => navigation.navigate("DelMap")}></Button>
                     </View>
-                </View>
+                {/* </View> */}
                 
                 <Button color="gray" title="Begin Searching"></Button>
             
@@ -64,16 +64,20 @@ export function Delivery_selection ({ navigation }) {
         return (
             <View style={styles.container}>
                 <View style={styles.deliver_sel_input}>
-                    <Text style={styles.order_sel_text}>Leaving from:</Text>
-                    <View style={styles.order_sel_input_box}>
-                        <Text>Leaving from: {startPoint?.name}</Text>
-                        <Text>Going to: {destination?.name}</Text>
+                    <Text style={styles.del_confirm_text}>Please confirm that your starting location and final destination are correct</Text>
+                    <View style={styles.del_sel_locations}>
+                        <Text style={styles.del_sel_loc_text}>Leaving from: {startPoint?.name}</Text>
+                        <Text style={styles.del_sel_loc_text}>Going to: {destination?.name}</Text>
                         <Button title='change my starting location and final destination' onPress={() => navigation.navigate("DelMap")}></Button>
                     </View>
                 </View>
-                <Button title="Begin Searching" onPress={() => 
+
+                <View style={{position: 'absolute',bottom:50}}>
+                    <Button title="Begin Searching" onPress={() => 
                     makeDelivery(userId, startPoint, destination, dispatch, navigation)
                 }></Button>
+                </View>
+
                 <StatusBar style="auto" />
             </View>
         )

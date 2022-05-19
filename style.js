@@ -122,21 +122,19 @@ const styles = StyleSheet.create({
     },
 
     home_profile_button: {
-      flex: 0.25,
-      // alignSelf: 'flex-start',
+      flex: 0.3,
       flexDirection: 'row',
-      justifyContent: 'space-between',
+      justifyContent: 'flex-end',
       margin: 10,
     },
 
     home_options: {
       flex: 0.8,
       width: '60%',
-      marginTop: 110,
     },
 
     home_buttons: {
-      flex: 0.3,
+      flex: 0.4,
       justifyContent: 'center',
       borderWidth: 1,
       borderRadius: 10,
@@ -144,9 +142,10 @@ const styles = StyleSheet.create({
     },
 
     profile_heading: {
-      flex: 0.1,
+      // flex: 0.6,
       width: '90%',
       alignItems:'flex-end',
+      paddingTop: 20,
     },
 
     profile_name: {
@@ -154,15 +153,74 @@ const styles = StyleSheet.create({
     },
 
     phone_number: {
-      flex: 0.1,
+      flex: 0.9,
       width: '90%',
+      paddingTop: 20,
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       justifyContent: 'space-between',
     },
 
-    profile_text: {
+    profile_modal_text:{
+      textAlign: 'center',
       fontSize: 15,
+      marginBottom: 20,
+    },
+
+    profile_modal: {
+      marginBottom: '10%',
+      width: '80%',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+
+    profile_new_num: { 
+      width: '70%',
+      // height: '15%', 
+      fontSize: 15,     
+      borderWidth: 1,
+      borderRadius: 5,
+      marginBottom: '5%',
+      textAlign: 'center',
+    },
+
+    profile_modal_btns: {
+      flexDirection: 'row',
+      width: '80%',
+      justifyContent: 'space-evenly',
+      // backgroundColor: 'coral',
+    },
+
+    profile_modal_cancel: {
+      borderRadius: 3,
+      borderWidth: 1,
+      width: 80,
+      paddingTop: 5,
+      paddingBottom: 5,
+      // height: 30,
+    },
+
+    profile_modal_update: {
+      borderRadius: 3,
+      borderWidth: 1,
+      width: 80,
+      paddingTop: 5,
+      paddingBottom: 5,
+      // height: 30,
+    },
+
+    profile_modal_edit: {
+      // width: 50,
+      paddingTop: 5,
+      paddingBottom: 5,
+    },
+
+    profile_text: {
+      fontSize: 18,
+    },
+
+    profile_acc_btns: {
+      marginBottom: 30,
     },
 
     payment: {
@@ -179,21 +237,48 @@ const styles = StyleSheet.create({
       flex: 0.3,
     },
 
-    past_deliveries: {
-      width: '90%',
-      flex: 0.3,
+    past_deliveries_cont: {
+      backgroundColor: '#FFFFFF',
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      // marginTop: 50,
+    },
+
+    past_deliveries_none: {
+      fontSize: 20,
+      // backgroundColor: 'coral',
+      flex: 0.2,
+    },
+
+    past_del_make: {
+      flex: 0.1,
+      // backgroundColor: 'coral',
+      justifyContent: 'center',
+      width: '60%',
+      marginTop: 10,
+      borderRadius: 10,
+      borderWidth: 1,
+      borderColor: "#006400",
+    },
+
+    past_text: {
+      fontSize: 17, 
+      textAlign: 'center', 
+      color: "#006400",
     },
 
     order_sel: {
-      flex: 0.25,
+      flex: 0.3,
       width: '90%',
       alignItems: 'center',
-      marginBottom: 20,
+      // marginBottom: 20,
     },
 
     order_sel_text: {
       alignSelf: 'flex-start',
       fontSize: 20,
+      marginBottom: 10,
     },
 
     order_sel_place_options: {
@@ -206,41 +291,62 @@ const styles = StyleSheet.create({
 
     order_sel_single_place: {
       flex: 0.3,
-      borderColor: 'black',
+      borderColor: '#006400',
       borderWidth: 1,
       borderRadius: 4,
     },
 
     order_sel_input: {
-      flex: 0.35,
+      flex: 0.50,
       width: '90%',
-      flexDirection: 'row',
-      // marginBottom: 10,
+      // flexDirection: 'row',
+      // marginBottom: ,
 
     }, 
 
     deliver_sel_input: {
-      // flex: 0.2,
       width: '90%',
-      flexDirection: 'row',
+      // flexDirection: 'column',
       marginBottom: 10,
+      justifyContent: 'center',
+      alignItems: 'center',
 
     }, 
 
-    order_sel_input_box: {
-      flex: 1,
-      marginLeft: '2%',
+    del_sel_locations: {
+      width: '90%',
+    },
+
+    del_sel_loc_text: {
+      marginTop: 10,
+      fontSize: 18,
+    },
+
+    del_sel_input_box: {
+      // flex:.7,
+      // marginLeft: '2%',
+      // marginBottom: 150
+      width: '80%',
     }, 
+
+    del_confirm_text: {
+      // alignSelf: 'flex-start',
+      fontSize: 15,
+      marginBottom: 15,
+      width: '90%',
+      textAlign: 'center',
+    },
 
     single_input: {
-      borderRadius: 3,
+      alignSelf: 'center',
+      borderRadius: 10,
       borderWidth: 1,
-      //height: '15%',
-      width: '100%',
+      height: '15%',
+      width: '90%',
       marginBottom: 10,
-      fontSize: 15,
+      fontSize: 18,
       textAlign: 'center',
-
+      marginTop: 10,
     }, 
 
     order_sel_times: {
@@ -278,6 +384,11 @@ const styles = StyleSheet.create({
       height: 50,
       fontSize: 20,
       textAlign: 'center',
+    },
+
+    cancel_order: {
+      bottom: 50,
+      position: 'absolute',
     },
 
     map: {

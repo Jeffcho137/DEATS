@@ -92,10 +92,13 @@ export function Order_search ({ navigation }) {
             </Modal>
           
             <View style={styles.order_sel}>
-                <Text style={styles.searching_text}>SEARCHING...</Text>
+                <Text style={styles.searching_text}>SEARCHING FOR A DELIVERER :)</Text>
+                <Text>Please be patient</Text>
+            </View>
+            <View style={styles.cancel_order}>
+              <Button color="#006400" title="cancel my order" onPress={() => navigation.navigate('Home')}></Button>
             </View>
             {/* <Button color="#006400" title="Refresh" onPress={findDrivers}></Button> */}
-            <Button color="#006400" title="Cancel" onPress={() => navigation.navigate('Home')}></Button>
             <StatusBar style="auto" />
         </View> 
     )

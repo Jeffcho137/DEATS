@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, Button, TextInput } from 'react-native';
+import { Text, View, Button, TextInput, Pressable } from 'react-native';
 import styles from '../style';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectId, selectPhoneNum } from '../redux/slices/userSlice';
@@ -91,7 +91,7 @@ export function Order_selection ({ navigation }) {
         return (
             <View style={styles.container}>
                 <View style={styles.order_sel}>
-                    <Text style={styles.order_sel_text}>I want food from:</Text>
+                    <Text style={styles.order_sel_text}>Please select where you are ordering food from</Text>
                     <View style={styles.order_sel_place_options}>
                         <View style={styles.order_sel_single_place}>
                             <Button color='#006400' title='HOP' onPress={selectTheHop}></Button>
@@ -102,18 +102,29 @@ export function Order_selection ({ navigation }) {
                     </View>
                 </View>
                 <View style={styles.order_sel_input}>
-                    <Text style={styles.order_sel_text}>Deliver to:</Text>
+                    <Text style={styles.order_sel_text}>Choose your delivery address below</Text>
                     <View style={styles.order_sel_input_box}>
                         <Button color="#006400" title='select my location' onPress={() => navigation.navigate("MapTest")}></Button>
                         <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => setRoom(text)}></TextInput>
-                        <TextInput style={styles.single_input} placeholder={number} onChangeText={text => {}}></TextInput>
+                        <TextInput style={styles.single_input} placeholder='number' onChangeText={text => {}}></TextInput>
                     </View>
                 </View>
+
                 <View style={{
                     marginBottom: 30,
                 }} >
                     <DateTime date={date} setDate={setDate}></DateTime>
                 </View>
+
+                {/* <View style={styles.order_sel}>
+                    <Text style={styles.order_sel_text}>I want my food between</Text>
+                    <View style={styles.order_sel_times}>
+                        <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
+                        <Text style={styles.order_sel_times_text}>and</Text>
+                        <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
+                    </View>
+                </View> */}
+
                 <Button color="#006400" title="Confirm" onPress={sendOrdererInfo}></Button>
                 <StatusBar style="auto" />
             </View>
@@ -122,7 +133,7 @@ export function Order_selection ({ navigation }) {
         return (
             <View style={styles.container}>
                 <View style={styles.order_sel}>
-                    <Text style={styles.order_sel_text}>I want food from:</Text>
+                    <Text style={styles.order_sel_text}>Please select where you are ordering food from:</Text>
                     <View style={styles.order_sel_place_options}>
                         <View style={styles.order_sel_single_place}>
                             <Button color="#006400" title='HOP' onPress={selectTheHop}></Button>
@@ -133,7 +144,7 @@ export function Order_selection ({ navigation }) {
                     </View>
                 </View>
                 <View style={styles.order_sel_input}>
-                    <Text style={styles.order_sel_text}>Deliver to:</Text>
+                    <Text style={styles.order_sel_text}>Please confirm that this is the correct address:</Text>
                     <View style={styles.order_sel_input_box}>
                         <Text style={styles.order_sel_loc}>{dropLocation.address}</Text>
                         <Button color="#006400" title='change my location' onPress={() => navigation.navigate("MapTest")}></Button>
@@ -141,11 +152,22 @@ export function Order_selection ({ navigation }) {
                         <TextInput style={styles.single_input} placeholder='number' onChangeText={text => {}}></TextInput>
                     </View>
                 </View>
+
                 <View style={{
                     marginBottom: 30,
                 }} >
                     <DateTime date={date} setDate={setDate}></DateTime>
                 </View>
+
+                {/* <View style={styles.order_sel}>
+                    <Text style={styles.order_sel_text}>I want my food between</Text>
+                    <View style={styles.order_sel_times}>
+                        <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
+                        <Text style={styles.order_sel_times_text}>and</Text>
+                        <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
+                    </View>
+                </View> */}
+
                 <Button title="Search" onPress={sendOrdererInfo}></Button>
                 <StatusBar style="auto" />
             </View>

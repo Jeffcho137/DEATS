@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Image, FlatList, TouchableOpacity} from "react-native";
+import { View, Text, Image, FlatList, TouchableOpacity, Pressable} from "react-native";
 import { useSelector } from "react-redux";
 import { selectId } from "../redux/slices/userSlice";
 import { DEATS_SERVER_URL, ROUTE_DELIVERIES } from "../utils/Constants";
+import styles from "../style"
 
 const static_deliveries = [
     {
@@ -72,7 +73,7 @@ export default function Deliveries({ navigation }) {
     
     return (
         <>
-        {console.log("user_deliveries", user_deliveries.length, user_deliveries)}
+        {/* {console.log("user_deliveries", user_deliveries.length, user_deliveries)} */}
         {user_deliveries?.length ? 
             (<FlatList
                 data={user_deliveries}
@@ -99,10 +100,12 @@ export default function Deliveries({ navigation }) {
                     </TouchableOpacity>
                 )}
             />) : 
-            <Text style={{
-                fontSize: 20,
-                fontWeight: "bold"
-            }} >No Deliveries</Text>}
+            <View style={styles.past_deliveries_cont}>
+                <Text style={styles.past_deliveries_none} >No Deliveries Yet!</Text>
+                <Pressable style={styles.past_del_make} onPress={() => navigation.navigate('DeliverySelection')}>
+                    <Text style={styles.past_text}>Make a delivery now!</Text>
+                </Pressable>
+            </View>}
        </>
     )
 }
