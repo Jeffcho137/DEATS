@@ -576,8 +576,48 @@ const styles = StyleSheet.create({
       //paddingBottom: 0,
       //borderWidth: 1,
       //borderRadius: 5,
-    }
+    },
 
+    orderItemStyle: {
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-around",
+      margin: 25
+  },
+
+  usernameStyle: {
+      fontSize: 24,
+      fontWeight: "600"
+  },
+
+  locationStyle: {
+      fontSize: 15,
+      fontWeight: "500",
+  },
+
+  modalNameStyle: {
+    fontSize: 22,
+    textAlign: "center",
+    fontWeight: "600",
+    marginTop: 10
+},
+
+modalUsernameStyle: {
+  fontSize: 18,
+  textAlign: "center",
+  fontWeight: "500",
+  marginBottom: 20
+},
+
+modalLocDescriptionStyle: {
+  fontSize: 20,
+  fontWeight: "500",
+  marginBottom: 2
+},
+
+modalLocationStyle: {
+  fontSize: 18,
+},
 })
 
 export default styles;

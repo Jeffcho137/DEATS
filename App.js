@@ -24,10 +24,14 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import Deliveries from "./components/deliveries";
 import SSOLogin from "./components/sso_login";
+import DelivererSearch from "./components/deliverer_search";
+import SSOLogout from "./components/sso_logout";
+import logout from "./components/logout";
 
 const AppNavigator = createStackNavigator(
   {
     SSOLogin: { screen: SSOLogin },
+    SSOLogout: { screen: SSOLogout },
     Landing: { screen: Landing },
     Signup: { screen: Signup },
     
@@ -38,6 +42,7 @@ const AppNavigator = createStackNavigator(
     DeliverySelection: { screen: Delivery_selection },
     OrderSearch: { screen: Order_search },
     DeliverSearch: { screen: Deliver_search },
+    DelivererSearch: { screen: DelivererSearch },
     DeliverMatch: { screen: Deliver_match },
     Deliveries: { screen: Deliveries },
     OrderMatch: { screen: Order_match },
@@ -53,8 +58,33 @@ const AppNavigator = createStackNavigator(
 
   {
     initialRouteParams: "SSSLogin",
+    defaultNavigationOptions: {
+      headerStyle: {
+        backgroundColor: 'green',
+      },
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+        fontWeight: 'bold',
+      },
+    },
   }
 );
+
+Home['navigationOptions'] = screenProps => (logout(screenProps));
+Profile['navigationOptions'] = screenProps => (logout(screenProps));
+Delivery_selection['navigationOptions'] = screenProps => (logout(screenProps));
+Del_map['navigationOptions'] = screenProps => (logout(screenProps));
+DelivererSearch['navigationOptions'] = screenProps => (logout(screenProps));
+Deliver_match['navigationOptions'] = screenProps => (logout(screenProps));
+Deliver_status['navigationOptions'] = screenProps => (logout(screenProps));
+Deliveries['navigationOptions'] = screenProps => (logout(screenProps));
+Order_selection['navigationOptions'] = screenProps => (logout(screenProps));
+Map_test['navigationOptions'] = screenProps => (logout(screenProps));
+Order_search['navigationOptions'] = screenProps => (logout(screenProps));
+Order_match['navigationOptions'] = screenProps => (logout(screenProps));
+Order_status['navigationOptions'] = screenProps => (logout(screenProps));
+Order_code['navigationOptions'] = screenProps => (logout(screenProps));
+Orders['navigationOptions'] = screenProps => (logout(screenProps));
 
 const AppContainer = createAppContainer(AppNavigator);
 export default class App extends Component {

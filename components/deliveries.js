@@ -5,7 +5,7 @@ import { selectId } from "../redux/slices/userSlice";
 import { DEATS_SERVER_URL, ROUTE_DELIVERIES } from "../utils/Constants";
 import styles from "../style"
 
-const static_deliveries = [
+export const static_deliveries = [
     {
         id: "622273fd505bad64f71fc5a7",
         customer_name: "John Doe",
@@ -22,7 +22,7 @@ const static_deliveries = [
         drop_loc_name: "Baker",
         order_date: "2019-01-01",
         order_status: "W",
-        customer_img_url: "https://static.psycom.net/wp-content/uploads/2020/06/iStock-1160344267.jpg"
+        customer_img_url: "https://assets.nintendo.com/image/upload/ar_16:9,b_auto:border,c_lpad/b_white/f_auto/q_auto/dpr_auto/c_scale,w_800/v1/ncom/en_US/games/switch/m/mario-kart-8-deluxe-switch/hero"
     },
     {
         id: "3947394739433374397",

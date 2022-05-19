@@ -70,7 +70,7 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
 
     // FROM DELIVERER: announcements for all connected clients 
     socket.on('del:match:all', (order_id) => {
-      dispatch(setToggle(!toggle))
+      dispatch(setToggle(Math.random()))
       console.log(`${userId},`, `The order, ${order_id}, has been matched`);
     });
 
@@ -94,7 +94,7 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
     
     // FROM CUSTOMER: announcements for all connected clients
     socket.on('cus:new:all', (order_id) => {
-      dispatch(setToggle(!toggle))
+      dispatch(setToggle(Math.random()))
       console.log(`${userId},`, "A new order has been created:", order_id);
     });
 

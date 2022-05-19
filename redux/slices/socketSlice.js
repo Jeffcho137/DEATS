@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    toggle: null,
+    toggle: null,  // starts as null; doesn't matter
 }
 
 export const socketSlice = createSlice({
