@@ -1,11 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, Button } from 'react-native';
 import styles from '../style';
 import  Logo  from './image_small.js';
 import TabBarBottom from './tab_bar_bottom';
+import DEATSNotifications from './notifications';
 
 export function Home ({ navigation }) {
+    DEATSNotifications()
     return (
         <View style={styles.container}>
             <View style={styles.home_profile_button}>
