@@ -38,11 +38,11 @@ export default function DEATSNotifications() {
   }, []);
 }
 
-async function schedulePushNotification() {
+export async function schedulePushNotification() {
     await Notifications.scheduleNotificationAsync({
       content: {
-        title: "New message 🍲",
-        body: "Your food is hear",
+        title: "New DEATS message 🍲",
+        body: "You've been matched!",
         data: { DEATS: "notifications" },
       },
       trigger: { seconds: 1 },
