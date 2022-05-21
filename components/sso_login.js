@@ -1,9 +1,11 @@
 import React from 'react';
 import { StyleSheet, SafeAreaView, Platform, StatusBar } from 'react-native';
 import { WebView } from 'react-native-webview';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectExpoPushToken } from '../redux/slices/notificationsSlice';
 import { setEmail, setId, setName, setPhoneNum } from '../redux/slices/userSlice';
 import { DEATS_SERVER_URL, ROUTE_SSO_LOGIN } from '../utils/Constants';
+import DEATSNotifications from './notifications';
 
 const styles = StyleSheet.create({
     AndroidSafeArea: {
@@ -42,6 +44,11 @@ const validateST = (ticketedURL, dispatch, navigation) => {
 
 export default function SSOLogin ({ navigation }) {
     const dispatch = useDispatch();
+    const expoPushToken = useSelector(selectExpoPushToken);
+
+    // Initiate notification service once 
+    DEATSNotifications()
+
     return (
         <SafeAreaView style={styles.AndroidSafeArea}>
             <WebView 
@@ -51,7 +58,10 @@ export default function SSOLogin ({ navigation }) {
 
                     if (request.url.includes("?ticket")) {
                         console.log("ST url:", request.url)
-                        validateST(request.url, dispatch, navigation);
+                        
+                        ticketedURL = request.url + `&expoPushToken=${expoPushToken}`
+                        console.log("ticketedURL:", ticketedURL)
+                        validateST(ticketedURL, dispatch, navigation);
                     }
 
                     else {

@@ -2,6 +2,8 @@ import * as Device from 'expo-device';
 import * as Notifications from 'expo-notifications';
 import { useState, useEffect, useRef } from 'react';
 import { Platform } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectExpoPushToken, setExpoPushToken } from '../redux/slices/notificationsSlice';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -12,13 +14,15 @@ Notifications.setNotificationHandler({
 });
 
 export default function DEATSNotifications() {
-  const [expoPushToken, setExpoPushToken] = useState("");
+  const dispatch = useDispatch();
+
+  const expoPushToken = useSelector(selectExpoPushToken)  
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
   const responseListener = useRef();
 
   useEffect(() => {
-    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+    registerForPushNotificationsAsync().then(token => dispatch(setExpoPushToken(token)));
 
     // This listener is fired whenever a notification is received while the app is foregrounded
     notificationListener.current = Notifications.addNotificationReceivedListener(notification => {

@@ -1,19 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    exponentPushToken: null,
+    expoPushToken: null,
 }
 
 export const notificationsSlice = createSlice({
     name: "notificationsSlice",
     initialState: {initialState}, 
     reducers: {
-        setExponentPushToken: (state, action) => {
-            state.exponentPushToken = action.payload;
+        setExpoPushToken: (state, action) => {
+            state.expoPushToken = action.payload;
         },
     }
 })
 
-export const selectExponentPushToken = (state) => state.notificationsSlice.startingPoint
-export const { setExponentPushToken } = notificationsSlice.actions
+export const selectExpoPushToken = (state) => state.notificationsSlice.expoPushToken
+export const { setExpoPushToken } = notificationsSlice.actions
 export default notificationsSlice.reducer
