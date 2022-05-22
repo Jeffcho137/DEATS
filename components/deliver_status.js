@@ -94,6 +94,12 @@ export function Deliver_status(props) {
         </View>
       </View>
       <Button
+        title="Reset Status"
+        onPress={() => {
+          track("matched");
+        }}
+      ></Button>
+      <Button
         title="Food is delivered!"
         onPress={() => {
           track("delivered");
