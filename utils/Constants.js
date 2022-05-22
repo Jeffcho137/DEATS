@@ -22,6 +22,7 @@ export const ROUTE_MATCH = "/match/"
 export const ROUTE_UNMATCH = "/unmatch/"
 export const ROUTE_ORDERS = "/orders/"
 export const ROUTE_DELIVERIES = "/deliveries/"
+export const ROUTE_CHECKOUT = "/checkout/"
 
 
 /* Stripe */

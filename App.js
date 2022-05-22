@@ -29,9 +29,11 @@ import SSOLogout from "./components/sso_logout";
 import logout from "./components/logout";
 import { StripeProvider } from "@stripe/stripe-react-native";
 import { PUBLISHABLE_KEY_TEST } from "./utils/Constants";
+import Checkout from "./components/checkout";
 
 const AppNavigator = createStackNavigator(
   {
+    Checkout: { screen: Checkout },
     SSOLogin: { screen: SSOLogin },
     SSOLogout: { screen: SSOLogout },
     Landing: { screen: Landing },
