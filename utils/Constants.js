@@ -24,3 +24,8 @@ export const ROUTE_ORDERS = "/orders/"
 export const ROUTE_DELIVERIES = "/deliveries/"
 
 
+/* Stripe */
+export const PUBLISHABLE_KEY_TEST = "pk_test_51L27bgCzhp0vww50EetYqUMoajMbR90nRPPXSO7rkUFKOkdbzwmU7ZLgCkCeZ3VvTNXTf7z88qkCXmonOVxYo7Ly006inuQfAd"
+export const PUBLISHABLE_KEY_PROD = ""
+
+
