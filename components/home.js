@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { View, Button } from 'react-native';
 import styles from '../style';
