@@ -1,6 +1,6 @@
 import { useStripe } from "@stripe/stripe-react-native";
 import { useEffect, useState } from "react";
-import { Button } from "react-native";
+import { Alert, Button } from "react-native";
 import { Screen } from "react-native-screens";
 import { DEATS_SERVER_URL, ROUTE_CHECKOUT } from "../utils/Constants";
 
@@ -43,6 +43,18 @@ export default function Checkout() {
         setLoading(true);
       }
     };
+
+    const openPayment = async () => {
+        const { error } = await presentPaymentSheet();
+    
+        if (error) {
+            console.log("Open payment error:", error);
+            Alert.alert(`Error code: ${error.code}`, error.message);
+        } else {
+            Alert.alert('Success', 'Your order is confirmed!');
+        }
+      };
+
   
     useEffect(() => {
       initializePayment();
@@ -52,9 +64,9 @@ export default function Checkout() {
       <Screen>
         <Button
           variant="primary"
-          disabled={!loading}
+          disabled={false}
           title="Checkout"
-          onPress={null}
+          onPress={openPayment}
         />
       </Screen>
     );

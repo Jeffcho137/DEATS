@@ -95,6 +95,7 @@ export default class App extends Component {
   render() {
     return (
       <StripeProvider
+        merchantIdentifier='merchant.identifier' 
         publishableKey={PUBLISHABLE_KEY_TEST}
       >
         <Provider store={store}>
