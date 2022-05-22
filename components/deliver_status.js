@@ -16,7 +16,7 @@ import {
   selectOrderId,
 } from "../redux/slices/orderDeliverySlice";
 import { selectId, selectPhoneNum } from "../redux/slices/userSlice";
-import { DEATS_SERVER_URL, ROUTE_UPDATE_ORDER } from "../utils/Constants";
+import { DEATS_SERVER_URL, ROUTE_UPDATE_ORDER_STATUS } from "../utils/Constants";
 
 export function Deliver_status(props) {
   const pickUpLocation = useSelector(selectPickupLocation);
@@ -28,35 +28,27 @@ export function Deliver_status(props) {
   const order_id = useSelector(selectOrderId);
   const customer = useSelector(selectSelectedCustomer);
 
-  const track = (order_status) => {
-    //console.log("orderId", orderId)
-    fetch(`${DEATS_SERVER_URL}${ROUTE_UPDATE_ORDER}`, {
+  const track = (status_msg) => {
+    if (customer) {
+      console.log("customerdebug", customer);
+    }
+    fetch(`${DEATS_SERVER_URL}${ROUTE_UPDATE_ORDER_STATUS}`, {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: customer.customer_id,
-        order_id: customer.order_id,
-        pickup_loc: customer.pickup_loc,
-        pickup_loc_name: customer.pickup_loc_name,
-        drop_loc: customer.drop_loc,
-        drop_loc_name: customer.drop_loc_name,
-        order_status: order_status,
+        order: {
+          order_id: customer.order.order_id,
+          order_status: status_msg,
+        },
+        user_id: customer.customer.user_id,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         console.log("response", data);
-        //   console.log(data.deliverer_info)
-        //   if (data.succeeded == true) {
-        //     dispatch(setDelivererInfo(data.deliverer_info))
-        //     dispatch(setDelivererId(data.deliverer_id))
-        //     setModalVisible(true)
-        //   } else {
-        //       console.log(data.msg);
-        //   }
       })
       .catch((err) => console.error(err));
   };
@@ -64,13 +56,12 @@ export function Deliver_status(props) {
   return (
     <View style={styles.container}>
       <View style={styles.status}>
-        <Text style={styles.status_text}>Are you on your way to {customer.pickup_loc_name} ?</Text>
+        <Text style={styles.status_text}>Are you on your way to {customer.order.pickup_loc.name}?</Text>
         <View style={styles.status_yes_button}>
           <Button
             title="Yes!"
             onPress={() => {
-              console.log("customer", customer);
-              track("C");
+              track(`heading to ${customer.order.pickup_loc.name}`);
             }}
           ></Button>
         </View>
@@ -79,16 +70,16 @@ export function Deliver_status(props) {
           <Button
             title="Yes!"
             onPress={() => {
-              track("F");
+              track("picked up");
             }}
           ></Button>
         </View>
-        <Text style={styles.status_text}>On your way to {customer.drop_loc_name} ?</Text>
+        <Text style={styles.status_text}>On your way to {customer.order.drop_loc.name} ?</Text>
         <View style={styles.status_yes_button}>
           <Button
             title="Yes!"
             onPress={() => {
-              track("M");
+              track(`heading to ${customer.order.drop_loc.name}`);
             }}
           ></Button>
         </View>
@@ -97,12 +88,18 @@ export function Deliver_status(props) {
           <Button
             title="Yes!"
             onPress={() => {
-              track("W");
+              track("arrived");
             }}
           ></Button>
         </View>
       </View>
-      <Button title="Food is delivered!" onPress={() => props.navigation.navigate("Completed")}></Button>
+      <Button
+        title="Food is delivered!"
+        onPress={() => {
+          track("delivered");
+          props.navigation.navigate("Completed");
+        }}
+      ></Button>
       <StatusBar style="auto" />
     </View>
   );
