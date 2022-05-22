@@ -1,6 +1,6 @@
 /* Server Domain URLS */
-// export const DEATS_SERVER_URL = "https://deats-server.herokuapp.com"  // Main
-export const DEATS_SERVER_URL = "https://d-testline.herokuapp.com"  // Test
+export const DEATS_SERVER_URL = "https://deats-server.herokuapp.com"  // Main
+// export const DEATS_SERVER_URL = "https://d-testline.herokuapp.com"  // Test
 
 
 /* Server paths */
@@ -22,5 +22,6 @@ export const ROUTE_MATCH = "/match/"
 export const ROUTE_UNMATCH = "/unmatch/"
 export const ROUTE_ORDERS = "/orders/"
 export const ROUTE_DELIVERIES = "/deliveries/"
+export const ROUTE_UPDATE_ORDER_STATUS = "/update_order_status/"
 
 
