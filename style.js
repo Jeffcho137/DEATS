@@ -490,7 +490,7 @@ const styles = StyleSheet.create({
     logo_image_small: {
       height: 70,
       marginBottom: 50,
-      marginLeft: 170,
+      marginLeft: 80,
       marginRight: -50,
       resizeMode: 'contain',
       width: Dimensions.get('window').width/2,
