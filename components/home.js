@@ -5,8 +5,11 @@ import styles from '../style';
 import  Logo  from './image_small.js';
 import TabBarBottom from './tab_bar_bottom';
 import { Text } from 'galio-framework';
+import { useSelector } from 'react-redux';
+import { selectDEATSTokens } from '../redux/slices/userSlice';
 
 export function Home ({ navigation }) {
+    const DEATSTokens = useSelector(selectDEATSTokens)
     return (
         <View style={styles.container}>
             <View style={styles.home_profile_button}>
@@ -16,7 +19,7 @@ export function Home ({ navigation }) {
                     fontSize: 20,
                     textAlign: 'left',
                 }}
-                >DEATS Tokens: 6</Text>
+                >DEATS Tokens: {DEATSTokens}</Text>
                 <Logo/>
             </View>
             <View style={styles.home_options}>
