@@ -5,13 +5,15 @@ import styles from '../style';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectId, selectPhoneNum } from '../redux/slices/userSlice';
 import { selectDropLocation, selectPickupLocation, setOrderId, setPickupLocation } from '../redux/slices/orderDeliverySlice';
-import { DEATS_SERVER_URL, ROUTE_ORDER_DEL } from '../utils/Constants';
+import { DEATS_SERVER_URL, ROUTE_ORDER_DEL, ROUTE_ORDER_FEE } from '../utils/Constants';
 import { useClientSocket } from './client_socket';
 import { DateTime } from './date_time';
 
 
 export function Order_selection ({ navigation }) { 
     const [modalVisible, setModalVisible] = useState(false)
+    const [orderFee, setOrderFee] = useState(null)
+
     const dispatch = useDispatch()
     const user_id = useSelector(selectId)
     const number = useSelector(selectPhoneNum)
@@ -46,6 +48,32 @@ export function Order_selection ({ navigation }) {
             name: "Collis"
         }))
     }
+
+    const checkOrderFee = () => {  
+        fetch(`${DEATS_SERVER_URL}${ROUTE_ORDER_FEE}`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                drop_loc: dropLocation,
+                pickup_loc: pickupLocation
+
+            })
+        })
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data)
+            if (data.succeeded == true) {
+                setOrderFee(data.order_fee)
+            } else {
+                console.log(data.msg);
+            }
+         })
+         .catch(err => console.error(err))
+    }
+
 
     const sendOrdererInfo = () => {  
         if (room == '' || !pickupLocation) {
@@ -172,6 +200,7 @@ export function Order_selection ({ navigation }) {
                 <Button title="Search" 
                     onPress={() => {
                         setModalVisible(true)
+                        checkOrderFee()
                     }}>
                 </Button>
 
@@ -190,7 +219,7 @@ export function Order_selection ({ navigation }) {
                                     fontWeight: 'bold',
                                     color: 'black',
                                 }}
-                            >This order costs: 6 DT</Text>
+                            >This order costs: {orderFee.toFixed(2)} DT</Text>
                         </View>
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
