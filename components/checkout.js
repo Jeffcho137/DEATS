@@ -42,14 +42,18 @@ export default function Checkout() {
             setLoading(false);
         });
         const { error } = await initPaymentSheet({
+            merchantDisplayName: "DEATS",
+            style: "automatic",
+            primaryButtonColor: "#006400", // dark green
+            defaultBillingDetails: {
+                address: {
+                  country: "US",
+                },
+            },
             customerId: customer,
             customerEphemeralKeySecret: ephemeralKey,
             paymentIntentClientSecret: paymentIntent,
             allowsDelayedPaymentMethods: false,  // don't handle payment methods that complete payment after a delay, like SEPA Debit and Sofort
-            onPaymentSuccess: (customerId) => {
-                console.log("Payment Successful");
-                console.log(customerId);
-            }
         });
         if (!error) {
         setLoading(true);
