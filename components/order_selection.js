@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, Button, TextInput, Pressable } from 'react-native';
+import { Text, View, Button, TextInput, Pressable, Modal } from 'react-native';
 import styles from '../style';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectId, selectPhoneNum } from '../redux/slices/userSlice';
@@ -11,6 +11,7 @@ import { DateTime } from './date_time';
 
 
 export function Order_selection ({ navigation }) { 
+    const [modalVisible, setModalVisible] = useState(false)
     const dispatch = useDispatch()
     const user_id = useSelector(selectId)
     const number = useSelector(selectPhoneNum)
@@ -168,7 +169,44 @@ export function Order_selection ({ navigation }) {
                     </View>
                 </View> */}
 
-                <Button title="Search" onPress={sendOrdererInfo}></Button>
+                <Button title="Search" 
+                    onPress={() => {
+                        setModalVisible(true)
+                    }}>
+                </Button>
+
+                <Modal
+                    animationType="slide" 
+                    visible={modalVisible} 
+                    transparent={true}
+                    onRequestClose={() => setModalVisible(false)}
+                >
+                    <View style={styles.bottomView}>
+                        <View style={styles.modalViewPayment}>
+                        <View style={styles.modalTextPayment}>
+                            <Text
+                                style={{
+                                    fontSize: 20,
+                                    fontWeight: 'bold',
+                                    color: 'black',
+                                }}
+                            >This order costs: 6 DT</Text>
+                        </View>
+                        <Pressable
+                            style={[styles.button, styles.buttonClose]}
+                            onPress={() => {setModalVisible(false)}}
+                        >
+                            <Text style={styles.textModalPayment}>Pay Now</Text>
+                        </Pressable>
+                        <Pressable
+                            onPress={() => {setModalVisible(false)}}
+                        >
+                            <Text style={{textAlign: 'center',textDecorationLine: 'underline',marginTop: 22, fontSize: 18}}>Let me think about it</Text>
+                        </Pressable>
+                        </View>
+                    </View>
+                </Modal>
+
                 <StatusBar style="auto" />
             </View>
         )
