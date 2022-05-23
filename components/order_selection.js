@@ -3,8 +3,8 @@ import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button, TextInput, Pressable, Modal } from 'react-native';
 import styles from '../style';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectId, selectPhoneNum } from '../redux/slices/userSlice';
-import { selectDropLocation, selectPickupLocation, setOrderId, setPickupLocation } from '../redux/slices/orderDeliverySlice';
+import { selectId, selectPhoneNum, setDEATSTokens } from '../redux/slices/userSlice';
+import { selectDropLocation, selectPickupLocation, setOrderFee, setOrderId, setPickupLocation } from '../redux/slices/orderDeliverySlice';
 import { DEATS_SERVER_URL, ROUTE_ORDER_DEL, ROUTE_ORDER_FEE } from '../utils/Constants';
 import { useClientSocket } from './client_socket';
 import { DateTime } from './date_time';
@@ -12,7 +12,7 @@ import { DateTime } from './date_time';
 
 export function Order_selection ({ navigation }) { 
     const [modalVisible, setModalVisible] = useState(false)
-    const [orderFee, setOrderFee] = useState(null)
+    const [tempOrderFee, setTempOrderFee] = useState(null)
 
     const dispatch = useDispatch()
     const user_id = useSelector(selectId)
@@ -66,7 +66,7 @@ export function Order_selection ({ navigation }) {
         .then((data) => {
             console.log(data)
             if (data.succeeded == true) {
-                setOrderFee(data.order_fee)
+                setTempOrderFee(data.order_fee)
             } else {
                 console.log(data.msg);
             }
@@ -98,11 +98,13 @@ export function Order_selection ({ navigation }) {
             .then((data) => {
                 console.log(data)
                 if (data.succeeded == true) {
-                    let order_id = data.order.order_id
+                    const order_id = data.order.order_id
 
                     joinRoomForOrder(order_id)
 
                     dispatch(setOrderId(order_id))
+                    dispatch(setOrderFee(tempOrderFee))
+                    dispatch(setDEATSTokens(data.user.DEATS_tokens))
 
                     navigation.navigate('OrderSearch') 
 
@@ -219,11 +221,14 @@ export function Order_selection ({ navigation }) {
                                     fontWeight: 'bold',
                                     color: 'black',
                                 }}
-                            >This order costs: {orderFee.toFixed(2)} DT</Text>
+                            >This order costs: {tempOrderFee?.toFixed(2)} DT</Text>
                         </View>
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
-                            onPress={() => {setModalVisible(false)}}
+                            onPress={() => {
+                                sendOrdererInfo()
+                                setModalVisible(false)
+                            }}
                         >
                             <Text style={styles.textModalPayment}>Pay Now</Text>
                         </Pressable>
