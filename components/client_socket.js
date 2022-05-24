@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import { selectSelectedCustomer, setSelectedCustomer } from '../redux/slices/makeDeliverySlice';
-import { selectExponentPushToken } from '../redux/slices/notificationsSlice';
+import { selectExpoPushToken } from '../redux/slices/notificationsSlice';
 import { setDelivererId, setDelivererInfo, setOrderStatus } from '../redux/slices/orderDeliverySlice';
 import { selectToggle, setToggle } from '../redux/slices/socketSlice';
 import { DEATS_SERVER_URL } from '../utils/Constants';
@@ -11,7 +11,7 @@ import { schedulePushNotification } from './notifications';
 
 export const useClientSocket = ({userId, orderId, enabled}) => {
   const toggle = useSelector(selectToggle)
-  const exponentPushToken = useSelector(selectExponentPushToken)
+  const exponentPushToken = useSelector(selectExpoPushToken)
   
   const dispatch = useDispatch();
   const ref = useRef(null);

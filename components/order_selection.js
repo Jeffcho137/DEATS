@@ -1,16 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, Button, TextInput, Pressable } from 'react-native';
+import { Text, View, Button, TextInput, Pressable, Modal } from 'react-native';
 import styles from '../style';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectId, selectPhoneNum } from '../redux/slices/userSlice';
-import { selectDropLocation, selectPickupLocation, setOrderId, setPickupLocation } from '../redux/slices/orderDeliverySlice';
-import { DEATS_SERVER_URL, ROUTE_ORDER_DEL } from '../utils/Constants';
+import { selectId, selectPhoneNum, setDEATSTokens } from '../redux/slices/userSlice';
+import { selectDropLocation, selectPickupLocation, setOrderFee, setOrderId, setPickupLocation } from '../redux/slices/orderDeliverySlice';
+import { DEATS_SERVER_URL, ROUTE_ORDER_DEL, ROUTE_ORDER_FEE } from '../utils/Constants';
 import { useClientSocket } from './client_socket';
 import { DateTime } from './date_time';
 
 
 export function Order_selection ({ navigation }) { 
+    const [modalVisible, setModalVisible] = useState(false)
+    const [tempOrderFee, setTempOrderFee] = useState(null)
+
     const dispatch = useDispatch()
     const user_id = useSelector(selectId)
     const number = useSelector(selectPhoneNum)
@@ -46,6 +49,32 @@ export function Order_selection ({ navigation }) {
         }))
     }
 
+    const checkOrderFee = () => {  
+        fetch(`${DEATS_SERVER_URL}${ROUTE_ORDER_FEE}`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                drop_loc: dropLocation,
+                pickup_loc: pickupLocation
+
+            })
+        })
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data)
+            if (data.succeeded == true) {
+                setTempOrderFee(data.order_fee)
+            } else {
+                console.log(data.msg);
+            }
+         })
+         .catch(err => console.error(err))
+    }
+
+
     const sendOrdererInfo = () => {  
         if (room == '' || !pickupLocation) {
             console.log("fill everything out u fucker")
@@ -69,11 +98,13 @@ export function Order_selection ({ navigation }) {
             .then((data) => {
                 console.log(data)
                 if (data.succeeded == true) {
-                    order_id = data.order.order_id
+                    const order_id = data.order.order_id
 
                     joinRoomForOrder(order_id)
 
                     dispatch(setOrderId(order_id))
+                    dispatch(setOrderFee(tempOrderFee))
+                    dispatch(setDEATSTokens(data.user.DEATS_tokens))
 
                     navigation.navigate('OrderSearch') 
 
@@ -168,7 +199,48 @@ export function Order_selection ({ navigation }) {
                     </View>
                 </View> */}
 
-                <Button title="Search" onPress={sendOrdererInfo}></Button>
+                <Button title="Search" 
+                    onPress={() => {
+                        setModalVisible(true)
+                        checkOrderFee()
+                    }}>
+                </Button>
+
+                <Modal
+                    animationType="slide" 
+                    visible={modalVisible} 
+                    transparent={true}
+                    onRequestClose={() => setModalVisible(false)}
+                >
+                    <View style={styles.bottomView}>
+                        <View style={styles.modalViewPayment}>
+                        <View style={styles.modalTextPayment}>
+                            <Text
+                                style={{
+                                    fontSize: 20,
+                                    fontWeight: 'bold',
+                                    color: 'black',
+                                }}
+                            >This order costs: {tempOrderFee?.toFixed(2)} DT</Text>
+                        </View>
+                        <Pressable
+                            style={[styles.button, styles.buttonClose]}
+                            onPress={() => {
+                                sendOrdererInfo()
+                                setModalVisible(false)
+                            }}
+                        >
+                            <Text style={styles.textModalPayment}>Pay Now</Text>
+                        </Pressable>
+                        <Pressable
+                            onPress={() => {setModalVisible(false)}}
+                        >
+                            <Text style={{textAlign: 'center',textDecorationLine: 'underline',marginTop: 22, fontSize: 18}}>Let me think about it</Text>
+                        </Pressable>
+                        </View>
+                    </View>
+                </Modal>
+
                 <StatusBar style="auto" />
             </View>
         )
