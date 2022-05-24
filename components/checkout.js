@@ -10,7 +10,7 @@ import { selectId, setDEATSTokens } from "../redux/slices/userSlice";
 import { DEATS_SERVER_URL, ROUTE_CHECKOUT, ROUTE_ORDER_DEL } from "../utils/Constants";
 import { useClientSocket } from "./client_socket";
 
-export default function Checkout() {
+export default function Checkout({ navigation }) {
     const { initPaymentSheet, presentPaymentSheet } = useStripe();
     const [loading, setLoading] = useState(false);
 
@@ -81,6 +81,7 @@ export default function Checkout() {
           Alert.alert(`Error code: ${error.code}`, error.message);
         } else {
           Alert.alert('Success', 'Your order is confirmed!');
+          navigation.navigate("OrderSearch");
         }
       };
   
@@ -130,7 +131,6 @@ export default function Checkout() {
       <Screen>
         <PaymentButton title="Pay with DeatsTokens" loading={loading} action={sendOrdererInfo}/>
         <PaymentButton title="Pay with Card" loading={loading} action={openPaymentSheet}/>
-
       </Screen>
     );
   }
