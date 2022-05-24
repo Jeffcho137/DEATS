@@ -77,6 +77,16 @@ export default function Checkout() {
       <Screen>
         <Button
           variant="primary"
+          containerStyle={{ 
+            borderColor: "#006400", // dark green
+            borderWidth: 2,
+            borderRadius: 15,
+            backgroundColor: "#006400", // dark green
+            margin: 40,
+          }}
+          buttonStyle={{
+            backgroundColor: "#006400", // dark green
+          }}
           disabled={!loading}
           title="Checkout"
           onPress={openPaymentSheet}
