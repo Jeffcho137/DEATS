@@ -78,10 +78,10 @@ export default function Checkout({ navigation }) {
     const openPaymentSheet = async () => {
         const { error } = await presentPaymentSheet();
         if (error) {
-          Alert.alert(`Error code: ${error.code}`, error.message);
+          console.log(`${error.code}`, error.message);
         } else {
           Alert.alert('Success', 'Your order is confirmed!');
-          navigation.navigate("OrderSearch");
+          navigation.replace("OrderSearch");
         }
       };
   
@@ -89,7 +89,7 @@ export default function Checkout({ navigation }) {
       initializePaymentSheet();
     }, []);
 
-    const sendOrdererInfo = () => {  
+    const payWithDT = () => {  
       fetch(`${DEATS_SERVER_URL}${ROUTE_ORDER_DEL}`,
       {
           method: 'POST',
@@ -108,6 +108,8 @@ export default function Checkout({ navigation }) {
       .then(response => response.json())
       .then((data) => {
           console.log(data)
+          dispatch(setDEATSTokens(data.user.DEATS_tokens))
+
           if (data.succeeded == true) {
               const order_id = data.order.order_id
 
@@ -115,44 +117,109 @@ export default function Checkout({ navigation }) {
 
               dispatch(setOrderId(order_id))
               dispatch(setOrderFee(data.order.order_fee))
-              dispatch(setDEATSTokens(data.user.DEATS_tokens))
 
-              navigation.navigate('OrderSearch') 
+              navigation.replace('OrderSearch') 
 
-          } else {
-              console.log(data.msg);
+          } else if (data.order) {
+            Alert.alert(
+              "Insuficient DEATS Tokens (DT)",
+              `This order costs ${data.order.order_fee.toFixed(2)} DT, but you have only ${data.user.DEATS_tokens.toFixed(2)} DT left in your account. Here's what you can do`,
+              [
+                {
+                  text: "Pay with card instead", 
+                  onPress: () => {
+                    openPaymentSheet()
+                  }
+                }, 
+                { 
+                  text: "Buy some DT first", 
+                  onPress: () => navigation.navigate("BuyTokens")
+                }, 
+                {
+                  text: "Update the order",
+                  onPress: () => navigation.navigate("OrderSelection"),
+                  
+                },
+                {
+                  text: "Earn some DT by making a delivery", 
+                  onPress: () => navigation.navigate("DeliverySelection"),
+                  
+                },
+              ],
+              { cancelable: false });
           }
       })
       .catch(err => console.error(err));
-  
     }
 
     return (
       <Screen>
-        <PaymentButton title="Pay with DeatsTokens" loading={loading} action={sendOrdererInfo}/>
+        <PaymentButton title="Pay with DeatsTokens" loading={loading} action={payWithDT}/>
         <PaymentButton title="Pay with Card" loading={loading} action={openPaymentSheet}/>
       </Screen>
     );
   }
 
 
-  const PaymentButton = ({ title, loading, action }) => (
-    <Button
-          variant="primary"
-          containerStyle={{ 
-            borderColor: "#006400", // dark green
-            borderWidth: 2,
-            borderRadius: 15,
-            backgroundColor: "#006400", // dark green
-            margin: 40,
-            marginBottom: 0,
-          }}
-          buttonStyle={{
-            backgroundColor: "#006400", // dark green
-          }}
-          disabled={!loading}
-          title={title}
-          onPress={action}
-        />
+const PaymentButton = ({ title, loading, action }) => (
+  <Button
+        variant="primary"
+        containerStyle={{ 
+          borderColor: "green", 
+          borderWidth: 2,
+          borderRadius: 15,
+          backgroundColor: "green", 
+          margin: 40,
+          marginBottom: 0,
+        }}
+        buttonStyle={{
+          backgroundColor: "green",
+        }}
+        disabled={!loading}
+        title={title}
+        onPress={action}
+  />
 )
 
+const BottomModal = ({ children, openPaymentSheet }) => (
+  <Modal
+        animationType="slide" 
+        visible={modalVisible} 
+        transparent={true}
+        onRequestClose={() => setModalVisible(false)}
+    >
+        <View style={styles.bottomView}>
+            <View style={styles.modalViewPayment}>
+            <View style={styles.modalTextPayment}>
+                <Text
+                    style={{
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                        color: 'black',
+                    }}
+                >You don't have enough DT to make this order</Text>
+            </View>
+            <BottomModalPressable text="Pay with Card" action={openPaymentSheet}/>
+            <BottomModalPressable text="Buy some DT First" action={openPaymentSheet}/>
+            <BottomModalPressable text="Earn DT for the future through making deliveries"/>
+            <Pressable
+                onPress={() => {setModalVisible(false)}}
+            >
+                <Text style={{textAlign: 'center',textDecorationLine: 'underline',marginTop: 22, fontSize: 18}}>Cancel the order</Text>
+            </Pressable>
+            </View>
+        </View>
+    </Modal>
+)
+
+const BottomModalPressable = ({ text, action }) => (
+  <Pressable
+      style={[styles.button, styles.buttonClose]}
+      onPress={() => {
+        action()
+        setModalVisible(false)
+      }}
+  >
+      <Text style={styles.textModalPayment}>{text}</Text>
+  </Pressable>
+)
