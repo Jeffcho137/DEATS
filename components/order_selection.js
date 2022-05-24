@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button, TextInput, Pressable, Modal } from 'react-native';
 import styles from '../style';
@@ -8,14 +8,15 @@ import { selectDropLocation, selectPickupLocation, setOrderFee, setOrderId, setP
 import { DEATS_SERVER_URL, ROUTE_ORDER_DEL, ROUTE_ORDER_FEE } from '../utils/Constants';
 import { useClientSocket } from './client_socket';
 import { DateTime } from './date_time';
+import FoodLocs from './pickup_loc';
 
 
 export function Order_selection ({ navigation }) { 
     const [modalVisible, setModalVisible] = useState(false)
     const [tempOrderFee, setTempOrderFee] = useState(null)
+    const [selectedFoodLoc, setSelectedFoodLoc] = useState("The Hop")
 
     const dispatch = useDispatch()
-    const user_id = useSelector(selectId)
     const number = useSelector(selectPhoneNum)
     const dropLocation = useSelector(selectDropLocation)
     const pickupLocation = useSelector(selectPickupLocation)
@@ -23,11 +24,13 @@ export function Order_selection ({ navigation }) {
     const [room, setRoom] = useState("")
     const [date, setDate] = useState(new Date(Date.now()));
 
-    const [joinRoomForOrder] = useClientSocket({
-        userId: user_id,
-        orderId: null,
-        enabled: Boolean(user_id)
-    })
+    useEffect(() => {
+        if (selectedFoodLoc === "The Hop") {
+            selectTheHop()
+        } else {
+            selectCollis()
+        }
+    }, [selectedFoodLoc])
 
     const selectTheHop = () => {
         dispatch(setPickupLocation({
@@ -74,139 +77,43 @@ export function Order_selection ({ navigation }) {
          .catch(err => console.error(err))
     }
 
-
-    const sendOrdererInfo = () => {  
-        if (room == '' || !pickupLocation) {
-            console.log("fill everything out u fucker")
-        } else {  
-            fetch(`${DEATS_SERVER_URL}${ROUTE_ORDER_DEL}`,
-            {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    user_id: user_id,
-                    order: {
-                        drop_loc: dropLocation,
-                        pickup_loc: pickupLocation
-                    }
-                })
-            })
-            .then(response => response.json())
-            .then((data) => {
-                console.log(data)
-                if (data.succeeded == true) {
-                    const order_id = data.order.order_id
-
-                    joinRoomForOrder(order_id)
-
-                    dispatch(setOrderId(order_id))
-                    dispatch(setOrderFee(tempOrderFee))
-                    dispatch(setDEATSTokens(data.user.DEATS_tokens))
-
-                    navigation.navigate('OrderSearch') 
-
-                } else {
-                    console.log(data.msg);
-                }
-            })
-            .catch(err => console.error(err));
-        }
-    }   
-
     const loc_chosen = navigation.state.params.chosen;
     console.log("Drop location", dropLocation)
-    if (!loc_chosen) {
-        return (
-            <View style={styles.container}>
-                <View style={styles.order_sel}>
-                    <Text style={styles.order_sel_text}>Please select where you are ordering food from</Text>
-                    <View style={styles.order_sel_place_options}>
-                        <View style={styles.order_sel_single_place}>
-                            <Button color='#006400' title='HOP' onPress={selectTheHop}></Button>
-                        </View>
-                        <View style={styles.order_sel_single_place}>
-                            <Button color='#006400' title='Collis' onPress={selectCollis}></Button>
-                        </View>
-                    </View>
+    
+    
+    return (
+        <View style={styles.container}>
+            <View style={styles.order_sel}>
+                <Text style={styles.order_sel_text}>Select your order pickup location </Text>
+                <View style={styles.order_sel_place_options}>
+                    <FoodLocs selectedFoodLoc={selectedFoodLoc} setSelectedFoodLoc={setSelectedFoodLoc}/>
                 </View>
-                <View style={styles.order_sel_input}>
-                    <Text style={styles.order_sel_text}>Choose your delivery address below</Text>
-                    <View style={styles.order_sel_input_box}>
-                        <Button color="#006400" title='select my location' onPress={() => navigation.navigate("MapTest")}></Button>
-                        <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => setRoom(text)}></TextInput>
-                        <TextInput style={styles.single_input} placeholder='number' onChangeText={text => {}}></TextInput>
-                    </View>
-                </View>
-
-                <View style={{
-                    marginBottom: 30,
-                }} >
-                    <DateTime date={date} setDate={setDate}></DateTime>
-                </View>
-
-                {/* <View style={styles.order_sel}>
-                    <Text style={styles.order_sel_text}>I want my food between</Text>
-                    <View style={styles.order_sel_times}>
-                        <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
-                        <Text style={styles.order_sel_times_text}>and</Text>
-                        <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
-                    </View>
-                </View> */}
-
-                <Button color="#006400" title="Confirm" onPress={sendOrdererInfo}></Button>
-                <StatusBar style="auto" />
             </View>
-        )
-    } else {
-        return (
-            <View style={styles.container}>
-                <View style={styles.order_sel}>
-                    <Text style={styles.order_sel_text}>Please select where you are ordering food from:</Text>
-                    <View style={styles.order_sel_place_options}>
-                        <View style={styles.order_sel_single_place}>
-                            <Button color="#006400" title='HOP' onPress={selectTheHop}></Button>
-                        </View>
-                        <View style={styles.order_sel_single_place}>
-                            <Button color="#006400" title='Collis' onPress={selectCollis}></Button>
-                        </View>
-                    </View>
-                </View>
+            <View style={styles.order_sel_input}>
+                <Text style={styles.order_sel_text}>Choose your delivery address below</Text>
+                <Button color="#006400" title='select my location' onPress={() => navigation.navigate("MapTest")}/>
                 <View style={styles.order_sel_input}>
-                    <Text style={styles.order_sel_text}>Please confirm that this is the correct address:</Text>
-                    <View style={styles.order_sel_input_box}>
-                        <Text style={styles.order_sel_loc}>{dropLocation.address}</Text>
-                        <Button color="#006400" title='change my location' onPress={() => navigation.navigate("MapTest")}></Button>
-                        <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => setRoom(text)}></TextInput>
-                        <TextInput style={styles.single_input} placeholder='number' onChangeText={text => {}}></TextInput>
-                    </View>
+                    <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => setRoom(text)}></TextInput>
+                    <TextInput style={styles.single_input} placeholder='number' onChangeText={text => {}}></TextInput>
                 </View>
+            </View>
 
-                <View style={{
-                    marginBottom: 30,
-                }} >
-                    <DateTime date={date} setDate={setDate}></DateTime>
-                </View>
+            <View style={{
+                marginBottom: 30,
+            }} >
+                <DateTime date={date} setDate={setDate}></DateTime>
+            </View>
 
-                {/* <View style={styles.order_sel}>
-                    <Text style={styles.order_sel_text}>I want my food between</Text>
-                    <View style={styles.order_sel_times}>
-                        <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
-                        <Text style={styles.order_sel_times_text}>and</Text>
-                        <TextInput style={styles.single_input_times} placeholder='time'></TextInput>
-                    </View>
-                </View> */}
+            <Button title="Confirm" 
+                disabled={!(dropLocation && selectedFoodLoc && room)}
+                onPress={() => {
+                    setModalVisible(true)
+                    checkOrderFee()
+                }}/>
 
-                <Button title="Search" 
-                    onPress={() => {
-                        setModalVisible(true)
-                        checkOrderFee()
-                    }}>
-                </Button>
+            <StatusBar style="auto" />
 
-                <Modal
+            <Modal
                     animationType="slide" 
                     visible={modalVisible} 
                     transparent={true}
@@ -226,11 +133,11 @@ export function Order_selection ({ navigation }) {
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
                             onPress={() => {
-                                sendOrdererInfo()
+                                navigation.navigate('Checkout')
                                 setModalVisible(false)
                             }}
                         >
-                            <Text style={styles.textModalPayment}>Pay Now</Text>
+                            <Text style={styles.textModalPayment}>CHECKOUT</Text>
                         </Pressable>
                         <Pressable
                             onPress={() => {setModalVisible(false)}}
@@ -240,9 +147,6 @@ export function Order_selection ({ navigation }) {
                         </View>
                     </View>
                 </Modal>
-
-                <StatusBar style="auto" />
-            </View>
-        )
-    } 
+        </View>
+    )
 }

@@ -299,9 +299,7 @@ const styles = StyleSheet.create({
     order_sel_input: {
       flex: 0.50,
       width: '90%',
-      // flexDirection: 'row',
-      // marginBottom: ,
-
+      marginTop: 20,
     }, 
 
     deliver_sel_input: {
@@ -343,10 +341,9 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       height: '15%',
       width: '90%',
-      marginBottom: 10,
       fontSize: 18,
       textAlign: 'center',
-      marginTop: 10,
+      marginTop: 15,
     }, 
 
     order_sel_times: {

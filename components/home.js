@@ -19,7 +19,7 @@ export function Home ({ navigation }) {
                     fontSize: 20,
                     textAlign: 'left',
                 }}
-                >DEATS Tokens: {DEATSTokens}</Text>
+                >DEATS Tokens: {DEATSTokens.toFixed(2)}</Text>
                 <Logo/>
             </View>
             <View style={styles.home_options}>

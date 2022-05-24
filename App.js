@@ -33,7 +33,6 @@ import Checkout from "./components/checkout";
 
 const AppNavigator = createStackNavigator(
   {
-    Checkout: { screen: Checkout },
     SSOLogin: { screen: SSOLogin },
     SSOLogout: { screen: SSOLogout },
     Landing: { screen: Landing },
@@ -47,6 +46,7 @@ const AppNavigator = createStackNavigator(
     OrderSearch: { screen: Order_search },
     DeliverSearch: { screen: Deliver_search },
     DelivererSearch: { screen: DelivererSearch },
+    Checkout: { screen: Checkout },
     DeliverMatch: { screen: Deliver_match },
     Deliveries: { screen: Deliveries },
     OrderMatch: { screen: Order_match },
