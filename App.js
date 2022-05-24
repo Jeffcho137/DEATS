@@ -27,9 +27,13 @@ import SSOLogin from "./components/sso_login";
 import DelivererSearch from "./components/deliverer_search";
 import SSOLogout from "./components/sso_logout";
 import logout from "./components/logout";
+import { StripeProvider } from "@stripe/stripe-react-native";
+import { PUBLISHABLE_KEY_TEST } from "./utils/Constants";
+import Checkout from "./components/checkout";
 
 const AppNavigator = createStackNavigator(
   {
+    Checkout: { screen: Checkout },
     SSOLogin: { screen: SSOLogin },
     SSOLogout: { screen: SSOLogout },
     Landing: { screen: Landing },
@@ -90,9 +94,14 @@ const AppContainer = createAppContainer(AppNavigator);
 export default class App extends Component {
   render() {
     return (
-      <Provider store={store}>
-        <AppContainer/>
-      </Provider>
+      <StripeProvider
+        merchantIdentifier='merchant.identifier' 
+        publishableKey={PUBLISHABLE_KEY_TEST}
+      >
+        <Provider store={store}>
+          <AppContainer />
+        </Provider>
+      </StripeProvider>
     );
   }
 }

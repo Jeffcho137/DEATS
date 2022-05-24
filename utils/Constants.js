@@ -23,6 +23,9 @@ export const ROUTE_MATCH = "/match/"
 export const ROUTE_UNMATCH = "/unmatch/"
 export const ROUTE_ORDERS = "/orders/"
 export const ROUTE_DELIVERIES = "/deliveries/"
+export const ROUTE_CHECKOUT = "/card_payment"
 export const ROUTE_UPDATE_ORDER_STATUS = "/update_order_status/"
 
-
+/* Stripe */
+export const PUBLISHABLE_KEY_TEST = "pk_test_51L27bgCzhp0vww50EetYqUMoajMbR90nRPPXSO7rkUFKOkdbzwmU7ZLgCkCeZ3VvTNXTf7z88qkCXmonOVxYo7Ly006inuQfAd"
+export const PUBLISHABLE_KEY_PROD = ""

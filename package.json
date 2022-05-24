@@ -13,6 +13,7 @@
     "@react-native-community/datetimepicker": "4.0.0",
     "@react-native-community/masked-view": "^0.1.11",
     "@reduxjs/toolkit": "^1.8.1",
+    "@stripe/stripe-react-native": "0.2.3",
     "expo": "~44.0.0",
     "expo-blur": "~11.0.0",
     "expo-device": "~4.1.0",
