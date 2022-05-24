@@ -15,19 +15,12 @@ export function Order_selection ({ navigation }) {
     const [tempOrderFee, setTempOrderFee] = useState(null)
 
     const dispatch = useDispatch()
-    const user_id = useSelector(selectId)
     const number = useSelector(selectPhoneNum)
     const dropLocation = useSelector(selectDropLocation)
     const pickupLocation = useSelector(selectPickupLocation)
  
     const [room, setRoom] = useState("")
     const [date, setDate] = useState(new Date(Date.now()));
-
-    const [joinRoomForOrder] = useClientSocket({
-        userId: user_id,
-        orderId: null,
-        enabled: Boolean(user_id)
-    })
 
     const selectTheHop = () => {
         dispatch(setPickupLocation({
@@ -74,48 +67,6 @@ export function Order_selection ({ navigation }) {
          .catch(err => console.error(err))
     }
 
-
-    const sendOrdererInfo = () => {  
-        if (room == '' || !pickupLocation) {
-            console.log("fill everything out u fucker")
-        } else {  
-            fetch(`${DEATS_SERVER_URL}${ROUTE_ORDER_DEL}`,
-            {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    user_id: user_id,
-                    order: {
-                        drop_loc: dropLocation,
-                        pickup_loc: pickupLocation
-                    }
-                })
-            })
-            .then(response => response.json())
-            .then((data) => {
-                console.log(data)
-                if (data.succeeded == true) {
-                    const order_id = data.order.order_id
-
-                    joinRoomForOrder(order_id)
-
-                    dispatch(setOrderId(order_id))
-                    dispatch(setOrderFee(tempOrderFee))
-                    dispatch(setDEATSTokens(data.user.DEATS_tokens))
-
-                    navigation.navigate('OrderSearch') 
-
-                } else {
-                    console.log(data.msg);
-                }
-            })
-            .catch(err => console.error(err));
-        }
-    }   
-
     const loc_chosen = navigation.state.params.chosen;
     console.log("Drop location", dropLocation)
     if (!loc_chosen) {
@@ -156,7 +107,7 @@ export function Order_selection ({ navigation }) {
                     </View>
                 </View> */}
 
-                <Button color="#006400" title="Confirm" onPress={sendOrdererInfo}></Button>
+                <Button color="#006400" title="Confirm"></Button>
                 <StatusBar style="auto" />
             </View>
         )
@@ -226,11 +177,11 @@ export function Order_selection ({ navigation }) {
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
                             onPress={() => {
-                                sendOrdererInfo()
+                                navigation.navigate('Checkout')
                                 setModalVisible(false)
                             }}
                         >
-                            <Text style={styles.textModalPayment}>Pay Now</Text>
+                            <Text style={styles.textModalPayment}>CHECKOUT</Text>
                         </Pressable>
                         <Pressable
                             onPress={() => {setModalVisible(false)}}
