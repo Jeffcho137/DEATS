@@ -53,6 +53,10 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
         engine.once("upgrade", () => {
            console.log("transport after upgrade:", engine.transport.name)
         })
+
+        if (orderId) {
+          joinRoomForOrder(userId, orderId);
+        }
     })
 
     socket.on('reconnect', () => {

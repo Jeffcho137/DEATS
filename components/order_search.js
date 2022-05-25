@@ -6,9 +6,12 @@ import styles from '../style';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectDelivererId, selectDelivererInfo, selectOrderId, setDelivererId, setDelivererInfo } from '../redux/slices/orderDeliverySlice';
 import { DEATS_SERVER_URL, ROUTE_MY_DELIVERER } from '../utils/Constants';
+import { useClientSocket } from './client_socket';
+import { selectId } from '../redux/slices/userSlice';
 
 export function Order_search ({ navigation }) {
     const dispatch = useDispatch()
+    const userId = useSelector(selectId)
     const orderId = useSelector(selectOrderId)
     const delivererId = useSelector(selectDelivererId)
     const delivererInfo = useSelector(selectDelivererInfo)
@@ -17,6 +20,12 @@ export function Order_search ({ navigation }) {
 
     console.log("current deliverer:", delivererId)
 
+    useClientSocket({
+      userId: userId,
+      orderId: orderId,
+      enabled: Boolean(userId)
+  })
+
     useEffect(() => {
         if (delivererId) {
           setModalVisible(true)
@@ -24,34 +33,6 @@ export function Order_search ({ navigation }) {
           setModalVisible(false)
         }
     }, [delivererId])
-    
-    // const findDrivers = () => {
-    //   console.log("orderId", orderId)
-    //   fetch(`${DEATS_SERVER_URL}${ROUTE_MY_DELIVERER}`,
-    //     {
-    //         method: 'POST',
-    //         headers: {
-    //             'Accept': 'application/json',
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({
-    //             order_id: orderId,
-    //         })
-    //     })
-    //     .then(response => response.json())
-    //     .then((data) => {
-    //         console.log(data)
-    //         console.log(data.deliverer)
-    //         if (data.succeeded == true) {
-    //           dispatch(setDelivererInfo(data.deliverer?.user_info))
-    //           dispatch(setDelivererId(data.deliverer?.user_id))
-    //           setModalVisible(true)
-    //         } else {
-    //             console.log(data.msg);
-    //         }
-    //     })
-    //     .catch(err => console.error(err));
-    // }
 
     return (
         <View style={styles.container}>
