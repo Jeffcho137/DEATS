@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import { selectSelectedCustomer, setSelectedCustomer } from '../redux/slices/makeDeliverySlice';
 import { selectExpoPushToken } from '../redux/slices/notificationsSlice';
-import { setDelivererId, setDelivererInfo, setOrderStatus } from '../redux/slices/orderDeliverySlice';
+import { setDelivererId, setDelivererInfo, setOrderFee, setOrderId, setOrderStatus } from '../redux/slices/orderDeliverySlice';
 import { selectToggle, setToggle } from '../redux/slices/socketSlice';
+import { setDEATSTokens } from '../redux/slices/userSlice';
 import { DEATS_SERVER_URL } from '../utils/Constants';
 import { schedulePushNotification } from './notifications';
 
@@ -77,6 +78,9 @@ export const useClientSocket = ({userId, orderId, paymentIntentId, enabled}) => 
 
     // FROM SERVER:STRIPE: announcements for customer 
     socket.on('stripe:order_with_card:cus', (payload) => {
+      dispatch(setOrderId(payload.order.order_id))
+      dispatch(setOrderFee(payload.order.order_fee))
+      dispatch(setDEATSTokens(payload.user.DEATS_tokens))
       console.log(`${userId},`, "Your order with card payment has been created:", payload);
     });
 
