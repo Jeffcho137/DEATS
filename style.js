@@ -123,9 +123,11 @@ const styles = StyleSheet.create({
 
     home_profile_button: {
       flex: 0.3,
+      width: '100%',
       flexDirection: 'row',
       justifyContent: 'flex-end',
-      margin: 10,
+      marginRight: 10,
+      marginTop: 10,
     },
 
     home_options: {
@@ -269,7 +271,7 @@ const styles = StyleSheet.create({
     },
 
     order_sel: {
-      flex: 0.3,
+      flex: 0.28,
       width: '90%',
       alignItems: 'center',
       // marginBottom: 20,
@@ -297,9 +299,25 @@ const styles = StyleSheet.create({
     },
 
     order_sel_input: {
-      flex: 0.50,
+      flex: 0.30,
+      // justifyContent: 'center',
+      alignItems: 'center',
       width: '90%',
-      marginTop: 20,
+      // marginTop: 50,
+    }, 
+
+    order_sel_times: {
+      width: '90%',
+      marginTop: -70,
+      flex: 0.28,
+    }, 
+
+    order_sel_input_second: {
+      flex: 0.50,
+      // justifyContent: 'center',
+      alignItems: 'center',
+      width: '90%',
+      // marginTop: 10,
     }, 
 
     deliver_sel_input: {
@@ -318,10 +336,13 @@ const styles = StyleSheet.create({
     del_sel_loc_text: {
       marginTop: 10,
       fontSize: 18,
+      fontWeight: 'bold',
+      color: 'green',
     },
 
     del_sel_input_box: {
-      // flex:.7,
+      flex:1,
+      justifyContent: 'center',
       // marginLeft: '2%',
       // marginBottom: 150
       width: '80%',
@@ -329,9 +350,9 @@ const styles = StyleSheet.create({
 
     del_confirm_text: {
       // alignSelf: 'flex-start',
-      fontSize: 15,
-      marginBottom: 15,
-      width: '90%',
+      fontSize: 16,
+      marginBottom: 30,
+      width: '95%',
       textAlign: 'center',
     },
 
@@ -339,24 +360,12 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
       borderRadius: 10,
       borderWidth: 1,
-      height: '15%',
+      height: '30%',
       width: '90%',
       fontSize: 18,
       textAlign: 'center',
       marginTop: 15,
     }, 
-
-    order_sel_times: {
-      flex: 0.7,
-      width: '100%',
-      flexDirection: 'row',
-      justifyContent: 'space-evenly',
-      alignItems: 'center',
-    }, 
-
-    order_sel_times_text: {
-      fontSize: 15,
-    },
 
     single_input_times: {
       flex: 0.3,

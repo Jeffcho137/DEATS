@@ -55,7 +55,9 @@ export function Delivery_selection ({ navigation }) {
                     </View>
                 {/* </View> */}
                 
-                <Button color="gray" title="Begin Searching"></Button>
+                <View style={{position: 'absolute', bottom: 50}}>
+                    <Button color="gray" style={{position: 'absolute', bottom: 10}} title="Begin Searching"></Button>
+                </View>
             
                 <StatusBar style="auto" />
             </View>
@@ -66,8 +68,14 @@ export function Delivery_selection ({ navigation }) {
                 <View style={styles.deliver_sel_input}>
                     <Text style={styles.del_confirm_text}>Please confirm that your starting location and final destination are correct</Text>
                     <View style={styles.del_sel_locations}>
-                        <Text style={styles.del_sel_loc_text}>Leaving from: {startPoint?.name}</Text>
-                        <Text style={styles.del_sel_loc_text}>Going to: {destination?.name}</Text>
+                        <View style={{marginBottom: 20}}>
+                            <Text style={styles.del_sel_loc_text}>Leaving from:</Text>
+                            <Text style={{fontSize: 17}}>{startPoint?.name}</Text>
+                        </View>
+                        <View style={{marginBottom: 40}}>
+                            <Text style={styles.del_sel_loc_text}>Going to:</Text>
+                            <Text style={{fontSize: 17}}>{destination?.name}</Text>
+                        </View>
                         <Button title='change my starting location and final destination' onPress={() => navigation.navigate("DelMap")}></Button>
                     </View>
                 </View>

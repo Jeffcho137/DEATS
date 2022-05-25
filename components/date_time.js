@@ -26,7 +26,8 @@ export function DateTime({date, setDate}) {
         <Text style={{
             fontSize: 15.5,
             fontWeight: "800",
-            marginHorizontal: 15
+            marginHorizontal: 15,
+            color: 'green',
         }}>Choose {text}:</Text>
         <SetDateTimePicker date={date} mode={mode} onChange={onChange}/>
     </View>
@@ -37,8 +38,10 @@ const SetDateTimePicker = ({date, mode, onChange}) => (
     <DateTimePicker
     style={{ 
         width: 88,
-        backgroundColor: 'green',
+        backgroundColor: '#FFFFFF',
         alignSelf: 'center',
+        borderRadius: 10,
+        borderWidth: 1,
     }}
     value={date}
     mode={mode}

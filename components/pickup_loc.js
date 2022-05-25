@@ -50,6 +50,6 @@ const FoodLocButton = ({ name, image, selectedFoodLoc, setSelectedFoodLoc }) => 
                     margin: 5,
                     borderRadius: 15 }}
             />
-         <Text style= {{ color: selectedFoodLoc === name ? "white" : "black", alignSelf:"center", fontSize: 20, fontWeight: "700" }}>{name}</Text>
+         <Text style= {{ color: selectedFoodLoc === name ? "white" : "green", alignSelf:"center", fontSize: 20, fontWeight: "700" }}>{name}</Text>
         </>
     )

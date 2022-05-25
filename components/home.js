@@ -9,17 +9,17 @@ import { useSelector } from 'react-redux';
 import { selectDEATSTokens } from '../redux/slices/userSlice';
 
 export function Home ({ navigation }) {
-    const DEATSTokens = useSelector(selectDEATSTokens)
+    // const DEATSTokens = useSelector(selectDEATSTokens)
     return (
         <View style={styles.container}>
             <View style={styles.home_profile_button}>
-                <Text 
+                {/* <Text 
                 style={{
                     fontWeight: 'bold',
                     fontSize: 20,
                     textAlign: 'left',
                 }}
-                >DEATS Tokens: {DEATSTokens.toFixed(2)}</Text>
+            >DEATS Tokens: {DEATSTokens.toFixed(2)}</Text> */}
                 <Logo/>
             </View>
             <View style={styles.home_options}>

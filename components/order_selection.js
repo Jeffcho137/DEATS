@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button, TextInput, Pressable, Modal } from 'react-native';
@@ -92,24 +93,27 @@ export function Order_selection ({ navigation }) {
             <View style={styles.order_sel_input}>
                 <Text style={styles.order_sel_text}>Choose your delivery address below</Text>
                 <Button color="#006400" title='select my location' onPress={() => navigation.navigate("MapTest")}/>
-                <View style={styles.order_sel_input}>
+                <View style={styles.order_sel_input_second}>
                     <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => setRoom(text)}></TextInput>
                     <TextInput style={styles.single_input} placeholder='number' onChangeText={text => {}}></TextInput>
                 </View>
             </View>
-
-            <View style={{
-                marginBottom: 30,
-            }} >
-                <DateTime date={date} setDate={setDate}></DateTime>
+            <View style={styles.order_sel_times}>
+                <Text style={styles.order_sel_text}>Select when you would like your order to be delivered</Text>
+                <View style={{alignItems: 'center'}}>
+                    <DateTime date={date} setDate={setDate}></DateTime>
+                </View>
             </View>
 
-            <Button title="Confirm" 
-                disabled={!(dropLocation && selectedFoodLoc && room)}
-                onPress={() => {
-                    setModalVisible(true)
-                    checkOrderFee()
+            <View style={{position: 'absolute', bottom: 50}}>
+                <Button title="Confirm" 
+                    disabled={!(dropLocation && selectedFoodLoc && room)}
+                    onPress={() => {
+                        setModalVisible(true)
+                        checkOrderFee()
                 }}/>
+            </View>
+            
 
             <StatusBar style="auto" />
 

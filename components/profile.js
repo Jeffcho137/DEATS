@@ -4,13 +4,14 @@ import { Text, View, Button, Modal, Pressable } from 'react-native';
 import styles from '../style';
 import ImageUpload from './image_upload';
 import { useSelector, useDispatch, dispatch } from 'react-redux';
-import { selectId, selectName, setPhoneNum, selectPhoneNum} from '../redux/slices/userSlice';
+import { selectId, selectName, setPhoneNum, selectPhoneNum, selectDEATSTokens} from '../redux/slices/userSlice';
 import { TextInput } from 'react-native-gesture-handler';
-import { DEATS_SERVER_URL, ROUTE_DELETE_ACC, ROUTE_DEACTIVATE_ACC, ROUTE_REACTIVATE_ACC, ROUTE_LOGOUT } from '../utils/Constants';
+import { DEATS_SERVER_URL, ROUTE_DELETE_ACC, ROUTE_DEACTIVATE_ACC, ROUTE_REACTIVATE_ACC, ROUTE_SSO_LOGOUT } from '../utils/Constants';
 
 export function Profile ({ navigation }) {
     const dispatch = useDispatch()
 
+    const DEATSTokens = useSelector(selectDEATSTokens)
     const id = useSelector(selectId)
     const name = useSelector(selectName)
     const number = useSelector(selectPhoneNum)
@@ -29,30 +30,6 @@ export function Profile ({ navigation }) {
     const updateNum = (num) => {
         dispatch(setPhoneNum(num))
         setModal(false)
-    }
-
-    const logout = () => {
-        fetch(`${DEATS_SERVER_URL}${ROUTE_LOGOUT}`,
-        {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                user_id: id,
-            })
-        })
-        .then(response => response.json())
-        .then((data) => {
-            if (data.succeeded == true) {
-                console.log("login results:", data);
-                navigation.navigate('SSOLogin')
-            } else {
-                console.log(data.msg);
-            }
-        })
-        .catch(err => console.log(err));
     }
 
     const del_account = () => {
@@ -240,10 +217,17 @@ export function Profile ({ navigation }) {
 
             <ImageUpload />
             <View style={styles.profile_heading}>
-                <View>
-                    <Text style={styles.profile_name}>{name}</Text>
-                    {/* <Text>my rating</Text> */}
-                </View>
+                <Text style={styles.profile_name}>{name}</Text>
+                <Text style={{
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                    }}
+                    >DEATS Tokens: {DEATSTokens}</Text>
+                <Text style={{
+                    // width: '70%',
+                    textAlign: 'right',
+                    marginTop: 5,
+                }}>Make new deliveries to earn more tokens!</Text>
             </View>
             <View style={styles.phone_number}>
                 <Text style={styles.profile_text}>Phone number: {number}</Text>
@@ -255,7 +239,6 @@ export function Profile ({ navigation }) {
                 <Button title='deactivate account' onPress={() => setModalVisibleDeact(true)}></Button>
                 <Button title='reactivate account' onPress={() => setModalVisibleReact(true)}></Button>
                 <Button title='delete account' onPress={() => setModalVisibleDelete(true)}></Button>
-                <Button title='logout' onPress={logout}></Button>
             </View>
             {/* <View style={styles.payment}>
                 <Text style={styles.profile_text}>Preferred payment method: </Text>
