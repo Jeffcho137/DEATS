@@ -35,7 +35,7 @@ const validateST = (ticketedURL, dispatch, navigation) => {
             dispatch(setPhoneNum(data.user.user_info.phone_num))
             dispatch(setDEATSTokens(data.user.DEATS_tokens))
             
-            navigation.navigate("Home");
+            navigation.replace("Home");
         } else {
             console.log(data.msg);
         }

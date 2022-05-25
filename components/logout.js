@@ -14,7 +14,7 @@ const DEATSLogout = (logoutURL) => {
     .then((data) => {
         console.log("server response:", data)
         if (data.succeeded == true) {
-            navigation.navigate("Signup");
+            navigation.replace("Signup");
         } else {
             console.log(data.msg);
         }
@@ -26,6 +26,10 @@ export default logout = ({  navigation }) => ({
     headerRight: () => (
       <LogoutButton navigation={navigation} />
     ),
+})
+
+export const logoutBackButton = () => ({
+    headerLeft: () => null
 })
 
 const LogoutButton = ({navigation}) => (
