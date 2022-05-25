@@ -9,7 +9,7 @@ import { selectToggle, setToggle } from '../redux/slices/socketSlice';
 import { DEATS_SERVER_URL } from '../utils/Constants';
 import { schedulePushNotification } from './notifications';
 
-export const useClientSocket = ({userId, orderId, enabled}) => {
+export const useClientSocket = ({userId, orderId, paymentIntentId, enabled}) => {
   const toggle = useSelector(selectToggle)
   const exponentPushToken = useSelector(selectExpoPushToken)
   
@@ -55,7 +55,11 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
         })
 
         if (orderId) {
-          joinRoomForOrder(userId, orderId);
+          joinRoomForOrder(orderId);
+        }
+
+        if (paymentIntentId) {
+          joinRoomForPayment(paymentIntentId);
         }
     })
 

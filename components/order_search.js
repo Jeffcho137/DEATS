@@ -7,12 +7,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectDelivererId, selectDelivererInfo, selectOrderId, setDelivererId, setDelivererInfo } from '../redux/slices/orderDeliverySlice';
 import { DEATS_SERVER_URL, ROUTE_MY_DELIVERER } from '../utils/Constants';
 import { useClientSocket } from './client_socket';
-import { selectId } from '../redux/slices/userSlice';
+import { selectId, selectPaymentIntentId } from '../redux/slices/userSlice';
 
 export function Order_search ({ navigation }) {
     const dispatch = useDispatch()
     const userId = useSelector(selectId)
     const orderId = useSelector(selectOrderId)
+    const paymentIntentId = useSelector(selectPaymentIntentId)
     const delivererId = useSelector(selectDelivererId)
     const delivererInfo = useSelector(selectDelivererInfo)
 
@@ -23,6 +24,7 @@ export function Order_search ({ navigation }) {
     useClientSocket({
       userId: userId,
       orderId: orderId,
+      paymentIntentId: paymentIntentId,
       enabled: Boolean(userId)
   })
 

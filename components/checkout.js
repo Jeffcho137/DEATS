@@ -6,7 +6,7 @@ import { Button } from "react-native-elements";
 import { Screen } from "react-native-screens";
 import { useDispatch, useSelector } from "react-redux";
 import { selectDropLocation, selectPickupLocation, setOrderFee, setOrderId } from "../redux/slices/orderDeliverySlice";
-import { selectId, setDEATSTokens } from "../redux/slices/userSlice";
+import { selectId, setDEATSTokens, setPaymentIntentId } from "../redux/slices/userSlice";
 import { DEATS_SERVER_URL, ROUTE_ORDER_DEL_WITH_CARD, ROUTE_ORDER_DEL } from "../utils/Constants";
 import { useClientSocket } from "./client_socket";
 
@@ -36,6 +36,7 @@ export default function Checkout({ navigation }) {
         });
 
         const { paymentIntentId, paymentIntentClientSecret, ephemeralKey, customer, ...data} = await response.json();
+        dispatch(setPaymentIntentId(paymentIntentId));
         console.log("paymentIntent:", paymentIntentId)
         console.log("server response:", data)
         return {
