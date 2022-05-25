@@ -12,6 +12,7 @@ import { Order_match } from "./components/order_match";
 import { Order_code } from "./components/order_code";
 import Orders from "./components/orders";
 import { Order_status } from "./components/order_status";
+import {Order_review} from "./components/order_review";
 import { Deliver_status } from "./components/deliver_status";
 import { Completed } from "./components/completed";
 import { Signup } from "./components/signup";
@@ -33,6 +34,8 @@ import Checkout from "./components/checkout";
 
 const AppNavigator = createStackNavigator(
   {
+    OrderReview: {screen: Order_review },
+
     SSOLogin: { screen: SSOLogin },
     SSOLogout: { screen: SSOLogout },
     Landing: { screen: Landing },
@@ -52,6 +55,7 @@ const AppNavigator = createStackNavigator(
     OrderMatch: { screen: Order_match },
     OrderCode: { screen: Order_code },
     OrderStatus: { screen: Order_status },
+    // OrderReview: {screen: Order_review },
     Orders: { screen: Orders },
     DeliverStatus: { screen: Deliver_status },
     Completed: { screen: Completed },
@@ -87,6 +91,7 @@ Map_test['navigationOptions'] = screenProps => (logout(screenProps));
 Order_search['navigationOptions'] = screenProps => (logout(screenProps));
 Order_match['navigationOptions'] = screenProps => (logout(screenProps));
 Order_status['navigationOptions'] = screenProps => (logout(screenProps));
+Order_review['navigationOptions'] = screenProps => (logout(screenProps));
 Order_code['navigationOptions'] = screenProps => (logout(screenProps));
 Orders['navigationOptions'] = screenProps => (logout(screenProps));
 SSOLogout['navigationOptions'] = () => (logoutBackButton());

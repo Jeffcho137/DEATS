@@ -277,6 +277,13 @@ const styles = StyleSheet.create({
       // marginBottom: 20,
     },
 
+    order_rev: {
+      flex: 0.28,
+      width: '90%',
+      alignItems: 'center',
+      marginBottom: 400,
+    },
+
     order_sel_text: {
       alignSelf: 'flex-start',
       fontSize: 20,
