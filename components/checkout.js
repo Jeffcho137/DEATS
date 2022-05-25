@@ -7,7 +7,7 @@ import { Screen } from "react-native-screens";
 import { useDispatch, useSelector } from "react-redux";
 import { selectDropLocation, selectPickupLocation, setOrderFee, setOrderId } from "../redux/slices/orderDeliverySlice";
 import { selectId, setDEATSTokens } from "../redux/slices/userSlice";
-import { DEATS_SERVER_URL, ROUTE_CHECKOUT, ROUTE_ORDER_DEL } from "../utils/Constants";
+import { DEATS_SERVER_URL, ROUTE_ORDER_DEL_WITH_CARD, ROUTE_ORDER_DEL } from "../utils/Constants";
 import { useClientSocket } from "./client_socket";
 
 export default function Checkout({ navigation }) {
@@ -26,14 +26,23 @@ export default function Checkout({ navigation }) {
   })
   
     const fetchPaymentSheetParams = async () => {
-        const response = await fetch(`${DEATS_SERVER_URL}${ROUTE_CHECKOUT}`, {
+        const response = await fetch(`${DEATS_SERVER_URL}${ROUTE_ORDER_DEL_WITH_CARD}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify({
+              user_id: user_id,
+              order: {
+                  drop_loc: dropLocation,
+                  pickup_loc: pickupLocation
+              }
+          })
         });
-        const { paymentIntent, ephemeralKey, customer} = await response.json();
+
+        const { paymentIntent, ephemeralKey, customer, ...data} = await response.json();
+        console.log("server response:", data)
         return {
             paymentIntent,
             ephemeralKey,
@@ -46,7 +55,8 @@ export default function Checkout({ navigation }) {
             paymentIntent,
             ephemeralKey,
             customer,
-        } = await fetchPaymentSheetParams().catch(() => {
+        } = await fetchPaymentSheetParams().catch((error) => {
+            console.log(error);
             Alert.alert(
             "Error",
             "Could not connect to server. Please try again later.",
