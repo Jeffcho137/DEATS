@@ -19,6 +19,11 @@ export default function Checkout({ navigation }) {
     const dropLocation = useSelector(selectDropLocation)
     const pickupLocation = useSelector(selectPickupLocation)
 
+    const [joinRoomForOrder, joinRoomForPayment] =useClientSocket({
+      userId: user_id,
+      enabled: Boolean(user_id)
+  })
+
     const fetchPaymentSheetParams = async () => {
         const response = await fetch(`${DEATS_SERVER_URL}${ROUTE_ORDER_DEL_WITH_CARD}`, {
             method: 'POST',
@@ -36,6 +41,7 @@ export default function Checkout({ navigation }) {
         });
 
         const { paymentIntentId, paymentIntentClientSecret, ephemeralKey, customer, ...data} = await response.json();
+        joinRoomForPayment(paymentIntentId)
         dispatch(setPaymentIntentId(paymentIntentId));
         console.log("paymentIntent:", paymentIntentId)
         console.log("server response:", data)
