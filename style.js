@@ -384,12 +384,32 @@ const styles = StyleSheet.create({
     },
 
     searching_text: {
-      flex: 0.3,
+      flex: 0.1,
       borderRadius: 5,
       //borderWidth: 1,
-      height: 50,
+      height: 30,
+      fontSize: 17,
+      textAlign: 'center',
+    },
+
+    searching_text_hardcode: {
+      flex: 0.1,
+      borderRadius: 5,
+      //borderWidth: 1,
+      color: 'green',
+      height: 30,
       fontSize: 20,
       textAlign: 'center',
+      fontWeight: 'bold',
+    },
+
+    del_match: {
+      flex: 0.7,
+      width: '90%',
+      alignItems: 'center',
+      justifyContent: 'center',
+      // marginBottom: 20,
+      backgroundColor: 'coral',
     },
 
     cancel_order: {

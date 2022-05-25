@@ -10,10 +10,17 @@ export function Deliver_match (props) {
     
     return (
         <View style={styles.container}>
-            <View style={styles.order_sel}>
-                <Text style={styles.searching_text}>Deliver to {customer.order.drop_loc.name} from {customer.order.pickup_loc.name}?</Text>            
+            <View style={styles.del_match}>
+                <Text style={styles.searching_text_hardcode}>Deliver to:</Text>    
+                <Text style={styles.searching_text}>{customer.order.drop_loc.name}</Text>  
             </View>
-            <Button title="Confirm" onPress={() => props.navigation.navigate('DeliverStatus')}></Button>
+            <View style={styles.del_match}>
+                <Text style={styles.searching_text_hardcode}>from:</Text>    
+                <Text style={styles.searching_text}>{customer.order.pickup_loc.name}?</Text>
+            </View>
+            <View style={{position: 'absolute', bottom:50}}>
+                <Button title="Confirm" onPress={() => props.navigation.navigate('DeliverStatus')}></Button>
+            </View>
             <StatusBar style="auto" />
         </View>
     )

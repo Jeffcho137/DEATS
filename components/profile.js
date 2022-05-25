@@ -8,6 +8,7 @@ import { selectId, selectName, setPhoneNum, selectPhoneNum, selectDEATSTokens} f
 import { TextInput } from 'react-native-gesture-handler';
 import { DEATS_SERVER_URL, ROUTE_DELETE_ACC, ROUTE_DEACTIVATE_ACC, ROUTE_REACTIVATE_ACC, ROUTE_SSO_LOGOUT } from '../utils/Constants';
 
+
 export function Profile ({ navigation }) {
     const dispatch = useDispatch()
 
@@ -235,6 +236,7 @@ export function Profile ({ navigation }) {
                     <Text style={{textAlign: 'center', color: 'blue', fontSize: 15}}>edit</Text>
                 </Pressable>
             </View>
+            <Progress.Circle size={30} indeterminate={true} />
             <View style={styles.profile_acc_btns}>
                 <Button title='deactivate account' onPress={() => setModalVisibleDeact(true)}></Button>
                 <Button title='reactivate account' onPress={() => setModalVisibleReact(true)}></Button>
