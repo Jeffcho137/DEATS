@@ -6,6 +6,7 @@ const initialState = {
     email: null,
     phoneNum: null,
     DEATSTokens: null,
+    paymentIntentId: null,
     profileImgUri: null,
 }
 
@@ -33,6 +34,10 @@ export const userSlice = createSlice({
             state.DEATSTokens = action.payload;
         },
 
+        setPaymentIntentId: (state, action) => {
+            state.paymentIntentId = action.payload;
+        },
+
         setProfileImgUri: (state, action) => {
             state.profileImgUri = action.payload;
         }
@@ -44,6 +49,7 @@ export const selectName = (state) => state.userSlice.name
 export const selectEmail = (state) => state.userSlice.email
 export const selectPhoneNum = (state) => state.userSlice.phoneNum
 export const selectDEATSTokens = (state) => state.userSlice.DEATSTokens
+export const selectPaymentIntentId = (state) => state.userSlice.paymentIntentId
 export const selectProfileImgUri = (state) => state.userSlice.profileImgUri
-export const { setId, setName, setEmail, setPhoneNum, setDEATSTokens, setProfileImgUri } = userSlice.actions
+export const { setId, setName, setEmail, setPhoneNum, setDEATSTokens, setPaymentIntentId, setProfileImgUri } = userSlice.actions
 export default userSlice.reducer
