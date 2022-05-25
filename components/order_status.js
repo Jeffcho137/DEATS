@@ -24,6 +24,7 @@ export function Order_status ({ navigation }) {
     <View style={styles.container}>
       <View style={styles.order_sel}>{status?<Text>{status}</Text>:<Text>Matched!</Text>}</View>
       <Button title="GET" onPress={() => navigation.navigate("OrderCode")}></Button>
+      <Button title="Review Order" onPress={() => navigation.navigate("OrderReview")}></Button>
       <Button title="I got my food!" onPress={() => navigation.navigate("Completed")}></Button>
       <StatusBar style="auto" />
     </View>
