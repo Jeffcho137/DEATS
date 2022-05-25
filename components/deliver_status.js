@@ -15,7 +15,7 @@ import {
   selectPickupLocation,
   selectOrderId,
 } from "../redux/slices/orderDeliverySlice";
-import { selectId, selectPhoneNum } from "../redux/slices/userSlice";
+import { selectId, selectPhoneNum, setDEATSTokens } from "../redux/slices/userSlice";
 import { DEATS_SERVER_URL, ROUTE_UPDATE_ORDER_STATUS } from "../utils/Constants";
 
 export function Deliver_status(props) {
@@ -49,6 +49,11 @@ export function Deliver_status(props) {
       .then((response) => response.json())
       .then((data) => {
         console.log("response", data);
+        if (data.succeeded == true) {
+          dispatch(setDEATSTokens(data.user.DEATS_tokens))
+        } else {
+          console.log(data.msg);
+        }
       })
       .catch((err) => console.error(err));
   };
