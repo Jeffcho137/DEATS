@@ -2,30 +2,25 @@ import React, { useState, useRef, useEffect } from "react";
 import { Text, View, Button } from "react-native";
 import styles from "../style";
 import MapView from "react-native-maps";
-import {
-  PROVIDER_GOOGLE,
-  Marker,
-  Callout,
-} from "react-native-maps";
+import { PROVIDER_GOOGLE, Marker, Callout } from "react-native-maps";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { useDispatch } from "react-redux";
 import { setDropLocation } from "../redux/slices/orderDeliverySlice";
 
-const API_KEY = 'AIzaSyCCkDRzY3UvSoaZa1anF9ov43ztpe6GSFk';
-let address = '';
+const API_KEY = "AIzaSyCCkDRzY3UvSoaZa1anF9ov43ztpe6GSFk";
+let address = "";
 
 const get_location = (lat, long, setPinDragged) => {
-  fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + long + '&key=' + API_KEY)
-  .then((response) => response.json())
-  .then((responseJson) => {
-      const location_obj = JSON.parse(JSON.stringify(responseJson))
-      address = location_obj.results[0].formatted_address
-      console.log("Fetch", lat, long)
-      console.log("Fetch:", address)
-      setPinDragged(false)
-      
-})
-}
+  fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + lat + "," + long + "&key=" + API_KEY)
+    .then((response) => response.json())
+    .then((responseJson) => {
+      const location_obj = JSON.parse(JSON.stringify(responseJson));
+      address = location_obj.results[0].formatted_address;
+      console.log("Fetch", lat, long);
+      console.log("Fetch:", address);
+      setPinDragged(false);
+    });
+};
 
 const Map_test = ({ navigation }) => {
   const [region, setRegion] = useState({
@@ -69,11 +64,9 @@ const Map_test = ({ navigation }) => {
           });
 
           //location = details.name +"\n"+ details.formatted_address
-          address = details.formatted_address
-          console.log("loc", address)
-
+          address = details.formatted_address;
+          console.log("loc", address);
         }}
-
         query={{
           key: "AIzaSyCCkDRzY3UvSoaZa1anF9ov43ztpe6GSFk",
           language: "en",
@@ -93,9 +86,12 @@ const Map_test = ({ navigation }) => {
       />
       <MapView
         style={styles.map}
-        onPress={(e) => {{
-          setPinSelected(false);
-          setCalloutMounted(false)}}}
+        onPress={(e) => {
+          {
+            setPinSelected(false);
+            setCalloutMounted(false);
+          }
+        }}
         provider={PROVIDER_GOOGLE}
         initialRegion={region}
         region={region}
@@ -126,9 +122,10 @@ const Map_test = ({ navigation }) => {
           }}
           stopPropagation={true}
           onPress={(e) => {
-            setCalloutMounted(true)
+            setCalloutMounted(true);
             setPinSelected(false);
-            console.log("Marker pressed", e.nativeEvent.coordinate)}}
+            console.log("Marker pressed", e.nativeEvent.coordinate);
+          }}
         >
           <Callout>
             <Text>This is my location: </Text>
@@ -142,21 +139,34 @@ const Map_test = ({ navigation }) => {
       <Button
         title="Confirm"
         color={pinSelected ? "gray" : "blue"}
-        onPress={() => 
-          {
-            console.log("button location", address)
-            console.log("latitude", region.latitude)
-            console.log("longitude", region.longitude)
+        onPress={() => {
+          console.log("button location", address);
+          console.log("latitude", region.latitude);
+          console.log("longitude", region.longitude);
 
-            dispatch(setDropLocation({
-              coordinates: {
-                  lat: region.latitude, 
+          if (navigation.state.params.addressEdit) {
+            navigation.navigate("OrderReview", {
+              drop_loc: {
+                coordinates: {
+                  lat: region.latitude,
                   long: region.longitude,
+                },
+                name: address,
               },
-              name: address
-            }))
-            
-            navigation.navigate("OrderSelection", {chosen: true})}}
+            });
+          } else {
+            navigation.navigate("OrderSelection", { chosen: true });
+            dispatch(
+              setDropLocation({
+                coordinates: {
+                  lat: region.latitude,
+                  long: region.longitude,
+                },
+                name: address,
+              })
+            );
+          }
+        }}
       ></Button>
     </View>
   );

@@ -34,8 +34,6 @@ import Checkout from "./components/checkout";
 
 const AppNavigator = createStackNavigator(
   {
-    OrderReview: {screen: Order_review },
-
     SSOLogin: { screen: SSOLogin },
     SSOLogout: { screen: SSOLogout },
     Landing: { screen: Landing },
@@ -55,7 +53,7 @@ const AppNavigator = createStackNavigator(
     OrderMatch: { screen: Order_match },
     OrderCode: { screen: Order_code },
     OrderStatus: { screen: Order_status },
-    // OrderReview: {screen: Order_review },
+    OrderReview: {screen: Order_review },
     Orders: { screen: Orders },
     DeliverStatus: { screen: Deliver_status },
     Completed: { screen: Completed },
