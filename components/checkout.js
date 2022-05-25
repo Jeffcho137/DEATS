@@ -19,7 +19,7 @@ export default function Checkout({ navigation }) {
     const dropLocation = useSelector(selectDropLocation)
     const pickupLocation = useSelector(selectPickupLocation)
 
-    const [joinRoomForOrder] = useClientSocket({
+    const [joinRoomForOrder, joinRoomForPayment] = useClientSocket({
       userId: user_id,
       orderId: null,
       enabled: Boolean(user_id)
@@ -41,10 +41,12 @@ export default function Checkout({ navigation }) {
           })
         });
 
-        const { paymentIntent, ephemeralKey, customer, ...data} = await response.json();
+        const { paymentIntentId, paymentIntentClientSecret, ephemeralKey, customer, ...data} = await response.json();
+        console.log("paymentIntent:", paymentIntentId)
+        joinRoomForPayment(paymentIntentId)
         console.log("server response:", data)
         return {
-            paymentIntent,
+            paymentIntentClientSecret,
             ephemeralKey,
             customer,
         };
@@ -52,7 +54,7 @@ export default function Checkout({ navigation }) {
   
     const initializePaymentSheet = async () => {
         const {
-            paymentIntent,
+            paymentIntentClientSecret,
             ephemeralKey,
             customer,
         } = await fetchPaymentSheetParams().catch((error) => {
@@ -77,7 +79,7 @@ export default function Checkout({ navigation }) {
             },
             customerId: customer,
             customerEphemeralKeySecret: ephemeralKey,
-            paymentIntentClientSecret: paymentIntent,
+            paymentIntentClientSecret: paymentIntentClientSecret,
             allowsDelayedPaymentMethods: false,  // don't handle payment methods that complete payment after a delay, like SEPA Debit and Sofort
         });
         if (!error) {

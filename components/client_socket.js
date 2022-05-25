@@ -17,11 +17,20 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
   const ref = useRef(null);
 
   const joinRoomForOrder = (orderId) => {
-    ref.current?.emit("join", {
+    ref.current?.emit("join_order_room", {
         order_id: orderId, 
         user_id: userId
     }, (response) => {
-        console.log("server join room response", response); 
+        console.log("server join order room response", response); 
+    });
+  }
+
+  const joinRoomForPayment = (paymentIntentId) => {
+    ref.current?.emit("join_payment_room", {
+        payment_intent_id: paymentIntentId, 
+        user_id: userId
+    }, (response) => {
+        console.log("server join payment room response", response); 
     });
   }
 
@@ -56,6 +65,11 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
 
     socket.on('message', (message) => {
       console.log('user:', userId, 'message:', message);
+    });
+
+    // FROM SERVER:STRIPE: announcements for customer 
+    socket.on('stripe:order_with_card:cus', (payload) => {
+      console.log(`${userId},`, "Your order with card payment has been created:", payload);
     });
 
     // FROM DELIVERER: announcements for customer 
@@ -100,7 +114,7 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
     // FROM CUSTOMER: announcements for all connected clients
     socket.on('cus:new:all', (order_id) => {
       dispatch(setToggle(Math.random()))
-      console.log(`${userId},`, "A new order has been created:", order_id);
+      console.log(`${userId},`, "A customer has created a new order:", order_id);
     });
 
     socket.on('cus:update:all', (order_id) => {
@@ -124,5 +138,5 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
     return () => socket.disconnect();
   }, [enabled, orderId]);
 
-  return [joinRoomForOrder]
+  return [joinRoomForOrder, joinRoomForPayment]
 };
