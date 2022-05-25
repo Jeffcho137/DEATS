@@ -26,7 +26,7 @@ import Deliveries from "./components/deliveries";
 import SSOLogin from "./components/sso_login";
 import DelivererSearch from "./components/deliverer_search";
 import SSOLogout from "./components/sso_logout";
-import logout from "./components/logout";
+import logout, { logoutBackButton } from "./components/logout";
 import { StripeProvider } from "@stripe/stripe-react-native";
 import { PUBLISHABLE_KEY_TEST } from "./utils/Constants";
 import Checkout from "./components/checkout";
@@ -89,6 +89,7 @@ Order_match['navigationOptions'] = screenProps => (logout(screenProps));
 Order_status['navigationOptions'] = screenProps => (logout(screenProps));
 Order_code['navigationOptions'] = screenProps => (logout(screenProps));
 Orders['navigationOptions'] = screenProps => (logout(screenProps));
+SSOLogout['navigationOptions'] = () => (logoutBackButton());
 
 const AppContainer = createAppContainer(AppNavigator);
 export default class App extends Component {

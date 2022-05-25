@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectId, selectPhoneNum, setDEATSTokens } from '../redux/slices/userSlice';
 import { selectDropLocation, selectPickupLocation, setOrderFee, setOrderId, setPickupLocation } from '../redux/slices/orderDeliverySlice';
 import { DEATS_SERVER_URL, ROUTE_ORDER_DEL, ROUTE_ORDER_FEE } from '../utils/Constants';
-import { useClientSocket } from './client_socket';
 import { DateTime } from './date_time';
 import FoodLocs from './pickup_loc';
 

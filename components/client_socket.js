@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import io from 'socket.io-client';
 import { selectSelectedCustomer, setSelectedCustomer } from '../redux/slices/makeDeliverySlice';
 import { selectExpoPushToken } from '../redux/slices/notificationsSlice';
-import { setDelivererId, setDelivererInfo, setOrderStatus } from '../redux/slices/orderDeliverySlice';
+import { setDelivererId, setDelivererInfo, setOrderFee, setOrderId, setOrderStatus } from '../redux/slices/orderDeliverySlice';
 import { selectToggle, setToggle } from '../redux/slices/socketSlice';
+import { setDEATSTokens } from '../redux/slices/userSlice';
 import { DEATS_SERVER_URL } from '../utils/Constants';
 import { schedulePushNotification } from './notifications';
 
-export const useClientSocket = ({userId, orderId, enabled}) => {
+export const useClientSocket = ({userId, orderId, paymentIntentId, enabled}) => {
   const toggle = useSelector(selectToggle)
   const exponentPushToken = useSelector(selectExpoPushToken)
   
@@ -17,11 +18,20 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
   const ref = useRef(null);
 
   const joinRoomForOrder = (orderId) => {
-    ref.current?.emit("join", {
+    ref.current?.emit("join_order_room", {
         order_id: orderId, 
         user_id: userId
     }, (response) => {
-        console.log("server join room response", response); 
+        console.log("server join order room response", response); 
+    });
+  }
+
+  const joinRoomForPayment = (paymentIntentId) => {
+    ref.current?.emit("join_payment_room", {
+        payment_intent_id: paymentIntentId, 
+        user_id: userId
+    }, (response) => {
+        console.log("server join payment room response", response); 
     });
   }
 
@@ -44,6 +54,14 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
         engine.once("upgrade", () => {
            console.log("transport after upgrade:", engine.transport.name)
         })
+
+        if (orderId) {
+          joinRoomForOrder(orderId);
+        }
+
+        if (paymentIntentId) {
+          joinRoomForPayment(paymentIntentId);
+        }
     })
 
     socket.on('reconnect', () => {
@@ -56,6 +74,14 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
 
     socket.on('message', (message) => {
       console.log('user:', userId, 'message:', message);
+    });
+
+    // FROM SERVER:STRIPE: announcements for customer 
+    socket.on('stripe:order_with_card:cus', (payload) => {
+      dispatch(setOrderId(payload.order.order_id))
+      dispatch(setOrderFee(payload.order.order_fee))
+      dispatch(setDEATSTokens(payload.user.DEATS_tokens))
+      console.log(`${userId},`, "Your order with card payment has been created:", payload);
     });
 
     // FROM DELIVERER: announcements for customer 
@@ -100,7 +126,7 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
     // FROM CUSTOMER: announcements for all connected clients
     socket.on('cus:new:all', (order_id) => {
       dispatch(setToggle(Math.random()))
-      console.log(`${userId},`, "A new order has been created:", order_id);
+      console.log(`${userId},`, "A customer has created a new order:", order_id);
     });
 
     socket.on('cus:update:all', (order_id) => {
@@ -124,5 +150,5 @@ export const useClientSocket = ({userId, orderId, enabled}) => {
     return () => socket.disconnect();
   }, [enabled, orderId]);
 
-  return [joinRoomForOrder]
+  return [joinRoomForOrder, joinRoomForPayment]
 };

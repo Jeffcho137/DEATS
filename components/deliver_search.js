@@ -11,7 +11,6 @@ import { makeDelivery } from './delivery_selection';
 import { selectToggle } from '../redux/slices/socketSlice';
 
 export function Deliver_search ({ navigation }) {
-    ///
     const dispatch = useDispatch()
 
     const userId = useSelector(selectId)

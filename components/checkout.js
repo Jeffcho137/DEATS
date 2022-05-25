@@ -6,8 +6,8 @@ import { Button } from "react-native-elements";
 import { Screen } from "react-native-screens";
 import { useDispatch, useSelector } from "react-redux";
 import { selectDropLocation, selectPickupLocation, setOrderFee, setOrderId } from "../redux/slices/orderDeliverySlice";
-import { selectId, setDEATSTokens } from "../redux/slices/userSlice";
-import { DEATS_SERVER_URL, ROUTE_CHECKOUT, ROUTE_ORDER_DEL } from "../utils/Constants";
+import { selectId, setDEATSTokens, setPaymentIntentId } from "../redux/slices/userSlice";
+import { DEATS_SERVER_URL, ROUTE_ORDER_DEL_WITH_CARD, ROUTE_ORDER_DEL } from "../utils/Constants";
 import { useClientSocket } from "./client_socket";
 
 export default function Checkout({ navigation }) {
@@ -19,23 +19,34 @@ export default function Checkout({ navigation }) {
     const dropLocation = useSelector(selectDropLocation)
     const pickupLocation = useSelector(selectPickupLocation)
 
-    const [joinRoomForOrder] = useClientSocket({
+    const [joinRoomForOrder, joinRoomForPayment] =useClientSocket({
       userId: user_id,
-      orderId: null,
       enabled: Boolean(user_id)
   })
-  
+
     const fetchPaymentSheetParams = async () => {
-        const response = await fetch(`${DEATS_SERVER_URL}${ROUTE_CHECKOUT}`, {
+        const response = await fetch(`${DEATS_SERVER_URL}${ROUTE_ORDER_DEL_WITH_CARD}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
+            body: JSON.stringify({
+              user_id: user_id,
+              order: {
+                  drop_loc: dropLocation,
+                  pickup_loc: pickupLocation
+              }
+          })
         });
-        const { paymentIntent, ephemeralKey, customer} = await response.json();
+
+        const { paymentIntentId, paymentIntentClientSecret, ephemeralKey, customer, ...data} = await response.json();
+        joinRoomForPayment(paymentIntentId)
+        dispatch(setPaymentIntentId(paymentIntentId));
+        console.log("paymentIntent:", paymentIntentId)
+        console.log("server response:", data)
         return {
-            paymentIntent,
+            paymentIntentClientSecret,
             ephemeralKey,
             customer,
         };
@@ -43,10 +54,11 @@ export default function Checkout({ navigation }) {
   
     const initializePaymentSheet = async () => {
         const {
-            paymentIntent,
+            paymentIntentClientSecret,
             ephemeralKey,
             customer,
-        } = await fetchPaymentSheetParams().catch(() => {
+        } = await fetchPaymentSheetParams().catch((error) => {
+            console.log(error);
             Alert.alert(
             "Error",
             "Could not connect to server. Please try again later.",
@@ -67,7 +79,7 @@ export default function Checkout({ navigation }) {
             },
             customerId: customer,
             customerEphemeralKeySecret: ephemeralKey,
-            paymentIntentClientSecret: paymentIntent,
+            paymentIntentClientSecret: paymentIntentClientSecret,
             allowsDelayedPaymentMethods: false,  // don't handle payment methods that complete payment after a delay, like SEPA Debit and Sofort
         });
         if (!error) {
@@ -112,9 +124,6 @@ export default function Checkout({ navigation }) {
 
           if (data.succeeded == true) {
               const order_id = data.order.order_id
-
-              joinRoomForOrder(order_id)
-
               dispatch(setOrderId(order_id))
               dispatch(setOrderFee(data.order.order_fee))
 
