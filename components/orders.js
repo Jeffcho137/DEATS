@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, FlatList, TouchableOpacity, Pressable} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { selectId } from "../redux/slices/userSlice";
 import { DEATS_SERVER_URL, ROUTE_ORDERS } from "../utils/Constants";
@@ -44,7 +45,8 @@ const static_orders = [
     }
 ]
 
-export default function Orders({ url, result_type, navigation }) {
+export default function Orders({ url, result_type }) {
+    const navigation = useNavigation()
     const  userId = useSelector(selectId)
     const [orders, setOrders] = useState([]);
     useEffect(() =>  { retrieveOrders(userId, setOrders) }, [])
