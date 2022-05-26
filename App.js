@@ -31,9 +31,11 @@ import logout, { logoutBackButton } from "./components/logout";
 import { StripeProvider } from "@stripe/stripe-react-native";
 import { PUBLISHABLE_KEY_TEST } from "./utils/Constants";
 import Checkout from "./components/checkout";
+import OrdersDeliveriesTabs from "./components/orders_deliveries_tabs";
 
 const AppNavigator = createStackNavigator(
   {
+    OrdersDeliveriesTabs: { screen: OrdersDeliveriesTabs },
     SSOLogin: { screen: SSOLogin },
     SSOLogout: { screen: SSOLogout },
     Landing: { screen: Landing },
