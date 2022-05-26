@@ -73,7 +73,6 @@ export default function Orders({navigation}) {
     
     return (
         <>
-        {/* {console.log("user_orders", user_orders.length, user_orders)} */}
         {user_orders?.length ?
             (<FlatList
                 data={user_orders}
