@@ -7,6 +7,7 @@ import { useSelector, useDispatch, dispatch } from 'react-redux';
 import { selectId, selectName, setPhoneNum, selectPhoneNum, selectDEATSTokens} from '../redux/slices/userSlice';
 import { TextInput } from 'react-native-gesture-handler';
 import { DEATS_SERVER_URL, ROUTE_DELETE_ACC, ROUTE_DEACTIVATE_ACC, ROUTE_REACTIVATE_ACC, ROUTE_SSO_LOGOUT } from '../utils/Constants';
+import { Circle } from 'react-native-progress';
 
 
 export function Profile ({ navigation }) {
@@ -236,7 +237,7 @@ export function Profile ({ navigation }) {
                     <Text style={{textAlign: 'center', color: 'blue', fontSize: 15}}>edit</Text>
                 </Pressable>
             </View>
-            <Progress.Circle size={30} indeterminate={true} />
+            <Circle size={30} indeterminate={true} />
             <View style={styles.profile_acc_btns}>
                 <Button title='deactivate account' onPress={() => setModalVisibleDeact(true)}></Button>
                 <Button title='reactivate account' onPress={() => setModalVisibleReact(true)}></Button>
