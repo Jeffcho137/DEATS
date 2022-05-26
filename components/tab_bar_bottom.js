@@ -17,7 +17,7 @@ const items= [
     {
         name: "receipt-long",
         text: "Orders",
-        navigateTo: "Orders"
+        navigateTo: "OrdersDeliveriesTabs"
     }
 ]
 

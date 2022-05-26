@@ -35,7 +35,6 @@ import OrdersDeliveriesTabs from "./components/orders_deliveries_tabs";
 
 const AppNavigator = createStackNavigator(
   {
-    OrdersDeliveriesTabs: { screen: OrdersDeliveriesTabs },
     SSOLogin: { screen: SSOLogin },
     SSOLogout: { screen: SSOLogout },
     Landing: { screen: Landing },
@@ -56,6 +55,7 @@ const AppNavigator = createStackNavigator(
     OrderCode: { screen: Order_code },
     OrderStatus: { screen: Order_status },
     OrderReview: {screen: Order_review },
+    OrdersDeliveriesTabs: { screen: OrdersDeliveriesTabs },
     Orders: { screen: Orders },
     DeliverStatus: { screen: Deliver_status },
     Completed: { screen: Completed },
