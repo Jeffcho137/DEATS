@@ -120,6 +120,8 @@ export default class App extends Component {
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
+                headerShadowVisible: true,
+                animation: 'slide_from_bottom',
                 headerRight: () => (
                   <LogoutButton navigation={navigation}/>
                 ),
