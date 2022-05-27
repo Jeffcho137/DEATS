@@ -60,6 +60,7 @@ export default function SelectedCustomer({modalVisible, setModalVisible, selecte
                             <Text style={styles.modalUsernameStyle}>({selectedCustomer?.customer.user_info.username})</Text>
                             <OrderInfo title="Pickup location" loc_name={selectedCustomer?.order.pickup_loc.name}/>
                             <OrderInfo title="Drop location" loc_name={selectedCustomer?.order.drop_loc.name}/>
+                            <RewardInfo reward={selectedCustomer?.order.order_fee}/>
                             <Text style={{color:'red'}}>{errorMsg}</Text>
                         </View>
                         <View style={styles.del_modal_buttons}>
@@ -91,5 +92,39 @@ const OrderInfo = ({ title, loc_name }) => (
     }}>
             <Text style={ styles.modalLocDescriptionStyle }>{title}</Text>
             <Text style={ styles.modalLocationStyle }>{loc_name}</Text>
+    </View>
+)
+
+const RewardInfo = ({ reward }) => (
+    <View style={{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 25,
+        marginBottom: 10
+    }}>
+        <Text 
+            style={{
+                fontSize: 24,
+                fontWeight: "bold",
+                color: "green",
+                alignSelf: "center",
+            }}
+        >Earn: </Text>
+
+        <View
+            style={{
+                backgroundColor: "gray",
+                borderRadius: 6,
+                padding: 5,
+            }}
+        >
+        <Text 
+            style={{
+                fontSize: 24,
+                fontWeight: "bold",
+                color: "white",
+            }}
+        >{reward} DT</Text>
+        </View>
     </View>
 )
