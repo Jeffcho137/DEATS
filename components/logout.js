@@ -36,7 +36,7 @@ export const LogoutButton = ({navigation}) => (
     <TouchableOpacity style={{
         alignItems: "center",
         }}
-        onPress={() => {navigation.navigate("SSOLogout")}}
+        onPress={() => {navigation.replace("SSOLogout")}}
     >
         < MaterialCommunityIcons name="logout" size={26} style={{ 
             color: "white",
