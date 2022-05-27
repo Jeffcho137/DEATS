@@ -12,12 +12,12 @@ const items= [
     {
         name: "delivery-dining",
         text: "Deliveries",
-        navigateTo: "Deliveries"
+        navigateTo: "DeliveriesTabs"
     },
     {
         name: "receipt-long",
         text: "Orders",
-        navigateTo: "OrdersDeliveriesTabs"
+        navigateTo: "OrdersTabs"
     }
 ]
 
