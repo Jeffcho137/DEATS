@@ -34,6 +34,7 @@ import { StripeProvider } from "@stripe/stripe-react-native";
 import { COLOR_BASIL, COLOR_CROCODILE, PUBLISHABLE_KEY_TEST } from "./utils/Constants";
 import Checkout from "./components/checkout";
 import OrdersDeliveriesTabs from "./components/orders_deliveries_tabs";
+import {LogoutButton} from "./components/logout";
 
 const AppNavigator = createStackNavigator(
   {
@@ -111,7 +112,7 @@ export default class App extends Component {
         <Provider store={store}>
           <NavigationContainer initialRouteName="SSOLogin">
             <Stack.Navigator
-              screenOptions={{
+              screenOptions={({ navigation }) => ({
                 headerStyle: {
                   backgroundColor: COLOR_CROCODILE,
                 },
@@ -119,7 +120,10 @@ export default class App extends Component {
                 headerTitleStyle: {
                   fontWeight: 'bold',
                 },
-              }}
+                headerRight: () => (
+                  <LogoutButton navigation={navigation}/>
+                ),
+              })}
             >
               <Stack.Screen name="SSOLogin" component={SSOLogin} />
               <Stack.Screen name="SSOLogout" component={SSOLogout} />

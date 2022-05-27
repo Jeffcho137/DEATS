@@ -32,7 +32,7 @@ export const logoutBackButton = () => ({
     headerLeft: () => null
 })
 
-const LogoutButton = ({navigation}) => (
+export const LogoutButton = ({navigation}) => (
     <TouchableOpacity style={{
         alignItems: "center",
         }}
