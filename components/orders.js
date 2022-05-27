@@ -45,7 +45,7 @@ const static_orders = [
     }
 ]
 
-export default function Orders({ url, result_type }) {
+export default function Orders({ url, cat, catModifier, result_type }) {
     const navigation = useNavigation()
     const  userId = useSelector(selectId)
     const [orders, setOrders] = useState([]);
@@ -101,9 +101,15 @@ export default function Orders({ url, result_type }) {
                 )}
             />) : 
             <View style={styles.past_deliveries_cont}>
-                <Text style={styles.past_deliveries_none} >No Orders Yet!</Text>
-                <Pressable style={styles.past_del_make} onPress={() => navigation.navigate('OrderSelection',{})}>
-                    <Text style={styles.past_text}>Make an order now!</Text>
+                <Text style={styles.past_deliveries_none} >No {catModifier } {cat} Yet!</Text>
+                <Pressable style={styles.past_del_make} onPress={() => {
+                    if (cat === "Orders") {
+                        navigation.navigate('OrderSelection',{})
+                    } else {
+                        navigation.navigate('DeliverySelection',{})
+                    }
+                }}>
+                    <Text style={styles.past_text}>Make {cat === "Orders" ? "an order" : "a delivery"} now!</Text>
                 </Pressable>
             </View>}
        </>

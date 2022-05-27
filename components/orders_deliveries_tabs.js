@@ -28,48 +28,48 @@ export function DeliveriesTabs () {
 
 const AllOrders = () => {
     return (
-        <Orders url={`${DEATS_SERVER_URL}${ROUTE_ALL_ORDERS}`} result_type={"all_orders"} />
+        <Orders url={`${DEATS_SERVER_URL}${ROUTE_ALL_ORDERS}`} cat="Orders" result_type={"all_orders"} />
     )
 }
 
 const ActiveOrders = () => {
     return (
-        <Orders url={`${DEATS_SERVER_URL}${ROUTE_ACTIVE_ORDERS}`} result_type={"active_orders"} />
+        <Orders url={`${DEATS_SERVER_URL}${ROUTE_ACTIVE_ORDERS}`} cat="Orders" catModifier={"Active"} result_type={"active_orders"} />
     )
 }
 
 const PastOrders = () => {
     return (
-        <Orders url={`${DEATS_SERVER_URL}${ROUTE_PAST_ORDERS}`} result_type={"past_orders"} />
+        <Orders url={`${DEATS_SERVER_URL}${ROUTE_PAST_ORDERS}`} cat="Orders" catModifier={"Past"} result_type={"past_orders"} />
     )
 }
 
 const CanceledOrders = () => {
     return (
-        <Orders url={`${DEATS_SERVER_URL}${ROUTE_CANCELED_ORDERS}`} result_type={"canceled_orders"} />
+        <Orders url={`${DEATS_SERVER_URL}${ROUTE_CANCELED_ORDERS}`} cat="Orders" catModifier={"Canceled"} result_type={"canceled_orders"} />
     )
 }
 
 const AllDeliveries = () => {
     return (
-        <Orders url={`${DEATS_SERVER_URL}${ROUTE_ALL_DELIVERIES}`} result_type={"all_deliveries"} />
+        <Orders url={`${DEATS_SERVER_URL}${ROUTE_ALL_DELIVERIES}`} cat="Deliveries" result_type={"all_deliveries"} />
     )
 }
 
 const ActiveDeliveries = () => {
     return (
-        <Orders url={`${DEATS_SERVER_URL}${ROUTE_ACTIVE_DELIVERIES}`} result_type={"active_deliveries"} />
+        <Orders url={`${DEATS_SERVER_URL}${ROUTE_ACTIVE_DELIVERIES}`} cat="Deliveries" catModifier={"Active"} result_type={"active_deliveries"} />
     )
 }
 
 const PastDeliveries = () => {
     return (
-        <Orders url={`${DEATS_SERVER_URL}${ROUTE_PAST_DELIVERIES}`} result_type={"past_deliveries"} />
+        <Orders url={`${DEATS_SERVER_URL}${ROUTE_PAST_DELIVERIES}`} cat="Deliveries" catModifier={"Past"} result_type={"past_deliveries"} />
     )
 }
 
 const CanceledDeliveries = () => {
     return (
-        <Orders url={`${DEATS_SERVER_URL}${ROUTE_CANCELED_DELIVERIES}`} result_type={"canceled_deliveries"} />
+        <Orders url={`${DEATS_SERVER_URL}${ROUTE_CANCELED_DELIVERIES}`} cat="Deliveries" catModifier={"Canceled"} result_type={"canceled_deliveries"} />
     )
 }
