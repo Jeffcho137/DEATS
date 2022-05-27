@@ -31,7 +31,7 @@ import DelivererSearch from "./components/deliverer_search";
 import SSOLogout from "./components/sso_logout";
 import logout, { logoutBackButton } from "./components/logout";
 import { StripeProvider } from "@stripe/stripe-react-native";
-import { PUBLISHABLE_KEY_TEST } from "./utils/Constants";
+import { COLOR_BASIL, COLOR_CROCODILE, PUBLISHABLE_KEY_TEST } from "./utils/Constants";
 import Checkout from "./components/checkout";
 import OrdersDeliveriesTabs from "./components/orders_deliveries_tabs";
 
@@ -110,7 +110,17 @@ export default class App extends Component {
       >
         <Provider store={store}>
           <NavigationContainer initialRouteName="SSOLogin">
-            <Stack.Navigator>
+            <Stack.Navigator
+              screenOptions={{
+                headerStyle: {
+                  backgroundColor: COLOR_CROCODILE,
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+              }}
+            >
               <Stack.Screen name="SSOLogin" component={SSOLogin} />
               <Stack.Screen name="SSOLogout" component={SSOLogout} />
               <Stack.Screen name="Home" component={Home} />
