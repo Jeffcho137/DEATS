@@ -73,15 +73,23 @@ export default function DelivererSearch({ navigation }) {
 const OrderDetail = ({ customer }) => (
     <View style={{ width: 200, height: 80, justifyContent: "space-around" }}>
         <Text style={styles.usernameStyle}>{customer.customer.user_info.username}</Text>
-        <OrderInfo title="Pickup from" loc_name={customer.order.pickup_loc.name}/>
-        <OrderInfo title="Drop at" loc_name={customer.order.drop_loc.name}/>
+        <OrderLocation title="Pickup from" loc_name={customer.order.pickup_loc.name}/>
+        <OrderLocation title="Drop at" loc_name={customer.order.drop_loc.name}/>
+        <OrderReward title="Earn" reward={customer.order.order_fee}/>
     </View>
 )
 
-const OrderInfo = ({ title, loc_name }) => (
-    <View style={{ flexDirection: "row"}}>
+const OrderLocation = ({ title, loc_name }) => (
+    <View style={{ flexDirection: "row", marginTop: 18 }}>
             <Text style={ styles.locationStyle }>{title}:  </Text>
             <Text>{loc_name.split(",")[0]}</Text>
+    </View>
+)
+
+const OrderReward = ({ title, reward }) => (
+    <View style={{ flexDirection: "row", marginTop: 18, }}>
+            <Text style={ styles.rewardStyle }>{title}:  </Text>
+            <Text>{reward} DT</Text>
     </View>
 )
 

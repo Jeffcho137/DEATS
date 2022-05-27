@@ -665,8 +665,15 @@ const styles = StyleSheet.create({
 
   locationStyle: {
       fontSize: 15,
-      fontWeight: "500",
+      fontWeight: "500"
   },
+
+  rewardStyle: {
+    fontSize: 15,
+    fontWeight: "500",
+    color: "green"
+},
+
 
   modalNameStyle: {
     fontSize: 22,
