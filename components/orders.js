@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, FlatList, TouchableOpacity, Pressable} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { selectId } from "../redux/slices/userSlice";
 import { DEATS_SERVER_URL, ROUTE_ORDERS } from "../utils/Constants";
@@ -44,39 +45,38 @@ const static_orders = [
     }
 ]
 
-const retrieveOrders = (user_id, setUserOrders) => {
-    fetch(`${DEATS_SERVER_URL}${ROUTE_ORDERS}`,
-    {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            user_id: user_id,
-        })
-    })
-    .then(response => response.json())
-    .then((data) => {
-        console.log("user_id", user_id);
-        console.log("data", data);
-        console.log("orders", data.orders);
-        setUserOrders(data.orders);
-    })
-    .catch((error) => console.log(error));
-  }
+export default function Orders({ url, result_type }) {
+    const navigation = useNavigation()
+    const  userId = useSelector(selectId)
+    const [orders, setOrders] = useState([]);
+    useEffect(() =>  { retrieveOrders(userId, setOrders) }, [])
 
-export default function Orders({navigation}) {
-    const  id = useSelector(selectId)
-    const [user_orders, setUserOrders] = useState([]);
-    useEffect(() =>  { retrieveOrders(id, setUserOrders) }, [])
+    const retrieveOrders = () => {
+        fetch(url,
+        {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user_id: userId,
+            })
+        })
+        .then(response => response.json())
+        .then((data) => {
+            console.log("server response:", data);
+            setOrders(data[result_type]);
+        })
+        .catch((error) => console.log(error));
+      }
+    
     
     return (
         <>
-        {/* {console.log("user_orders", user_orders.length, user_orders)} */}
-        {user_orders?.length ?
+        {orders?.length ?
             (<FlatList
-                data={user_orders}
+                data={orders}
                 keyExtractor={(item) => item._id}
                 vertical
                 renderItem={({ item }) => (

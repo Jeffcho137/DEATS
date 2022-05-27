@@ -37,7 +37,7 @@ export const makeDelivery = (userId, startPoint, destination, dispatch, navigati
 }
 
 
-export function Delivery_selection ({ navigation }) {
+export function Delivery_selection ({ navigation, route }) {
     const dispatch = useDispatch()
     const userId = useSelector(selectId)
     const startPoint = useSelector(selectStartingPoint)
@@ -46,7 +46,7 @@ export function Delivery_selection ({ navigation }) {
     console.log("delivery selection -> id:", userId);
 
     
-    if (!navigation.state.params?.chosen) {
+    if (!route.params?.chosen) {
         return (
             <View style={styles.container}>
                 {/* <View style={styles.deliver_sel_input}> */}
