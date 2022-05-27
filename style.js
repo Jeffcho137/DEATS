@@ -141,6 +141,8 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderRadius: 10,
       marginBottom: 40,
+      backgroundColor: 'lightgray',
+      borderColor: 'green',
     },
 
     profile_heading: {

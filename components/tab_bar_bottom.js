@@ -27,8 +27,10 @@ export default function TabBarBottom({navigation, id, name, number, email, passw
                 flexDirection: "row",
                 justifyContent: "space-around",
                 margin: "5%", 
-                backgroundColor: "white",
+                backgroundColor: "lightgray",
+                borderRadius: 15,
                 zIndex: 1,
+
              }}>
             <TabMaterialCommunityIcons index={0} 
                 navigation={navigation}
