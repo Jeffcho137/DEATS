@@ -8,7 +8,7 @@ import { selectId, selectName, selectEmail, selectPhoneNum, setName, setEmail, s
 import { useClientSocket } from "./client_socket";
 import { useDispatch } from "react-redux";
 
-export function Order_review({ navigation }) {
+export function Order_review({ navigation, route }) {
   const orderId = useSelector(selectOrderId);
   const user_id = useSelector(selectId);
 
@@ -87,7 +87,7 @@ export function Order_review({ navigation }) {
         <Text>Address</Text>
         <TextInput
           style={styles.single_input}
-          placeholder={`${navigation.state.params ? navigation.state.params.drop_loc.name : drop_loc.name}`}
+          placeholder={`${route.params ? route.params.drop_loc.name : drop_loc.name}`}
           onChangeText={() => {}}
           editable={false}
           placeholderTextColor={'black'} 

@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { createAppContainer } from "react-navigation";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createStackNavigator } from "react-navigation-stack";
 import { Delivery_selection } from "./components/delivery_selection";
 import { Home } from "./components/home";
@@ -97,6 +99,8 @@ Orders['navigationOptions'] = screenProps => (logout(screenProps));
 SSOLogout['navigationOptions'] = () => (logoutBackButton());
 
 const AppContainer = createAppContainer(AppNavigator);
+
+const Stack = createNativeStackNavigator();
 export default class App extends Component {
   render() {
     return (
@@ -105,7 +109,30 @@ export default class App extends Component {
         publishableKey={PUBLISHABLE_KEY_TEST}
       >
         <Provider store={store}>
-          <AppContainer />
+          <NavigationContainer initialRouteName="SSOLogin">
+            <Stack.Navigator>
+              <Stack.Screen name="SSOLogin" component={SSOLogin} />
+              <Stack.Screen name="SSOLogout" component={SSOLogout} />
+              <Stack.Screen name="Home" component={Home} />
+              <Stack.Screen name="Profile" component={Profile} />
+              <Stack.Screen name="OrderSelection" component={Order_selection} />
+              <Stack.Screen name="DeliverySelection" component={Delivery_selection} />
+              <Stack.Screen name="OrderSearch" component={Order_search} />
+              <Stack.Screen name="DelivererSearch" component={DelivererSearch} />
+              <Stack.Screen name="OrderMatch" component={Order_match} />
+              <Stack.Screen name="DeliverMatch" component={Deliver_match} />
+              <Stack.Screen name="OrderReview" component={Order_review} />
+              <Stack.Screen name="Checkout" component={Checkout} />
+              <Stack.Screen name="OrderCode" component={Order_code} />
+              <Stack.Screen name="OrderStatus" component={Order_status} />
+              <Stack.Screen name="DeliverStatus" component={Deliver_status} />
+              <Stack.Screen name="Completed" component={Completed} />
+              <Stack.Screen name="OrdersDeliveriesTabs" component={OrdersDeliveriesTabs} />
+              <Stack.Screen name="Deliveries" component={Deliveries} />
+              <Stack.Screen name="MapTest" component={Map_test} />
+              <Stack.Screen name="DelMap" component={Del_map} />
+            </Stack.Navigator>
+          </NavigationContainer>
         </Provider>
       </StripeProvider>
     );

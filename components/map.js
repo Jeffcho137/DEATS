@@ -22,7 +22,7 @@ const get_location = (lat, long, setPinDragged) => {
     });
 };
 
-const Map_test = ({ navigation }) => {
+const Map_test = ({ navigation, route }) => {
   const [region, setRegion] = useState({
     latitude: 43.704483237221815,
     longitude: -72.28869350196095,
@@ -144,7 +144,7 @@ const Map_test = ({ navigation }) => {
           console.log("latitude", region.latitude);
           console.log("longitude", region.longitude);
 
-          if (navigation.state.params.addressEdit) {
+          if (route.params?.addressEdit) {
             navigation.navigate("OrderReview", {
               drop_loc: {
                 coordinates: {

@@ -77,9 +77,7 @@ export function Order_selection ({ navigation }) {
          .catch(err => console.error(err))
     }
 
-    const loc_chosen = navigation.state.params.chosen;
     console.log("Drop location", dropLocation)
-    
     
     return (
         <View style={styles.container}>
