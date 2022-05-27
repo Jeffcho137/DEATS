@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import { selectId } from "../redux/slices/userSlice";
 import { DEATS_SERVER_URL, ROUTE_ORDERS } from "../utils/Constants";
 import styles from '../style'
+import { static_deliveries } from "./deliveries";
+import { Divider, Tile } from "react-native-elements";
 
 const static_orders = [
     {
@@ -80,24 +82,40 @@ export default function Orders({ url, cat, catModifier, result_type }) {
                 keyExtractor={(item) => item._id}
                 vertical
                 renderItem={({ item }) => (
+                    <>
                     <TouchableOpacity>
                         <View style={{
                             flexDirection: "row",
-                            justifyContent: "space-between",
-                            padding: 45
-                        
+                            justifyContent: "space-around",
+                            padding: 15,
+                            paddingTop: 1,
+                            backgroundColor: "lightgray",
+                            borderRadius: 15,
+                            marginBottom: 5,
+                            marginTop: 5,
+                            width: "97%",
+                            alignSelf: "center",
                         }}>
-                            <Image 
-                                style={{ width: "50%", height: "100%", borderRadius: 25, marginRight: 15}}
-                                source={{ uri: item.deliverer_img_url ? item.deliverer_img_url : static_orders[0].deliverer_img_url}} />
-                            <OrderDetail 
-                                pickUpLocation={item.pickup_loc.name}
-                                dropLocation={item.drop_loc.name}
-                                orderStatus={item.order_status} 
-                                delvererName={item.deliverer?.user_info?.name} 
-                                />
+                            {cat === "Orders" ?
+                                (<>
+                                    <OrderDetails order={item} cat={cat} catModifier={catModifier}/>
+                                    <UserDetail user={item.deliverer} type="Deliverer"/>
+                                    
+                                </>)
+                                : (<>
+                                    <OrderDetails order={item} cat={cat} catModifier={catModifier}/>
+                                    <UserDetail user={item.customer} type="Orderer"/>
+                                    
+                                </>)    
+                        }
                         </View>
                     </TouchableOpacity>
+                    <Divider 
+                        width={1}
+                        style={{ marginHorizontal: 120}}
+                    />
+                    
+                    </>
                 )}
             />) : 
             <View style={styles.past_deliveries_cont}>
@@ -116,24 +134,110 @@ export default function Orders({ url, cat, catModifier, result_type }) {
     )
 }
     
-const OrderDetail = ({pickUpLocation, dropLocation, orderStatus, delvererName }) => (
-    <View style={{ width: "50%", marginLeft: 15}}>
-        <Text style={{
-            fontSize: 18,
-            fontWeight: "bold",
-        }}>From: {pickUpLocation}</Text>
-        <Text style={{
-            fontSize: 16,
-            fontWeight: "500",
-        }}>To: {dropLocation}</Text>
-        <Text
-            style={{
-                fontSize: 15,
-                fontWeight: "400",
-            }}
-        >Status: {orderStatus}</Text>
-        <Text>Deliverer name: {delvererName}</Text>
+
+const OrderDetails = ({ order, cat, catModifier }) => {
+    let rewardTile = "Cost"
+    if (cat === "Deliveries") {
+        if (catModifier === "Active") {
+            rewardTile = "Will Earn"
+        } else if (catModifier === "Past") {
+            rewardTile = "Earned"
+        } else {
+            rewardTile = "Unearned"
+        }
+    }
+
+    return  (
+        <View style={{ width: 200, height: 90, justifyContent: "space-around" }}>
+            <OrderInfoText title="Pickup from" text={order.pickup_loc.name}/>
+            <OrderInfoText title="Drop at" text={order.drop_loc.name}/>
+            <OrderInfoText title="Status" text={order.order_status} color2="red"/>
+            <OrderReward title={rewardTile} text={order.order_fee} color1="green" />
+        </View>
+    )
+}
+
+const OrderInfoText = ({ title, text, color1, color2 }) => (
+    <View style={{ flexDirection: "row", marginTop: 18 }}>
+            <Text 
+                style={{
+                    fontSize: 16,
+                    fontWeight: "500",
+                    color: color1 ? color1 : "#000",
+                }}
+            >{title}:  </Text>
+            <Text
+                style={{
+                    fontSize: 15,
+                    color: color2 ? color2 : "#000",
+                }}
+            >{text?.split(",")[0]} </Text>
     </View>
 )
+
+const OrderReward = ({ title, reward, color1, color2 }) => (
+    <View style={{ flexDirection: "row", marginTop: 18 }}>
+            <Text 
+                style={{
+                    fontSize: 16,
+                    fontWeight: "500",
+                    color: color1 ? color1 : "#000",
+                }}
+            >{title}:  </Text>
+            <Text
+                style={{
+                    fontSize: 15,
+                    color: color2 ? color2 : "#000",
+                }}
+            >{reward} DT</Text>
+    </View>
+)
+
+const UserDetail = ({ user, type}) => (
+    <View
+        style={{
+            width: 150,
+            height: 50,
+            alignItems: "center",
+            justifyContent: "space-between",
+        }}
+
+    >
+        {user &&
+            <Image 
+                    source={{ uri: user?.user_info.image? user.user_info.image : static_deliveries[1].customer_img_url}} 
+                    style={{ 
+                        width: 50, 
+                        height: 50, 
+                        borderRadius: 100, 
+                        marginTop: 7,   
+                        alignSelf: "center",
+                    }} 
+            />
+        }
+
+        <UserName title={type} user={user}/>
+       
+    </View>
+)
+
+
+const UserName = ({ title, user }) => (
+    <View style={{ flexDirection: "row", marginTop: 18, alignItems:"center" }}>
+            <Text 
+                style={{
+                    fontSize: 16,
+                    fontWeight: "500",
+                }}
+            >{title}:  </Text>
+            <Text
+                style={{
+                    fontSize: 15,
+                }}
+            
+            >{user? user.user_info.name.split(" ")[0] : "None"}</Text>
+    </View>
+)
+
 
 
