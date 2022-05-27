@@ -129,7 +129,8 @@ export default class App extends Component {
                 name="SSOLogin" 
                 component={SSOLogin} 
                 options={{
-                  title: "SSO Login"
+                  title: "SSO Login",
+                  headerRight: () => null,
                 }}
               />
               <Stack.Screen 
@@ -137,6 +138,7 @@ export default class App extends Component {
                 component={SSOLogout} 
                 options={{
                   title: "SSO Logout",
+                  headerRight: () => null,
                 }}
               />
               <Stack.Screen name="Home" component={Home} />
