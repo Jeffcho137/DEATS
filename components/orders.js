@@ -152,7 +152,7 @@ const OrderDetails = ({ order, cat, catModifier }) => {
             <OrderInfoText title="Pickup from" text={order.pickup_loc.name}/>
             <OrderInfoText title="Drop at" text={order.drop_loc.name}/>
             <OrderInfoText title="Status" text={order.order_status} color2="red"/>
-            <OrderReward title={rewardTile} text={order.order_fee} color1="green" />
+            <OrderReward title={rewardTile} reward={order.order_fee?.toFixed(2)} color1="green" />
         </View>
     )
 }

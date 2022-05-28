@@ -75,7 +75,7 @@ const OrderDetail = ({ customer }) => (
         <Text style={styles.usernameStyle}>{customer.customer.user_info.username}</Text>
         <OrderLocation title="Pickup from" loc_name={customer.order.pickup_loc.name}/>
         <OrderLocation title="Drop at" loc_name={customer.order.drop_loc.name}/>
-        <OrderReward title="Earn" reward={customer.order.order_fee}/>
+        <OrderReward title="Earn" reward={customer.order.order_fee?.toFixed(2)}/>
     </View>
 )
 
