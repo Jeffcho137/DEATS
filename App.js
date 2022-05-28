@@ -35,6 +35,7 @@ import { COLOR_BASIL, COLOR_CROCODILE, PUBLISHABLE_KEY_TEST } from "./utils/Cons
 import Checkout from "./components/checkout";
 import OrdersDeliveriesTabs from "./components/orders_deliveries_tabs";
 import {LogoutButton} from "./components/logout";
+import { BackButton } from "./components/buttons";
 
 const AppNavigator = createStackNavigator(
   {
@@ -122,6 +123,10 @@ export default class App extends Component {
                 },
                 headerShadowVisible: true,
                 animation: 'slide_from_bottom',
+                headerLeft: ({ canGoBack }) =>
+                  canGoBack && (
+                    <BackButton navigation={ navigation }/>
+                ),  
                 headerRight: () => (
                   <LogoutButton navigation={navigation}/>
                 ),

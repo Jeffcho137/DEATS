@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const DEATSLogout = (logoutURL) => {
