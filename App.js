@@ -22,7 +22,6 @@ import Map_test from "./components/map";
 import Del_map from "./components/deliverer_map";
 import { Login } from "./components/login";
 import { Landing } from "./components/landing";
-import { Logo } from './components/image.js';
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import Deliveries from "./components/deliveries";
@@ -33,7 +32,7 @@ import logout, { logoutBackButton } from "./components/logout";
 import { StripeProvider } from "@stripe/stripe-react-native";
 import { COLOR_BASIL, COLOR_CROCODILE, PUBLISHABLE_KEY_TEST } from "./utils/Constants";
 import Checkout from "./components/checkout";
-import OrdersDeliveriesTabs from "./components/orders_deliveries_tabs";
+import { DeliveriesTabs, OrdersTabs } from "./components/orders_deliveries_tabs";
 import {LogoutButton} from "./components/logout";
 import { BackButton } from "./components/buttons";
 
@@ -59,7 +58,6 @@ const AppNavigator = createStackNavigator(
     OrderCode: { screen: Order_code },
     OrderStatus: { screen: Order_status },
     OrderReview: {screen: Order_review },
-    OrdersDeliveriesTabs: { screen: OrdersDeliveriesTabs },
     Orders: { screen: Orders },
     DeliverStatus: { screen: Deliver_status },
     Completed: { screen: Completed },
@@ -222,8 +220,8 @@ export default class App extends Component {
                 }}
               />
               <Stack.Screen name="Completed" component={Completed} />
-              <Stack.Screen name="OrdersDeliveriesTabs" component={OrdersDeliveriesTabs} />
-              <Stack.Screen name="Deliveries" component={Deliveries} />
+              <Stack.Screen name="OrdersTabs" component={OrdersTabs} />
+              <Stack.Screen name="DeliveriesTabs" component={DeliveriesTabs} />
               <Stack.Screen 
                 name="MapTest" 
                 component={Map_test} 

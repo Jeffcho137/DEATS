@@ -43,16 +43,16 @@ export function Order_code(props) {
   });
 
   const dispatch = useDispatch();
-  const id = useSelector(selectId);
+  const userId = useSelector(selectId);
   const number = useSelector(selectPhoneNum);
   const dropLocation = useSelector(selectDropLocation);
   const pickupLocation = useSelector(selectPickupLocation);
-  const order_id = useSelector(selectOrderId);
+  const orderId = useSelector(selectOrderId);
 
   const sendGETcode = () => {
-    if (value.length != 4 || !id || !pickupLocation || !dropLocation) {
-      console.log("Please enter the code and select locations");
-    } else if (!order_id) {
+    if (value.length != 4) {
+      console.log("Please enter your GET code");
+    } else if (!orderId) {
       console.log("Please begin your search first");
     } else {
       fetch(`${DEATS_SERVER_URL}${ROUTE_UPDATE_ORDER}`, {
@@ -62,28 +62,18 @@ export function Order_code(props) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          id: id,
-          order_id: order_id,
-          pickup_loc: {
-            x: pickupLocation.lat,
-            y: pickupLocation.long,
-          },
-          pickup_loc_name: pickupLocation.name,
-          drop_loc: {
-            x: dropLocation.lat,
-            y: dropLocation.long,
-          },
-          drop_loc_name: dropLocation.address,
-          GET_code: value,
+          user_id: userId,
+          order: {
+            order_id: orderId,
+            GET_code: value,
+          }
         }),
       })
         .then((response) => response.json())
         .then((data) => {
-          // console.log(data)
+          console.log("server response:", data)
           if (data.succeeded == true) {
             console.log("GET code [", value, "] sent to server");
-            // dispatch() // no need to dispatch
-            // navigation.navigate('OrderSearch') // navigate to Brian's update pages
           } else {
             console.log(data.msg);
           }

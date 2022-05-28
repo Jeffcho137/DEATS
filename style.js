@@ -141,6 +141,8 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       borderRadius: 10,
       marginBottom: 40,
+      backgroundColor: 'lightgray',
+      borderColor: 'green',
     },
 
     profile_heading: {
@@ -665,8 +667,15 @@ const styles = StyleSheet.create({
 
   locationStyle: {
       fontSize: 15,
-      fontWeight: "500",
+      fontWeight: "500"
   },
+
+  rewardStyle: {
+    fontSize: 15,
+    fontWeight: "500",
+    color: "green"
+},
+
 
   modalNameStyle: {
     fontSize: 22,
