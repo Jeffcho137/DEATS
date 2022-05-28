@@ -37,3 +37,39 @@ export const ROUTE_UPDATE_ORDER_STATUS = "/update_order_status/"
 /* Stripe */
 export const PUBLISHABLE_KEY_TEST = "pk_test_51L27bgCzhp0vww50EetYqUMoajMbR90nRPPXSO7rkUFKOkdbzwmU7ZLgCkCeZ3VvTNXTf7z88qkCXmonOVxYo7Ly006inuQfAd"
 export const PUBLISHABLE_KEY_PROD = ""
+
+
+/* Colors */
+export const COLOR_SILVER = "#C0C0C0"
+
+export const COLOR_LIGHT_BLUE = "#00a8ff"
+
+export const COLOR_PITACHIO = "#B2DEC2"
+export const COLOR_MINT = "#99E3C2"
+export const SEAFOAM = "#3DED97"
+
+export const COLOR_SAGE = "#728C69"
+
+export const COLOR_FERN = "#5DBB63"
+export const COLOR_GREEN = "#3CB043"
+export const COLOR_PARAKEET = "#03C04A"
+export const COLOR_SHAMROCK = "#03AC13"
+export const COLOR_EMERALD = "#028A0F"
+
+
+export const COLOR_OLIVE = "#98BF64"
+export const COLOR_CROCODILE = "#607D3B"
+export const COLOR_PICKLE = "#597D35"
+
+
+export const COLOR_MOSS = "#466D1D"
+export const COLOR_JUNIPER = "#3A5311"
+export const COLOR_SEAWEED = "#354A21"
+
+export const COLOR_LIME = "#AEF359"
+export const COLOR_PEAR = "#74B72E"
+
+export const COLOR_BASIL = "#32612D"
+export const COLOR_PINE = "#234F1E"
+export const COLOR_CEDAR = "#1F3D1A"
+export const CELERY = "#1F3D1A"

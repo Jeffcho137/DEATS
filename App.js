@@ -30,9 +30,11 @@ import DelivererSearch from "./components/deliverer_search";
 import SSOLogout from "./components/sso_logout";
 import logout, { logoutBackButton } from "./components/logout";
 import { StripeProvider } from "@stripe/stripe-react-native";
-import { PUBLISHABLE_KEY_TEST } from "./utils/Constants";
+import { COLOR_BASIL, COLOR_CROCODILE, PUBLISHABLE_KEY_TEST } from "./utils/Constants";
 import Checkout from "./components/checkout";
 import { DeliveriesTabs, OrdersTabs } from "./components/orders_deliveries_tabs";
+import {LogoutButton} from "./components/logout";
+import { BackButton } from "./components/buttons";
 
 const AppNavigator = createStackNavigator(
   {
@@ -108,27 +110,132 @@ export default class App extends Component {
       >
         <Provider store={store}>
           <NavigationContainer initialRouteName="SSOLogin">
-            <Stack.Navigator>
-              <Stack.Screen name="SSOLogin" component={SSOLogin} />
-              <Stack.Screen name="SSOLogout" component={SSOLogout} />
+            <Stack.Navigator
+              screenOptions={({ navigation }) => ({
+                headerStyle: {
+                  backgroundColor: COLOR_CROCODILE,
+                },
+                headerTintColor: '#fff',
+                headerTitleStyle: {
+                  fontWeight: 'bold',
+                },
+                headerShadowVisible: true,
+                animation: 'slide_from_bottom',
+                headerLeft: ({ canGoBack }) =>
+                  canGoBack && (
+                    <BackButton navigation={ navigation }/>
+                ),  
+                headerRight: () => (
+                  <LogoutButton navigation={navigation}/>
+                ),
+              })}
+            >
+              <Stack.Screen 
+                name="SSOLogin" 
+                component={SSOLogin} 
+                options={{
+                  title: "SSO Login",
+                  headerRight: () => null,
+                }}
+              />
+              <Stack.Screen 
+                name="SSOLogout" 
+                component={SSOLogout} 
+                options={{
+                  title: "SSO Logout",
+                  headerRight: () => null,
+                }}
+              />
               <Stack.Screen name="Home" component={Home} />
               <Stack.Screen name="Profile" component={Profile} />
-              <Stack.Screen name="OrderSelection" component={Order_selection} />
-              <Stack.Screen name="DeliverySelection" component={Delivery_selection} />
-              <Stack.Screen name="OrderSearch" component={Order_search} />
-              <Stack.Screen name="DelivererSearch" component={DelivererSearch} />
-              <Stack.Screen name="OrderMatch" component={Order_match} />
-              <Stack.Screen name="DeliverMatch" component={Deliver_match} />
-              <Stack.Screen name="OrderReview" component={Order_review} />
+              <Stack.Screen 
+                name="OrderSelection" 
+                component={Order_selection}
+                options={{
+                  title: "Order Selection",
+                }}
+              />
+              <Stack.Screen 
+                name="DeliverySelection" 
+                component={Delivery_selection} 
+                options={{
+                  title: "Delivery Selection",
+                }}
+              />
+              <Stack.Screen 
+                name="OrderSearch" 
+                component={Order_search} 
+                options={{
+                  title: "Order Search",
+                }}
+              />
+              <Stack.Screen 
+                name="DelivererSearch" 
+                component={DelivererSearch} 
+                options={{
+                  title: "Delivery Search",
+                }}
+              />
+              <Stack.Screen 
+                name="OrderMatch" 
+                component={Order_match} 
+                options={{
+                  title: "Order Match",
+                }}
+              />
+              <Stack.Screen 
+                name="DeliverMatch" 
+                component={Deliver_match} 
+                options={{
+                  title: "Delivery Match",
+                }}
+              />
+              <Stack.Screen 
+                name="OrderReview" 
+                component={Order_review} 
+                options={{
+                  title: "Order Review",
+                }}
+              />
               <Stack.Screen name="Checkout" component={Checkout} />
-              <Stack.Screen name="OrderCode" component={Order_code} />
-              <Stack.Screen name="OrderStatus" component={Order_status} />
-              <Stack.Screen name="DeliverStatus" component={Deliver_status} />
+              <Stack.Screen 
+                name="OrderCode" 
+                component={Order_code} 
+                options={{
+                  title: "GET Code",
+                }}
+              />
+              <Stack.Screen 
+                name="OrderStatus" 
+                component={Order_status} 
+                options={{
+                  title: "Order Status",
+                }}
+              />
+              <Stack.Screen 
+                name="DeliverStatus" 
+                component={Deliver_status} 
+                options={{
+                  title: "Delivery Status",
+                }}
+              />
               <Stack.Screen name="Completed" component={Completed} />
               <Stack.Screen name="OrdersTabs" component={OrdersTabs} />
               <Stack.Screen name="DeliveriesTabs" component={DeliveriesTabs} />
-              <Stack.Screen name="MapTest" component={Map_test} />
-              <Stack.Screen name="DelMap" component={Del_map} />
+              <Stack.Screen 
+                name="MapTest" 
+                component={Map_test} 
+                options={{
+                  title: "Map",
+                }}
+              />
+              <Stack.Screen 
+                name="DelMap" 
+                component={Del_map}
+                options={{
+                  title: "Map",
+                }}
+              />
             </Stack.Navigator>
           </NavigationContainer>
         </Provider>

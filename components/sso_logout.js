@@ -26,7 +26,7 @@ export default function SSOLogout ({ navigation }) {
                 <Button
                     title="SSOLogin"
                     onPress={() => {
-                        navigation.navigate("SSOLogin");
+                        navigation.replace("SSOLogin");
                     }}
                 />
             </View>
