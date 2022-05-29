@@ -71,7 +71,7 @@ const cancelOrder = (orderId) => {
   .catch(err => console.error(err));
 }
 
-export default function SwipeableButtons({ children, navigation, orderId, cat, catModifier }) {
+export default function SwipeableButtons({ children, navigation, orderId, deliverer, cat, catModifier }) {
   console.log("orderId", orderId)
   ref = useRef(null)
   userId = useSelector(selectId)
@@ -87,7 +87,7 @@ export default function SwipeableButtons({ children, navigation, orderId, cat, c
       }}
       renderRightActions={(progress) => {
         if (catModifier === "Active") {
-          return SwipeRightButtons(progress, navigation, orderId, cat, catModifier)
+          return SwipeRightButtons(progress, navigation, orderId, deliverer, cat)
         }
       }}
     >
@@ -140,7 +140,7 @@ const SwipeRightButton = ({ progress, translateX, text, color, navigation, order
   )
 }
 
-const SwipeRightButtons = (progress, navigation, orderId, cat, catModifier) => (
+const SwipeRightButtons = (progress, navigation, orderId, deliverer, cat) => (
     console.log("progress", cat),
     <View
       style={{
@@ -156,7 +156,7 @@ const SwipeRightButtons = (progress, navigation, orderId, cat, catModifier) => (
           orderId={orderId}
         />
 
-        {cat === "Orders" &&
+        {cat === "Orders" && deliverer &&
           <SwipeRightButton  
             progress={progress} 
             translateX={48} 
