@@ -36,6 +36,28 @@ const swipeableButtonAlert = (text, cat, action, orderId) => {
   );
 }
 
+const swipeableUpdateOrderAlert = (navigation) => {
+  Alert.alert(
+    "SELECT ONE",
+    "What do you want to update?",
+    [
+      { 
+        text: "Order Details",
+        onPress: () => {
+          navigation.navigate("OrderSelection")
+        }
+      }, 
+      { 
+        text: "GET Code",
+        onPress: () => {
+          navigation.navigate("OrderCode")
+        }
+      }
+    ],
+    { cancelable: true }
+  );
+}
+
 const unmatchDeliverer = (orderId) => {
   console.log("unmatch:", orderId)
   fetch(`${DEATS_SERVER_URL}${ROUTE_UNMATCH}`,
@@ -138,7 +160,7 @@ const SwipeRightButton = ({ progress, translateX, text, color, navigation, order
               break
 
             case "UPDATE \n ORDER":
-              navigation.navigate("OrderSelection")
+              swipeableUpdateOrderAlert(navigation)
               break
             
             case "UNMATCH":
