@@ -8,7 +8,6 @@ import styles from '../style';
 import { useSelector } from 'react-redux';
 import { selectId } from '../redux/slices/userSlice';
 
-let ref = null
 let userId = null
 
 const swipeableButtonAlert = (text, cat, action, orderId) => {
@@ -71,7 +70,7 @@ const cancelOrder = (orderId) => {
   .catch(err => console.error(err));
 }
 
-export default function SwipeableButtons({ children, navigation, orderId, deliverer, cat, catModifier }) {
+export default function SwipeableButtons({ children, navigation, orderId, deliverer, cat, catModifier, ref }) {
   console.log("orderId", orderId)
   ref = useRef(null)
   userId = useSelector(selectId)
@@ -87,7 +86,7 @@ export default function SwipeableButtons({ children, navigation, orderId, delive
       }}
       renderRightActions={(progress) => {
         if (catModifier === "Active") {
-          return SwipeRightButtons(progress, navigation, orderId, deliverer, cat)
+          return SwipeRightButtons(progress, navigation, orderId, deliverer, cat, ref)
         }
       }}
     >
@@ -96,7 +95,7 @@ export default function SwipeableButtons({ children, navigation, orderId, delive
   )
 }
 
-const SwipeRightButton = ({ progress, translateX, text, color, navigation, orderId, cat, catModifier }) => {
+const SwipeRightButton = ({ progress, translateX, text, color, navigation, orderId, buttonRef }) => {
   return (
     <Animated.View style={{ 
       flex: 1, 
@@ -111,7 +110,7 @@ const SwipeRightButton = ({ progress, translateX, text, color, navigation, order
       <RectButton
         style={[styles.swipeRightButton, { backgroundColor: color }]}
         onPress={()  => {
-          ref?.current?.close()
+          buttonRef?.current?.close()
           switch(text) {
             case "UPDATE \n STATUS":
               navigation.navigate("DeliverStatus")
@@ -140,7 +139,7 @@ const SwipeRightButton = ({ progress, translateX, text, color, navigation, order
   )
 }
 
-const SwipeRightButtons = (progress, navigation, orderId, deliverer, cat) => (
+const SwipeRightButtons = (progress, navigation, orderId, deliverer, cat, ref) => (
     console.log("progress", cat),
     <View
       style={{
@@ -154,6 +153,7 @@ const SwipeRightButtons = (progress, navigation, orderId, deliverer, cat) => (
           color={COLOR_PICKLE} 
           navigation={navigation} 
           orderId={orderId}
+          buttonRef={ref}
         />
 
         {cat === "Orders" && deliverer &&
@@ -164,6 +164,7 @@ const SwipeRightButtons = (progress, navigation, orderId, deliverer, cat) => (
             color={COLOR_LIGHT_BLUE} 
             navigation={navigation}
             orderId={orderId}
+            buttonRef={ref}
           />
         }
       
@@ -174,6 +175,7 @@ const SwipeRightButtons = (progress, navigation, orderId, deliverer, cat) => (
           color="brown"
           navigation={navigation}
           orderId={orderId}
+          buttonRef={ref}
         />
     </View>
   );
