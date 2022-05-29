@@ -73,3 +73,5 @@ export const COLOR_BASIL = "#32612D"
 export const COLOR_PINE = "#234F1E"
 export const COLOR_CEDAR = "#1F3D1A"
 export const CELERY = "#1F3D1A"
+
+export const COLOR_DEEP_RED = "#dd2c15"

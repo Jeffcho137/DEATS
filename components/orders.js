@@ -3,10 +3,10 @@ import { View, Text, Image, FlatList, TouchableOpacity, Pressable} from "react-n
 import { useNavigation } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { selectId } from "../redux/slices/userSlice";
-import { DEATS_SERVER_URL, ROUTE_ORDERS } from "../utils/Constants";
 import styles from '../style'
 import { static_deliveries } from "./deliveries";
-import { Divider, Tile } from "react-native-elements";
+import { Divider } from "react-native-elements";
+import SwipeableButtons from "./swipeable_buttons";
 
 const static_orders = [
     {
@@ -83,38 +83,39 @@ export default function Orders({ url, cat, catModifier, result_type }) {
                 vertical
                 renderItem={({ item }) => (
                     <>
-                    <TouchableOpacity>
-                        <View style={{
-                            flexDirection: "row",
-                            justifyContent: "space-around",
-                            padding: 15,
-                            paddingTop: 1,
-                            backgroundColor: "lightgray",
-                            borderRadius: 15,
-                            marginBottom: 5,
-                            marginTop: 5,
-                            width: "97%",
-                            alignSelf: "center",
-                        }}>
-                            {cat === "Orders" ?
-                                (<>
-                                    <OrderDetails order={item} cat={cat} catModifier={catModifier}/>
-                                    <UserDetail user={item.deliverer} type="Deliverer"/>
-                                    
-                                </>)
-                                : (<>
-                                    <OrderDetails order={item} cat={cat} catModifier={catModifier}/>
-                                    <UserDetail user={item.customer} type="Orderer"/>
-                                    
-                                </>)    
-                        }
-                        </View>
-                    </TouchableOpacity>
-                    <Divider 
-                        width={1}
-                        style={{ marginHorizontal: 120}}
-                    />
-                    
+                        <SwipeableButtons>
+                            <TouchableOpacity>
+                                <View style={{
+                                    flexDirection: "row",
+                                    justifyContent: "space-around",
+                                    padding: 15,
+                                    paddingTop: 1,
+                                    backgroundColor: "lightgray",
+                                    borderRadius: 15,
+                                    marginBottom: 5,
+                                    marginTop: 5,
+                                    width: "97%",
+                                    alignSelf: "center",
+                                }}>
+                                    {cat === "Orders" ?
+                                        (<>
+                                            <OrderDetails order={item} cat={cat} catModifier={catModifier}/>
+                                            <UserDetail user={item.deliverer} type="Deliverer"/>
+                                            
+                                        </>)
+                                        : (<>
+                                            <OrderDetails order={item} cat={cat} catModifier={catModifier}/>
+                                            <UserDetail user={item.customer} type="Orderer"/>
+                                            
+                                        </>)    
+                                }
+                                </View>
+                            </TouchableOpacity>
+                        </SwipeableButtons>
+                        <Divider 
+                            width={1}
+                            style={{ marginHorizontal: 120}}
+                        />
                     </>
                 )}
             />) : 

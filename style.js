@@ -700,6 +700,30 @@ modalLocDescriptionStyle: {
 modalLocationStyle: {
   fontSize: 18,
 },
-})
+
+swipeLeftButton: {
+  flex: 1,
+  margin: 8,
+  borderRadius: 10,
+  backgroundColor: "brown",
+  justifyContent: 'center',
+  alignItems: 'flex-end',
+},
+
+swipeText: {
+  alignSelf: 'center',
+  color: 'white',
+  fontSize: 15,
+  fontWeight: 'bold'
+},
+
+swipeRightButton: {
+  flex: 1,
+  margin: 8,
+  marginLeft: 0,
+  borderRadius: 10,
+  alignItems: 'center',
+  justifyContent: 'center'
+}})
 
 export default styles;
