@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { View, Text, Image, FlatList, TouchableOpacity, Pressable} from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { selectId } from "../redux/slices/userSlice";
 import styles from '../style'
@@ -51,7 +51,14 @@ export default function Orders({ url, cat, catModifier, result_type }) {
     const navigation = useNavigation()
     const  userId = useSelector(selectId)
     const [orders, setOrders] = useState([]);
-    useEffect(() =>  { retrieveOrders(userId, setOrders) }, [])
+    
+    useFocusEffect(
+        useCallback(() => {
+            
+          retrieveOrders(userId, setOrders)
+          return () => {}
+        }, [userId])
+      );
 
     const retrieveOrders = () => {
         fetch(url,
