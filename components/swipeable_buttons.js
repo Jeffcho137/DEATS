@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Alert, Animated, I18nManager, Text, View, useNavigation } from 'react-native'
+import { Alert, Animated, I18nManager, Text, View } from 'react-native'
 
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { RectButton } from 'react-native-gesture-handler';
@@ -54,7 +54,7 @@ const cancelOrder = (orderId) => {
   .catch(err => console.error(err));
 }
 
-export default function SwipeableButtons({ children, navigation, orderId }) {
+export default function SwipeableButtons({ children, navigation, orderId, cat, catModifier }) {
   console.log("orderId", orderId)
   ref = useRef(null)
   userId = useSelector(selectId)
@@ -67,19 +67,19 @@ export default function SwipeableButtons({ children, navigation, orderId }) {
       rightThreshold={50}
       renderLeftActions={(dragX) => {
           return SwipeLeftButton(dragX, navigation)
-        }
-      }
+      }}
       renderRightActions={(progress) => {
-          return SwipeRightButtons(progress, navigation, orderId)
+        if (catModifier === "Active") {
+          return SwipeRightButtons(progress, navigation, orderId, cat, catModifier)
         }
-      }
+      }}
     >
       {children}
     </Swipeable>
   )
 }
 
-const SwipeRightButton = ({ progress, translateX, text, color, navigation, orderId}) => {
+const SwipeRightButton = ({ progress, translateX, text, color, navigation, orderId, cat, catModifier }) => {
   return (
     <Animated.View style={{ 
       flex: 1, 
@@ -118,8 +118,8 @@ const SwipeRightButton = ({ progress, translateX, text, color, navigation, order
   )
 }
 
-const SwipeRightButtons = (progress, navigation, orderId) => (
-    console.log("progress", progress),
+const SwipeRightButtons = (progress, navigation, orderId, cat, catModifier) => (
+    console.log("progress", cat),
     <View
       style={{
         width: "68%",
@@ -128,7 +128,7 @@ const SwipeRightButtons = (progress, navigation, orderId) => (
         <SwipeRightButton 
           progress={progress} 
           translateX={72} 
-          text={'UPDATE'} 
+          text={cat === "Orders" ? "UPDATE" : "UPDATE \n STATUS"}
           color={COLOR_PICKLE} 
           navigation={navigation} 
           orderId={orderId}
@@ -142,14 +142,16 @@ const SwipeRightButtons = (progress, navigation, orderId) => (
           orderId={orderId}
         />
           
-        <SwipeRightButton 
-          progress={progress} 
-          translateX={24} 
-          text={"CANCEL"} 
-          color="brown"
-          navigation={navigation}
-          orderId={orderId}
-        />
+        {cat === "Orders" && 
+          <SwipeRightButton 
+            progress={progress} 
+            translateX={24} 
+            text={"CANCEL"} 
+            color="brown"
+            navigation={navigation}
+            orderId={orderId}
+          />
+        }
     </View>
   );
 

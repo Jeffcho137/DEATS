@@ -83,7 +83,7 @@ export default function Orders({ url, cat, catModifier, result_type }) {
                 vertical
                 renderItem={({ item }) => (
                     <>
-                        <SwipeableButtons navigation={navigation} orderId={item._id}>
+                        <SwipeableButtons navigation={navigation} orderId={item._id} cat={cat} catModifier={catModifier}>
                             <TouchableOpacity>
                                 <View style={{
                                     flexDirection: "row",
