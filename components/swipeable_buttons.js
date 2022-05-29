@@ -11,6 +11,23 @@ import { selectId } from '../redux/slices/userSlice';
 let ref = null
 let userId = null
 
+const swipeableButtonAlert = (text, cat, action, orderId) => {
+  Alert.alert(
+    "WAIT",
+    `Are you sure you want to ${text} this ${cat}? \n You can't undo this action!`,
+    [
+      { 
+        text: "YES",
+        onPress: () => {
+          action(orderId)
+        }
+      }, 
+      { text: "NO"}
+    ],
+    { cancelable: true }
+  );
+}
+
 const unmatchDeliverer = (orderId) => {
   console.log("unmatch:", orderId)
   fetch(`${DEATS_SERVER_URL}${ROUTE_UNMATCH}`,
@@ -105,15 +122,15 @@ const SwipeRightButton = ({ progress, translateX, text, color, navigation, order
               break
             
             case "UNMATCH":
-              unmatchDeliverer(orderId)
+              swipeableButtonAlert("unmatch", "deliverer", unmatchDeliverer, orderId)
               break
 
             case "CANCEL \n ORDER":
-              cancelOrder(orderId)
+              swipeableButtonAlert("cancel", "order", cancelOrder, orderId)
               break
 
             default:
-              unmatchDeliverer(orderId)
+              swipeableButtonAlert("cancel", "delivery", unmatchDeliverer, orderId)
           }
         }}
       >
