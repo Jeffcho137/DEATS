@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useState, useCallback } from "react";
 import { View, Text, Image, FlatList, TouchableOpacity, Pressable} from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import { useSelector } from "react-redux";
@@ -54,7 +54,6 @@ export default function Orders({ url, cat, catModifier, result_type }) {
     
     useFocusEffect(
         useCallback(() => {
-            
           retrieveOrders(userId, setOrders)
           return () => {}
         }, [userId])
@@ -79,7 +78,6 @@ export default function Orders({ url, cat, catModifier, result_type }) {
         })
         .catch((error) => console.log(error));
       }
-    
     
     return (
         <>

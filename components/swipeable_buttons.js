@@ -1,6 +1,6 @@
-import React, { useRef } from 'react'
+import React, { useRef, useCallback } from 'react'
 import { Alert, Animated, I18nManager, Text, View } from 'react-native'
-
+import { useFocusEffect } from "@react-navigation/native";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { RectButton } from 'react-native-gesture-handler';
 import { COLOR_LIGHT_BLUE, COLOR_PICKLE, DEATS_SERVER_URL, ROUTE_CANCEL_ORDER, ROUTE_UNMATCH } from '../utils/Constants';
@@ -11,6 +11,13 @@ import { selectId } from '../redux/slices/userSlice';
 let userId = null
 let buttonRefs = []
 let prevOpenedButton;
+
+const closePrevOpenedButton = (orderId) =>{
+  if (prevOpenedButton && prevOpenedButton !== buttonRefs[orderId]) {
+    prevOpenedButton.close();
+  }
+  prevOpenedButton = buttonRefs[orderId];
+}
 
 const swipeableButtonAlert = (text, cat, action, orderId) => {
   Alert.alert(
@@ -74,17 +81,14 @@ const cancelOrder = (orderId) => {
 
 export default function SwipeableButtons({ children, navigation, orderId, deliverer, cat, catModifier, buttonRef }) {
   buttonRef = useRef(null)
-
-  
   userId = useSelector(selectId)
 
-  const closePrevOpenedButton = () =>{
-    if (prevOpenedButton && prevOpenedButton !== buttonRefs[orderId]) {
-      prevOpenedButton.close();
-    }
-    prevOpenedButton = buttonRefs[orderId];
-    console.log("buton", prevOpenedButton)
-  }
+  useFocusEffect(
+    useCallback(() => {
+      closePrevOpenedButton(orderId)
+      return () => {}
+    }, [userId])
+  );
   
   return (
     <Swipeable
@@ -104,7 +108,7 @@ export default function SwipeableButtons({ children, navigation, orderId, delive
         }
       }}
       onSwipeableWillOpen={() => {
-        closePrevOpenedButton()
+        closePrevOpenedButton(orderId)
       }}
     >
       {children}
