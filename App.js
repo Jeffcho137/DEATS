@@ -30,7 +30,7 @@ import DelivererSearch from "./components/deliverer_search";
 import SSOLogout from "./components/sso_logout";
 import logout, { logoutBackButton } from "./components/logout";
 import { StripeProvider } from "@stripe/stripe-react-native";
-import { COLOR_BASIL, COLOR_CROCODILE, PUBLISHABLE_KEY_TEST } from "./utils/Constants";
+import { COLOR_CROCODILE, PUBLISHABLE_KEY_TEST } from "./utils/Constants";
 import Checkout from "./components/checkout";
 import { DeliveriesTabs, OrdersTabs } from "./components/orders_deliveries_tabs";
 import {LogoutButton} from "./components/logout";

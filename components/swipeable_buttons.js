@@ -95,20 +95,25 @@ const SwipeRightButton = ({ progress, translateX, text, color, navigation, order
         style={[styles.swipeRightButton, { backgroundColor: color }]}
         onPress={()  => {
           ref?.current?.close()
-          if (text === "UPDATE") {
-            navigation.navigate("OrderSelection")
-          } else if (text === "UNMATCH") {
-            unmatchDeliverer(orderId)
-          } else if (text === "CANCEL") {
-            console.log("cancel:", orderId)
-            cancelOrder(orderId)
-          } else{
-            Alert.alert(
-              "WAIT",
-              `Are you sure you want to ${text} this order?`,
-              [{ text: "WHY NOT" }, { text: "OOF" }],
-              { cancelable: false }
-            );
+          switch(text) {
+            case "UPDATE \n STATUS":
+              navigation.navigate("DeliverStatus")
+              break
+
+            case "UPDATE \n ORDER":
+              navigation.navigate("OrderSelection")
+              break
+            
+            case "UNMATCH":
+              unmatchDeliverer(orderId)
+              break
+
+            case "CANCEL \n ORDER":
+              cancelOrder(orderId)
+              break
+
+            default:
+              unmatchDeliverer(orderId)
           }
         }}
       >
@@ -128,30 +133,31 @@ const SwipeRightButtons = (progress, navigation, orderId, cat, catModifier) => (
         <SwipeRightButton 
           progress={progress} 
           translateX={72} 
-          text={cat === "Orders" ? "UPDATE" : "UPDATE \n STATUS"}
+          text={cat === "Orders" ? "UPDATE \n ORDER" : "UPDATE \n STATUS"}
           color={COLOR_PICKLE} 
           navigation={navigation} 
           orderId={orderId}
         />
-        <SwipeRightButton  
-          progress={progress} 
-          translateX={48} 
-          text={'UNMATCH'} 
-          color={COLOR_LIGHT_BLUE} 
-          navigation={navigation}
-          orderId={orderId}
-        />
-          
-        {cat === "Orders" && 
-          <SwipeRightButton 
+
+        {cat === "Orders" &&
+          <SwipeRightButton  
             progress={progress} 
-            translateX={24} 
-            text={"CANCEL"} 
-            color="brown"
+            translateX={48} 
+            text={"UNMATCH"} 
+            color={COLOR_LIGHT_BLUE} 
             navigation={navigation}
             orderId={orderId}
           />
         }
+      
+        <SwipeRightButton 
+          progress={progress} 
+          translateX={24} 
+          text={cat === "Orders" ? "CANCEL \n ORDER" : "CANCEL \n DELIVERY"} 
+          color="brown"
+          navigation={navigation}
+          orderId={orderId}
+        />
     </View>
   );
 
