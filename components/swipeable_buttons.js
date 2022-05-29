@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 import { selectId } from '../redux/slices/userSlice';
 
 let userId = null
+let buttonRefs = []
+let prevOpenedButton;
 
 const swipeableButtonAlert = (text, cat, action, orderId) => {
   Alert.alert(
@@ -70,14 +72,26 @@ const cancelOrder = (orderId) => {
   .catch(err => console.error(err));
 }
 
-export default function SwipeableButtons({ children, navigation, orderId, deliverer, cat, catModifier, ref }) {
-  console.log("orderId", orderId)
-  ref = useRef(null)
+export default function SwipeableButtons({ children, navigation, orderId, deliverer, cat, catModifier, buttonRef }) {
+  buttonRef = useRef(null)
+
+  
   userId = useSelector(selectId)
+
+  const closePrevOpenedButton = () =>{
+    if (prevOpenedButton && prevOpenedButton !== buttonRefs[orderId]) {
+      prevOpenedButton.close();
+    }
+    prevOpenedButton = buttonRefs[orderId];
+    console.log("buton", prevOpenedButton)
+  }
   
   return (
     <Swipeable
-      ref={ref}
+      ref={ref => {
+        buttonRefs[orderId] = ref
+        buttonRef = ref
+      }}
       friction={3}
       leftThreshold={50}
       rightThreshold={50}
@@ -86,8 +100,11 @@ export default function SwipeableButtons({ children, navigation, orderId, delive
       }}
       renderRightActions={(progress) => {
         if (catModifier === "Active") {
-          return SwipeRightButtons(progress, navigation, orderId, deliverer, cat, ref)
+          return SwipeRightButtons(progress, navigation, orderId, deliverer, cat, buttonRef)
         }
+      }}
+      onSwipeableWillOpen={() => {
+        closePrevOpenedButton()
       }}
     >
       {children}
@@ -110,7 +127,7 @@ const SwipeRightButton = ({ progress, translateX, text, color, navigation, order
       <RectButton
         style={[styles.swipeRightButton, { backgroundColor: color }]}
         onPress={()  => {
-          buttonRef?.current?.close()
+          buttonRef.close()
           switch(text) {
             case "UPDATE \n STATUS":
               navigation.navigate("DeliverStatus")
@@ -139,8 +156,7 @@ const SwipeRightButton = ({ progress, translateX, text, color, navigation, order
   )
 }
 
-const SwipeRightButtons = (progress, navigation, orderId, deliverer, cat, ref) => (
-    console.log("progress", cat),
+const SwipeRightButtons = (progress, navigation, orderId, deliverer, cat, buttonRef) => (
     <View
       style={{
         width: "68%",
@@ -153,7 +169,7 @@ const SwipeRightButtons = (progress, navigation, orderId, deliverer, cat, ref) =
           color={COLOR_PICKLE} 
           navigation={navigation} 
           orderId={orderId}
-          buttonRef={ref}
+          buttonRef={buttonRef}
         />
 
         {cat === "Orders" && deliverer &&
@@ -164,7 +180,7 @@ const SwipeRightButtons = (progress, navigation, orderId, deliverer, cat, ref) =
             color={COLOR_LIGHT_BLUE} 
             navigation={navigation}
             orderId={orderId}
-            buttonRef={ref}
+            buttonRef={buttonRef}
           />
         }
       
@@ -175,7 +191,7 @@ const SwipeRightButtons = (progress, navigation, orderId, deliverer, cat, ref) =
           color="brown"
           navigation={navigation}
           orderId={orderId}
-          buttonRef={ref}
+          buttonRef={buttonRef}
         />
     </View>
   );
