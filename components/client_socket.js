@@ -77,11 +77,16 @@ export const useClientSocket = ({userId, orderId, paymentIntentId, enabled}) => 
     });
 
     // FROM SERVER:STRIPE: announcements for customer 
-    socket.on('stripe:order_with_card:cus', (payload) => {
+    socket.on('stripe:order_wc:cus', (payload) => {
       dispatch(setOrderId(payload.order.order_id))
       dispatch(setOrderFee(payload.order.order_fee))
       dispatch(setDEATSTokens(payload.user.DEATS_tokens))
       console.log(`${userId},`, "Your order with card payment has been created:", payload);
+    });
+
+    socket.on('stripe:update_order_wc:cus', (payload) => {
+      dispatch(setDEATSTokens(payload.user.DEATS_tokens))
+      console.log(`${userId},`, "Your order with card payment has been updated:", payload);
     });
 
     // FROM DELIVERER: announcements for customer 
