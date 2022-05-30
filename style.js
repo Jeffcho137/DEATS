@@ -533,6 +533,7 @@ const styles = StyleSheet.create({
       fontWeight: "bold",
       textAlign: "center",
       fontSize: 18,
+      padding: 12,
     },
 
     modalTextPayment: {

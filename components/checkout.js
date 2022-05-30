@@ -1,13 +1,15 @@
 import { useStripe } from "@stripe/stripe-react-native";
+import { StackActions } from '@react-navigation/native';
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { Button } from "react-native-elements";
 
 import { Screen } from "react-native-screens";
 import { useDispatch, useSelector } from "react-redux";
-import { selectDropLocation, selectPickupLocation, setOrderFee, setOrderId } from "../redux/slices/orderDeliverySlice";
+import { selectNavigationMode } from "../redux/slices/navigationSlice";
+import { selectDropLocation, selectOrderId, selectPickupLocation, setOrderFee, setOrderId } from "../redux/slices/orderDeliverySlice";
 import { selectId, setDEATSTokens, setPaymentIntentId } from "../redux/slices/userSlice";
-import { DEATS_SERVER_URL, ROUTE_ORDER_DEL_WITH_CARD, ROUTE_ORDER_DEL } from "../utils/Constants";
+import { DEATS_SERVER_URL, ROUTE_ORDER_DEL_WITH_CARD, ROUTE_ORDER_DEL, ROUTE_UPDATE_ORDER, ROUTE_UPDATE_ORDER_WITH_CARD } from "../utils/Constants";
 import { useClientSocket } from "./client_socket";
 
 export default function Checkout({ navigation }) {
@@ -15,30 +17,50 @@ export default function Checkout({ navigation }) {
     const [loading, setLoading] = useState(false);
 
     const dispatch = useDispatch();
-    const user_id = useSelector(selectId)
+    const userId = useSelector(selectId)
+    const orderId = useSelector(selectOrderId)
     const dropLocation = useSelector(selectDropLocation)
     const pickupLocation = useSelector(selectPickupLocation)
+    const navigationMode = useSelector(selectNavigationMode)
+
+    console.log("navigationMode", navigationMode)
 
     const [joinRoomForOrder, joinRoomForPayment] =useClientSocket({
-      userId: user_id,
-      enabled: Boolean(user_id)
+      userId: userId,
+      enabled: Boolean(userId)
   })
 
     const fetchPaymentSheetParams = async () => {
-        const response = await fetch(`${DEATS_SERVER_URL}${ROUTE_ORDER_DEL_WITH_CARD}`, {
+        const response = navigationMode === "updateOrder" ?
+        await fetch(`${DEATS_SERVER_URL}${ROUTE_UPDATE_ORDER_WITH_CARD}`, {
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            user_id: userId,
+            order: {
+              order_id: orderId,
+              drop_loc: dropLocation,
+              pickup_loc: pickupLocation,
+            }
+          })
+        }) :
+        await fetch(`${DEATS_SERVER_URL}${ROUTE_ORDER_DEL_WITH_CARD}`, {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              user_id: user_id,
+              user_id: userId,
               order: {
                   drop_loc: dropLocation,
                   pickup_loc: pickupLocation
               }
           })
-        });
+        })
 
         const { paymentIntentId, paymentIntentClientSecret, ephemeralKey, customer, ...data} = await response.json();
         joinRoomForPayment(paymentIntentId)
@@ -92,8 +114,8 @@ export default function Checkout({ navigation }) {
         if (error) {
           console.log(`${error.code}`, error.message);
         } else {
-          Alert.alert('Success', 'Your order is confirmed!');
-          navigation.replace("OrderSearch");
+          Alert.alert('Success', 'Your payment is confirmed!');
+          navigationMode === "updateOrder" ? navigation.dispatch(StackActions.pop(2)) : navigation.replace("OrderSearch");
         }
       };
   
@@ -110,7 +132,7 @@ export default function Checkout({ navigation }) {
               'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-              user_id: user_id,
+              user_id: userId,
               order: {
                   drop_loc: dropLocation,
                   pickup_loc: pickupLocation
@@ -130,40 +152,78 @@ export default function Checkout({ navigation }) {
               navigation.replace('OrderSearch') 
 
           } else if (data.order) {
-            Alert.alert(
-              "Insuficient DEATS Tokens (DT)",
-              `This order costs ${data.order.order_fee.toFixed(2)} DT, but you have only ${data.user.DEATS_tokens.toFixed(2)} DT left in your account. Here's what you can do`,
-              [
-                {
-                  text: "Pay with card instead", 
-                  onPress: () => {
-                    openPaymentSheet()
-                  }
-                }, 
-                { 
-                  text: "Buy some DT first", 
-                  onPress: () => navigation.navigate("BuyTokens")
-                }, 
-                {
-                  text: "Update the order",
-                  onPress: () => navigation.navigate("OrderSelection"),
-                  
-                },
-                {
-                  text: "Earn some DT by making a delivery", 
-                  onPress: () => navigation.navigate("DeliverySelection"),
-                  
-                },
-              ],
-              { cancelable: false });
+            const msg = `This order costs ${data.order.order_fee.toFixed(2)} DT, but you have only ${data.user.DEATS_tokens.toFixed(2)} DT left in your account. Here's what you can do`
+            paymentFailedAlert(msg)
           }
       })
       .catch(err => console.error(err));
     }
 
+    const payUpdateCostWithDT = () => {  
+      fetch(`${DEATS_SERVER_URL}${ROUTE_UPDATE_ORDER}`, {
+          method: 'POST',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+              user_id: userId,
+              order: {
+                  order_id: orderId,
+                  drop_loc: dropLocation,
+                  pickup_loc: pickupLocation,
+              }
+          })
+      })
+      .then(response => response.json())
+      .then((data) => {
+          console.log(data)
+          if (data.succeeded == true) {
+            navigation.dispatch(StackActions.pop(2));
+
+        } else if (data.order) {
+          const costDiff = data.order.new_order_fee - data.order.old_order_fee
+          const msg = `This update costs ${costDiff.toFixed(2)} DT extra, but you have only ${data.user.DEATS_tokens.toFixed(2)} DT left in your account. Here's what you can do`
+          paymentFailedAlert(msg)
+        }
+
+       })
+       .catch(err => console.error(err))
+    }
+
+    const paymentFailedAlert = (msg) => {
+      Alert.alert(
+        "Insuficient DEATS Tokens (DT)",
+        msg,
+        [
+          {
+            text: "Pay with card instead", 
+            onPress: () => {
+              openPaymentSheet()
+            }
+          }, 
+          { 
+            text: "Buy some DT first", 
+            onPress: () => navigation.navigate("BuyTokens")
+          }, 
+          {
+            text: "Update the order",
+            onPress: () => navigation.navigate("OrderSelection"),
+            
+          },
+          {
+            text: "Earn some DT by making a delivery", 
+            onPress: () => navigation.navigate("DeliverySelection"),
+            
+          },
+        ],
+        { cancelable: false }
+      )
+    }
+
     return (
       <Screen>
-        <PaymentButton title="Pay with DeatsTokens" loading={loading} action={payWithDT}/>
+        <PaymentButton title="Pay with DeatsTokens" loading={loading} action={navigationMode ? payUpdateCostWithDT : payWithDT}/>
         <PaymentButton title="Pay with Card" loading={loading} action={openPaymentSheet}/>
       </Screen>
     );
