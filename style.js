@@ -628,36 +628,35 @@ const styles = StyleSheet.create({
       width: '90%',
       //alignItems: 'center',
       marginBottom: 20,
+      justifyContent: 'space-evenly',
     },
 
     status_text:{
-      flex: 0.3,
+      flex: 0.9,
       fontSize: 22,
-      marginRight:70,
-      textAlign: 'left',
-      paddingLeft: 20,
-      width: '70%'
-      //borderWidth: 1,
-      //borderRadius: 10,
-      //orderWidth:10,
     },
 
     status_single_update: {
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'space-between',
+      backgroundColor: 'lightgrey',
+      borderRadius: 15,
+      borderColor: 'green',
+      borderWidth: 1,
+      paddingLeft: 15,
+      // height: 50,
+      paddingTop: 10,
+      paddingBottom: 10,
+      marginBottom: 50,
+      // paddingRight: 10,
     },  
 
     status_yes_button:{
-      flex: 1,
-      //flexWrap,
-      // width: '190%',
-      textAlign:'right',
-      justifyContent: 'space-between',
-      //paddingBottom: 0,
-      //borderWidth: 1,
-      //borderRadius: 5,
-    },
+      // flex: 0.1,
+//flexWrap,
+// width: '190%',
+textAlign:'right',
+justifyContent: 'space-between'},
 
     orderItemStyle: {
       flexDirection: "row",

@@ -60,12 +60,21 @@ export function Deliver_status(props) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.status}>
+      <View style={{
+      flex: 0.9,
+      // width: '100%',
+      width: '90%',
+      //alignItems: 'center',
+      marginBottom: 20,
+      // alignItems: 'flex-start',
+      justifyContent: 'flex-start',
+    }}>
+        <Text style={{fontSize: 20, marginBottom: 70}}>Update your delivery for your customer as you complete it!</Text>
         <View style={styles.status_single_update}>
-          <Text style={styles.status_text}>Are you on your way to {customer.order.pickup_loc.name}?</Text>
+          <Text style={styles.status_text}>I'm on my way to {customer.order.pickup_loc.name}</Text>
           <View style={styles.status_yes_button}>
             <Button
-              title="Yes!"
+              title="Yes!" color={'green'}
               onPress={() => {
                 track(`heading to ${customer.order.pickup_loc.name}`);
               }}
@@ -73,10 +82,10 @@ export function Deliver_status(props) {
           </View>
         </View>
         <View style={styles.status_single_update}>
-          <Text style={styles.status_text}>Food picked up?</Text>
+          <Text style={styles.status_text}>I've picked up the food!</Text>
           <View style={styles.status_yes_button}>
             <Button
-              title="Yes!"
+              title="Yes!" color={'green'}
               onPress={() => {
                 track("picked up");
               }}
@@ -84,10 +93,10 @@ export function Deliver_status(props) {
           </View>
         </View>
         <View style={styles.status_single_update}>
-          <Text style={styles.status_text}>On your way to {customer.order.drop_loc.name} ?</Text>
+          <Text style={styles.status_text}>I'm on my way to {customer.order.drop_loc.name} ?</Text>
           <View style={styles.status_yes_button}>
             <Button
-              title="Yes!"
+              title="Yes!" color={'green'}
               onPress={() => {
                 track(`heading to ${customer.order.drop_loc.name}`);
               }}
@@ -95,10 +104,10 @@ export function Deliver_status(props) {
           </View>
         </View>
         <View style={styles.status_single_update}>
-          <Text style={styles.status_text}>Arrived?</Text>
+          <Text style={styles.status_text}>I've arrived.</Text>
           <View style={styles.status_yes_button}>
             <Button
-              title="Yes!"
+              title="Yes!" color={'green'}
               onPress={() => {
                 track("arrived");
               }}
@@ -106,19 +115,23 @@ export function Deliver_status(props) {
           </View>
         </View>
       </View>
-      <Button
-        title="Reset Status"
-        onPress={() => {
-          track("matched");
-        }}
-      ></Button>
-      <Button
-        title="Food is delivered!"
-        onPress={() => {
-          track("delivered");
-          props.navigation.navigate("Completed");
-        }}
-      ></Button>
+      <View style={{position: 'absolute', bottom: 80}}>
+        <Button
+          title="Reset Status" color={'green'}
+          onPress={() => {
+            track("matched");
+          }}
+        ></Button>
+      </View>
+      <View style={{position: 'absolute', bottom: 50}}>
+        <Button
+          title="Food is delivered!" color={'green'}
+          onPress={() => {
+            track("delivered");
+            props.navigation.navigate("Completed");
+          }}
+        ></Button>
+      </View>
       <StatusBar style="auto" />
     </View>
   );

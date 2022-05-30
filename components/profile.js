@@ -237,7 +237,7 @@ export function Profile ({ navigation }) {
                     <Text style={{textAlign: 'center', color: 'blue', fontSize: 15}}>edit</Text>
                 </Pressable>
             </View>
-            <Circle size={30} indeterminate={true} />
+            {/* <Circle size={30} indeterminate={true} /> */}
             <View style={styles.profile_acc_btns}>
                 <Button title='deactivate account' onPress={() => setModalVisibleDeact(true)}></Button>
                 <Button title='reactivate account' onPress={() => setModalVisibleReact(true)}></Button>

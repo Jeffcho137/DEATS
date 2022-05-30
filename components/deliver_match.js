@@ -11,6 +11,7 @@ export function Deliver_match (props) {
     return (
         <View style={styles.container}>
             <View style={styles.del_match}>
+                <Text style={styles.searching_text}>Please confirm this match</Text>
                 <Text style={styles.searching_text_hardcode}>Deliver to:</Text>    
                 <Text style={styles.searching_text}>{customer.order.drop_loc.name}</Text>  
             {/* </View> */}

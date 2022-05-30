@@ -12,6 +12,7 @@ import { selectId, selectPaymentIntentId } from '../redux/slices/userSlice';
 import { BubblesLoader, CirclesLoader } from 'react-native-indicator';
 import ProgressBar from 'react-native-progress/Bar';
 import { CircleSnail } from 'react-native-progress';
+import { Circle } from 'react-native-progress';
 
 export function Order_search ({ navigation }) {
     const dispatch = useDispatch()
@@ -77,14 +78,19 @@ export function Order_search ({ navigation }) {
                 </View>
               </View>
             </Modal>
-          
-            <View style={{flex: 0.5, alignItems: 'center'}}>
-                <Text style={styles.searching_text}>SEARCHING FOR A DELIVERER :)</Text>
+            <View style={{alignItems: 'center', justifyContent: 'center', marginBottom: 50}}>
+                <Text style={{
+                  height: 30,
+                  fontSize: 20,
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                }}>SEARCHING FOR A DELIVERER :)</Text>
                 <Text>Please be patient</Text>
             </View>
-            <View style={{position: 'absolute', top: 300}}>
+            <Circle size={50} indeterminate={true} />
+            {/* <View style={{position: 'absolute', top: 300}}>
               <Progress.CircleSnail size={100} animating={true} indeterminate={true} />
-            </View>
+            </View> */}
             <View style={styles.cancel_order}>
               <Button color="#006400" title="cancel my order" onPress={() => navigation.navigate('Home')}></Button>
             </View>

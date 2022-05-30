@@ -28,7 +28,8 @@ export default function TabBarBottom({navigation, id, name, number, email, passw
                 justifyContent: "space-around",
                 margin: "5%", 
                 backgroundColor: "lightgray",
-                borderRadius: 15,
+                width: '87%',
+                borderRadius: 20,
                 zIndex: 1,
 
              }}>
