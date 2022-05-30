@@ -61,41 +61,49 @@ export function Deliver_status(props) {
   return (
     <View style={styles.container}>
       <View style={styles.status}>
-        <Text style={styles.status_text}>Are you on your way to {customer.order.pickup_loc.name}?</Text>
-        <View style={styles.status_yes_button}>
-          <Button
-            title="Yes!"
-            onPress={() => {
-              track(`heading to ${customer.order.pickup_loc.name}`);
-            }}
-          ></Button>
+        <View style={styles.status_single_update}>
+          <Text style={styles.status_text}>Are you on your way to {customer.order.pickup_loc.name}?</Text>
+          <View style={styles.status_yes_button}>
+            <Button
+              title="Yes!"
+              onPress={() => {
+                track(`heading to ${customer.order.pickup_loc.name}`);
+              }}
+            ></Button>
+          </View>
         </View>
-        <Text style={styles.status_text}>Food picked up?</Text>
-        <View style={styles.status_yes_button}>
-          <Button
-            title="Yes!"
-            onPress={() => {
-              track("picked up");
-            }}
-          ></Button>
+        <View style={styles.status_single_update}>
+          <Text style={styles.status_text}>Food picked up?</Text>
+          <View style={styles.status_yes_button}>
+            <Button
+              title="Yes!"
+              onPress={() => {
+                track("picked up");
+              }}
+            ></Button>
+          </View>
         </View>
-        <Text style={styles.status_text}>On your way to {customer.order.drop_loc.name} ?</Text>
-        <View style={styles.status_yes_button}>
-          <Button
-            title="Yes!"
-            onPress={() => {
-              track(`heading to ${customer.order.drop_loc.name}`);
-            }}
-          ></Button>
+        <View style={styles.status_single_update}>
+          <Text style={styles.status_text}>On your way to {customer.order.drop_loc.name} ?</Text>
+          <View style={styles.status_yes_button}>
+            <Button
+              title="Yes!"
+              onPress={() => {
+                track(`heading to ${customer.order.drop_loc.name}`);
+              }}
+            ></Button>
+          </View>
         </View>
-        <Text style={styles.status_text}>Arrived?</Text>
-        <View style={styles.status_yes_button}>
-          <Button
-            title="Yes!"
-            onPress={() => {
-              track("arrived");
-            }}
-          ></Button>
+        <View style={styles.status_single_update}>
+          <Text style={styles.status_text}>Arrived?</Text>
+          <View style={styles.status_yes_button}>
+            <Button
+              title="Yes!"
+              onPress={() => {
+                track("arrived");
+              }}
+            ></Button>
+          </View>
         </View>
       </View>
       <Button

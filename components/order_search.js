@@ -78,11 +78,13 @@ export function Order_search ({ navigation }) {
               </View>
             </Modal>
           
-            <View style={styles.order_sel}>
+            <View style={{flex: 0.5, alignItems: 'center'}}>
                 <Text style={styles.searching_text}>SEARCHING FOR A DELIVERER :)</Text>
                 <Text>Please be patient</Text>
             </View>
-            <CircleSnail size={100} animating={true} indeterminate={true} />
+            <View style={{position: 'absolute', top: 300}}>
+              <Progress.CircleSnail size={100} animating={true} indeterminate={true} />
+            </View>
             <View style={styles.cancel_order}>
               <Button color="#006400" title="cancel my order" onPress={() => navigation.navigate('Home')}></Button>
             </View>
