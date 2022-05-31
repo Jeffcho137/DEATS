@@ -11,7 +11,7 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { setDestination, setStartingPoint } from "../redux/slices/makeDeliverySlice";
 import { useDispatch } from "react-redux";
 
-const API_KEY = 'AIzaSyCCkDRzY3UvSoaZa1anF9ov43ztpe6GSFk';
+const API_KEY = 'AIzaSyAvcpVsefUlx1N2DGbCxWwsnReeZkpjUcA';
 let start_address = '';
 let destination_address = '';
 
