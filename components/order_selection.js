@@ -90,9 +90,10 @@ export function Order_selection ({ navigation }) {
             <View style={styles.order_sel_input}>
                 <Text style={styles.order_sel_text}>Choose your delivery address below</Text>
                 <Button color="#006400" title='select my location' onPress={() => navigation.navigate("MapTest", {addressEdit: false})}/>
+                <Text style={{fontSize: 17, fontWeight:'bold'}}>{dropLocation?dropLocation.name:""}</Text>
                 <View style={styles.order_sel_input_second}>
-                    <TextInput style={styles.single_input} placeholder='room number' onChangeText={text => setRoom(text)}></TextInput>
-                    <TextInput style={styles.single_input} placeholder='number' onChangeText={text => {}}></TextInput>
+                    <TextInput style={styles.single_input} placeholder='Room No.' onChangeText={text => setRoom(text)}></TextInput>
+                    <TextInput style={styles.single_input} placeholder='Phone No.' onChangeText={text => {}}></TextInput>
                 </View>
             </View>
             <View style={styles.order_sel_times}>
