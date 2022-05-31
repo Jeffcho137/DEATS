@@ -8,18 +8,17 @@ import { useDispatch } from "react-redux";
 import { setDropLocation } from "../redux/slices/orderDeliverySlice";
 
 const Map_test = ({ navigation, route }) => {
-
+  const [addressName, setAddressName] = useState({text: "Search"});
   const API_KEY = "AIzaSyAvcpVsefUlx1N2DGbCxWwsnReeZkpjUcA";
-  let address = "Search";
   const get_location = (lat, long, setPinDragged) => {
     fetch("https://maps.googleapis.com/maps/api/geocode/json?address=" + lat + "," + long + "&key=" + API_KEY)
       .then((response) => response.json())
       .then((responseJson) => {
         const location_obj = JSON.parse(JSON.stringify(responseJson));
         if (location_obj && location_obj.results[0]) {
-          address = location_obj.results[0].formatted_address;
-          console.log('address', address)
-          setPlaceholder(address);
+          setAddressName({text: location_obj.results[0].formatted_address});
+          console.log('address', addressName.text)
+
         }
         console.log("Fetch", lat, long);
         setPinDragged(false);
@@ -39,7 +38,6 @@ const Map_test = ({ navigation, route }) => {
   const [calloutMounted, setCalloutMounted] = useState(false);
   const [pinDragged, setPinDragged] = useState(false);
   const [pinSelected, setPinSelected] = useState(false);
-  const [placeholder, setPlaceholder] = useState("Search");
 
   const dispatch = useDispatch();
 
@@ -50,16 +48,14 @@ const Map_test = ({ navigation, route }) => {
 
   useEffect(() => {
     get_location(region.latitude, region.longitude, setPinDragged);
-    ref.current?.setAddressText(placeholder);
-
-    setPlaceholder(address)
+    ref.current?.setAddressText(addressName.text);
   }, [pinDragged]);
 
   return (
     <View styles={{ marginTop: 50, flex: 1 }}>
       <GooglePlacesAutocomplete
         ref={ref}
-        value={`${placeholder}`}
+        value={`${addressName.text}`}
         fetchDetails={true}
         GooglePlacesSearchQuery={{
           rankby: "distance",
@@ -74,8 +70,9 @@ const Map_test = ({ navigation, route }) => {
           });
 
           //location = details.name +"\n"+ details.formatted_address
-          address = details.formatted_address;
-          console.log("loc", address);
+          //address = details.formatted_address;
+          setAddressName({text: details.formatted_address})
+          console.log("loc", addressName.text);
         }}
         query={{
           key: API_KEY,
@@ -129,6 +126,8 @@ const Map_test = ({ navigation, route }) => {
               longitudeDelta: 0.01,
             });
             setPinDragged(true);
+            setPinSelected(false);
+
           }}
           stopPropagation={true}
           onPress={(e) => {
@@ -150,7 +149,7 @@ const Map_test = ({ navigation, route }) => {
         title="Confirm"
         color={pinSelected ? "gray" : "blue"}
         onPress={() => {
-          console.log("button location", address);
+          console.log("button location", addressName.text);
           console.log("latitude", region.latitude);
           console.log("longitude", region.longitude);
 
@@ -161,7 +160,7 @@ const Map_test = ({ navigation, route }) => {
                   lat: region.latitude,
                   long: region.longitude,
                 },
-                name: address,
+                name: addressName.text,
               },
             });
           } else {
@@ -172,7 +171,7 @@ const Map_test = ({ navigation, route }) => {
                   lat: region.latitude,
                   long: region.longitude,
                 },
-                name: address,
+                name: addressName.text,
               })
             );
           }

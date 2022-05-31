@@ -11,73 +11,75 @@ import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplet
 import { setDestination, setStartingPoint } from "../redux/slices/makeDeliverySlice";
 import { useDispatch } from "react-redux";
 
-const API_KEY = 'AIzaSyAvcpVsefUlx1N2DGbCxWwsnReeZkpjUcA';
-let start_address = '';
-let destination_address = '';
+const Del_map = () => {
 
-const get_start_location = (lat, long, setStartPinDragged) => {
-  fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + long + '&key=' + API_KEY)
-  .then((response) => response.json())
-  .then((responseJson) => {
-      const location_obj = JSON.parse(JSON.stringify(responseJson))
-      start_address = location_obj.results[0].formatted_address
-      console.log('get start', start_address)
-      setStartPinDragged(false);
-})
-}
+    const API_KEY = 'AIzaSyAvcpVsefUlx1N2DGbCxWwsnReeZkpjUcA';
+    let start_address = '';
+    let destination_address = '';
+    
+    const get_start_location = (lat, long, setStartPinDragged) => {
+      fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + long + '&key=' + API_KEY)
+      .then((response) => response.json())
+      .then((responseJson) => {
+          const location_obj = JSON.parse(JSON.stringify(responseJson))
+          start_address = location_obj.results[0].formatted_address
+          console.log('get start', start_address)
+          setStartPinDragged(false);
+    })
+    }
+    
+    const get_fin_location = (lat, long, setFinPinDragged) => {
+        fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + long + '&key=' + API_KEY)
+        .then((response) => response.json())
+        .then((responseJson) => {
+            const location_obj = JSON.parse(JSON.stringify(responseJson))
+            destination_address = location_obj.results[0].formatted_address
+            console.log("destination address:", destination_address)
+            setFinPinDragged(false);
+      })
+    }
+    
+    const Del_map = ({ navigation }) => {
+      let startMarkerRef = useRef(null);
+      let finMarkerRef = useRef(null);
+      const [startCalloutMounted, setStartCalloutMounted] = useState(false);
+      const [finCalloutMounted, setFinCalloutMounted] = useState(false);
+      const [startPinDragged, setStartPinDragged] = useState(false);
+      const [startPinSelected, setStartPinSelected] = useState(false);
+      const [finPinDragged, setFinPinDragged] = useState(false);
+      const [finPinSelected, setFinPinSelected] = useState(false);
+    
+      const dispatch = useDispatch();
+    
+      useEffect(() => {
+        console.log("callMounted:", "start->", startCalloutMounted, "fin->", finCalloutMounted);
+        startMarkerRef.current && startCalloutMounted && startMarkerRef.current.redrawCallout();
+        finMarkerRef.current && finCalloutMounted && finMarkerRef.current.redrawCallout();
+      });
+    
+      useEffect(() => {
+        get_start_location(startRegion.latitude, startRegion.longitude, setStartPinDragged);
+      }, [startPinDragged]);
+    
+      useEffect(() => {
+        get_fin_location(finRegion.latitude, finRegion.longitude, setFinPinDragged);
+      }, [finPinDragged]);
+    
+      const [startRegion, setStartRegion] = useState({
+        latitude: 43.704483237221815,
+        longitude: -72.28869350196095,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      });
+    
+      const [finRegion, setFinRegion] = useState({
+        latitude: 43.704483237221815,
+        longitude: -72.28869350196095,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      });
+    
 
-const get_fin_location = (lat, long, setFinPinDragged) => {
-    fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + lat + ',' + long + '&key=' + API_KEY)
-    .then((response) => response.json())
-    .then((responseJson) => {
-        const location_obj = JSON.parse(JSON.stringify(responseJson))
-        destination_address = location_obj.results[0].formatted_address
-        console.log("destination address:", destination_address)
-        setFinPinDragged(false);
-  })
-}
-
-const Del_map = ({ navigation }) => {
-  let startMarkerRef = useRef(null);
-  let finMarkerRef = useRef(null);
-  const [startCalloutMounted, setStartCalloutMounted] = useState(false);
-  const [finCalloutMounted, setFinCalloutMounted] = useState(false);
-  const [startPinDragged, setStartPinDragged] = useState(false);
-  const [startPinSelected, setStartPinSelected] = useState(false);
-  const [finPinDragged, setFinPinDragged] = useState(false);
-  const [finPinSelected, setFinPinSelected] = useState(false);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    console.log("callMounted:", "start->", startCalloutMounted, "fin->", finCalloutMounted);
-    startMarkerRef.current && startCalloutMounted && startMarkerRef.current.redrawCallout();
-    finMarkerRef.current && finCalloutMounted && finMarkerRef.current.redrawCallout();
-  });
-
-  useEffect(() => {
-    get_start_location(startRegion.latitude, startRegion.longitude, setStartPinDragged);
-  }, [startPinDragged]);
-
-  useEffect(() => {
-    get_fin_location(finRegion.latitude, finRegion.longitude, setFinPinDragged);
-  }, [finPinDragged]);
-
-  const [startRegion, setStartRegion] = useState({
-    latitude: 43.704483237221815,
-    longitude: -72.28869350196095,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-  });
-
-  const [finRegion, setFinRegion] = useState({
-    latitude: 43.704483237221815,
-    longitude: -72.28869350196095,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-  });
-
-  return (
     <View styles={{ marginTop: 50, flex: 1 }}>
       <GooglePlacesAutocomplete
         placeholder="Search"
@@ -259,6 +261,7 @@ const Del_map = ({ navigation }) => {
       }
       ></Button>
     </View>
-  );
+    };
 };
+
 export default Del_map;
