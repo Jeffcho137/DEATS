@@ -1,5 +1,6 @@
 import React from 'react'
 import { Image, View, Text, TouchableOpacity} from 'react-native'
+import { COLOR_CROCODILE, COLOR_PICKLE } from '../utils/Constants';
 import { static_deliveries } from './deliveries';
 
 export default function FoodLocs({selectedFoodLoc, setSelectedFoodLoc}) {
@@ -29,7 +30,7 @@ const FoodLocButton = ({ name, image, selectedFoodLoc, setSelectedFoodLoc }) => 
     >
         <TouchableOpacity 
             style={{
-                backgroundColor: selectedFoodLoc === name ? "gray" : "white",
+                backgroundColor: selectedFoodLoc === name ? 'grey' : "white",
                 paddingVertical: 10,
                 paddingHorizontal: 10,
                 borderRadius: 15
@@ -50,6 +51,6 @@ const FoodLocButton = ({ name, image, selectedFoodLoc, setSelectedFoodLoc }) => 
                     margin: 5,
                     borderRadius: 15 }}
             />
-         <Text style= {{ color: selectedFoodLoc === name ? "white" : "green", alignSelf:"center", fontSize: 20, fontWeight: "700" }}>{name}</Text>
+         <Text style= {{ color: selectedFoodLoc === name ? "white" : COLOR_CROCODILE, alignSelf:"center", fontSize: 20, fontWeight: "700" }}>{name}</Text>
         </>
     )
