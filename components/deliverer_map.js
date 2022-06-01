@@ -19,8 +19,8 @@ const Del_map = ({ navigation }) => {
       .then((response) => response.json())
       .then((responseJson) => {
         const location_obj = JSON.parse(JSON.stringify(responseJson));
-        if (location_obj && location_obj.results) {
-          setStartAddressName({ text: location_obj.results[0].formatted_address });
+        if (location_obj && location_obj?.results) {
+          setStartAddressName({ text: location_obj?.results[0]?.formatted_address });
           console.log("get start", startAddressName.text);
         }
         setStartPinDragged(false);

@@ -124,11 +124,12 @@ const styles = StyleSheet.create({
 
     home_profile_button: {
       flex: 0.3,
-      width: '100%',
+      width: '70%',
       flexDirection: 'row',
-      justifyContent: 'flex-end',
+      justifyContent: 'space-around',
       marginRight: 10,
       marginTop: 10,
+      marginBottom: 55,
     },
 
     home_options: {

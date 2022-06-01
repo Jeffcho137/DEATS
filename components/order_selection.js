@@ -126,7 +126,7 @@ export function Order_selection ({ navigation }) {
         .then((data) => {
             console.log("updated order fee response:", data)
             if (data.succeeded == true) {
-                const feeDiff = data.new_order_fee - orderFee
+                const feeDiff = data?.new_order_fee - orderFee
                 if (feeDiff > 0) {
                     const title = "FEE WARNING"
                     const msg = `Are you sure you want to proceed with this order update? \n It costs ${feeDiff.toFixed(2)} DT extra due to the location change you made.`

@@ -145,14 +145,14 @@ export default function Checkout({ navigation }) {
           dispatch(setDEATSTokens(data.user.DEATS_tokens))
 
           if (data.succeeded == true) {
-              const order_id = data.order.order_id
+              const order_id = data?.order?.order_id
               dispatch(setOrderId(order_id))
-              dispatch(setOrderFee(data.order.order_fee))
+              dispatch(setOrderFee(data?.order?.order_fee))
 
               navigation.replace('OrderSearch') 
 
           } else if (data.order) {
-            const msg = `This order costs ${data.order.order_fee.toFixed(2)} DT, but you have only ${data.user.DEATS_tokens.toFixed(2)} DT left in your account. Here's what you can do`
+            const msg = `This order costs ${data?.order?.order_fee?.toFixed(2)} DT, but you have only ${data?.user?.DEATS_tokens?.toFixed(2)} DT left in your account. Here's what you can do`
             paymentFailedAlert(msg)
           }
       })
@@ -182,8 +182,8 @@ export default function Checkout({ navigation }) {
             navigation.dispatch(StackActions.pop(2));
 
         } else if (data.order) {
-          const costDiff = data.order.new_order_fee - data.order.old_order_fee
-          const msg = `This update costs ${costDiff.toFixed(2)} DT extra, but you have only ${data.user.DEATS_tokens.toFixed(2)} DT left in your account. Here's what you can do`
+          const costDiff = data?.order?.new_order_fee - data?.order?.old_order_fee
+          const msg = `This update costs ${costDiff?.toFixed(2)} DT extra, but you have only ${data?.user?.DEATS_tokens?.toFixed(2)} DT left in your account. Here's what you can do`
           paymentFailedAlert(msg)
         }
 

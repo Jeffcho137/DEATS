@@ -168,10 +168,10 @@ const OrderDetails = ({ order, cat, catModifier }) => {
 
     return  (
         <View style={{ width: 200, height: 90, justifyContent: "space-around" }}>
-            <OrderInfoText title="Pickup from" text={order.pickup_loc.name}/>
-            <OrderInfoText title="Drop at" text={order.drop_loc.name}/>
-            <OrderInfoText title="Status" text={order.order_status} color2="red"/>
-            <OrderReward title={rewardTile} reward={order.order_fee?.toFixed(2)} color1="green" />
+            <OrderInfoText title="Pickup from" text={order?.pickup_loc?.name}/>
+            <OrderInfoText title="Drop at" text={order?.drop_loc?.name}/>
+            <OrderInfoText title="Status" text={order?.order_status} color2="red"/>
+            <OrderReward title={rewardTile} reward={order?.order_fee?.toFixed(2)} color1="green" />
         </View>
     )
 }
@@ -224,7 +224,7 @@ const UserDetail = ({ user, type}) => (
     >
         {user &&
             <Image 
-                    source={{ uri: user?.user_info.image? user.user_info.image : static_deliveries[1].customer_img_url}} 
+                    source={{ uri: user?.user_info?.image? user.user_info.image : static_deliveries[1].customer_img_url}} 
                     style={{ 
                         width: 50, 
                         height: 50, 

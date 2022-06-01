@@ -40,17 +40,17 @@ export function Deliver_status(props) {
       },
       body: JSON.stringify({
         order: {
-          order_id: customer.order.order_id,
+          order_id: customer?.order?.order_id,
           order_status: status_msg,
         },
-        user_id: customer.customer.user_id,
+        user_id: customer?.customer?.user_id,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         console.log("response", data);
         if (data.succeeded == true) {
-          dispatch(setDEATSTokens(data.user.DEATS_tokens))
+          dispatch(setDEATSTokens(data?.user?.DEATS_tokens))
         } else {
           console.log(data.msg);
         }
@@ -93,12 +93,12 @@ export function Deliver_status(props) {
           </View>
         </View>
         <View style={styles.status_single_update}>
-          <Text style={styles.status_text}>I'm on my way to {customer.order.drop_loc.name} ?</Text>
+          <Text style={styles.status_text}>I'm on my way to {customer?.order?.drop_loc?.name} ?</Text>
           <View style={styles.status_yes_button}>
             <Button
               title="Yes!" color={'green'}
               onPress={() => {
-                track(`heading to ${customer.order.drop_loc.name}`);
+                track(`heading to ${customer?.order?.drop_loc?.name}`);
               }}
             ></Button>
           </View>

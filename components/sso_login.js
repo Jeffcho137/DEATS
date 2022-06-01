@@ -3,7 +3,7 @@ import { StyleSheet, SafeAreaView, Platform, StatusBar } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectExpoPushToken } from '../redux/slices/notificationsSlice';
-import { setDEATSTokens, setEmail, setId, setName, setPhoneNum } from '../redux/slices/userSlice';
+import { setDEATSTokens, setEmail, setId, setName, setPhoneNum, setUsername } from '../redux/slices/userSlice';
 import { DEATS_SERVER_URL, ROUTE_SSO_LOGIN } from '../utils/Constants';
 import DEATSNotifications from './notifications';
 
@@ -32,6 +32,7 @@ const validateST = (ticketedURL, dispatch, navigation) => {
             dispatch(setId(data.user.user_id))
             dispatch(setEmail(data.user.user_info.email))
             dispatch(setName(data.user.user_info.name))
+            dispatch(setUsername(data.user.user_info.username))
             dispatch(setPhoneNum(data.user.user_info.phone_num))
             dispatch(setDEATSTokens(data.user.DEATS_tokens))
             
