@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
+import { COLOR_CROCODILE } from "./utils/Constants";
 
 const styles = StyleSheet.create({
   
@@ -142,7 +143,7 @@ const styles = StyleSheet.create({
       borderRadius: 10,
       marginBottom: 40,
       backgroundColor: 'lightgray',
-      borderColor: 'green',
+      borderColor: COLOR_CROCODILE,
     },
 
     profile_heading: {
@@ -273,9 +274,13 @@ const styles = StyleSheet.create({
     },
 
     order_sel: {
-      flex: 0.28,
-      width: '90%',
+      flex: 0.32,
+      width: 350,
       alignItems: 'center',
+      borderWidth: 1, 
+      borderRadius: 15, 
+      padding: 15,
+      paddingBottom: 20,
       // marginBottom: 20,
     },
 
@@ -307,25 +312,44 @@ const styles = StyleSheet.create({
       borderRadius: 4,
     },
 
+    single_input_order_sel: {
+      alignSelf: 'center',
+      borderRadius: 15,
+      borderWidth: 1,
+      // height: '80%',
+      width: 200,
+      fontSize: 18,
+      textAlign: 'center',
+      marginTop: 10,
+    }, 
+
     order_sel_input: {
-      flex: 0.30,
+      flex: 0.28,
       // justifyContent: 'center',
       alignItems: 'center',
-      width: '90%',
+      width: 350,
+      borderWidth: 1, 
+      borderRadius: 15, 
+      padding: 15,
       // marginTop: 50,
     }, 
 
     order_sel_times: {
-      width: '90%',
-      marginTop: -70,
+      width: 350,
+      // marginTop: -70,
       flex: 0.28,
+      borderWidth: 1, 
+      borderRadius: 15, 
+      padding: 15 ,
+      paddingBottom: 20,
+      marginBottom: 50,
     }, 
 
     order_sel_input_second: {
-      flex: 0.50,
+      // flex: 0.50,
       // justifyContent: 'center',
       alignItems: 'center',
-      width: '90%',
+      // width: '1000%',
       // marginTop: 10,
     }, 
 
@@ -346,7 +370,7 @@ const styles = StyleSheet.create({
       marginTop: 10,
       fontSize: 18,
       fontWeight: 'bold',
-      color: 'green',
+      color: COLOR_CROCODILE,
     },
 
     del_sel_input_box: {
@@ -405,7 +429,7 @@ const styles = StyleSheet.create({
       flex: 0.1,
       borderRadius: 5,
       //borderWidth: 1,
-      color: 'green',
+      color: COLOR_CROCODILE,
       height: 30,
       fontSize: 20,
       textAlign: 'center',
@@ -641,7 +665,7 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       backgroundColor: 'lightgrey',
       borderRadius: 15,
-      borderColor: 'green',
+      borderColor: COLOR_CROCODILE,
       borderWidth: 1,
       paddingLeft: 15,
       // height: 50,

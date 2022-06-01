@@ -81,6 +81,7 @@ export function Order_selection ({ navigation }) {
     
     return (
         <View style={styles.container}>
+            <View style={{justifyContent: 'space-evenly', alignItems: 'center'}}>
             <View style={styles.order_sel}>
                 <Text style={styles.order_sel_text}>Select your order pickup location </Text>
                 <View style={styles.order_sel_place_options}>
@@ -89,11 +90,13 @@ export function Order_selection ({ navigation }) {
             </View>
             <View style={styles.order_sel_input}>
                 <Text style={styles.order_sel_text}>Choose your delivery address below</Text>
-                <Button color="#006400" title='select my location' onPress={() => navigation.navigate("MapTest", {addressEdit: false})}/>
-                <Text style={{fontSize: 17, fontWeight:'bold'}}>{dropLocation?dropLocation.name:""}</Text>
+                <View style={{marginTop: -10}}>
+                    <Button color="#006400" title='select my location' onPress={() => navigation.navigate("MapTest", {addressEdit: false})}/>
+                </View>
+                <Text style={{fontSize: 17, fontWeight:'bold', marginBottom: 5}}>{dropLocation?dropLocation.name:""}</Text>
                 <View style={styles.order_sel_input_second}>
-                    <TextInput style={styles.single_input} placeholder='Room No.' onChangeText={text => setRoom(text)}></TextInput>
-                    <TextInput style={styles.single_input} placeholder='Phone No.' onChangeText={text => {}}></TextInput>
+                    <TextInput style={styles.single_input_order_sel} placeholder='Room No.' onChangeText={text => setRoom(text)}></TextInput>
+                    <TextInput style={styles.single_input_order_sel} placeholder='Phone No.' onChangeText={text => {}}></TextInput>
                 </View>
             </View>
             <View style={styles.order_sel_times}>
@@ -102,6 +105,8 @@ export function Order_selection ({ navigation }) {
                     <DateTime date={date} setDate={setDate}></DateTime>
                 </View>
             </View>
+            </View>
+
 
             <View style={{position: 'absolute', bottom: 50}}>
                 <Button title="Confirm" 
