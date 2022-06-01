@@ -1,12 +1,14 @@
 import React, { useRef, useCallback } from 'react'
 import { Alert, Animated, I18nManager, Text, View } from 'react-native'
-import { useFocusEffect } from "@react-navigation/native";
+import { useFocusEffect, useNavigation} from "@react-navigation/native";
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 import { RectButton } from 'react-native-gesture-handler';
 import { COLOR_LIGHT_BLUE, COLOR_PICKLE, DEATS_SERVER_URL, ROUTE_CANCEL_ORDER, ROUTE_UNMATCH } from '../utils/Constants';
 import styles from '../style';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectId } from '../redux/slices/userSlice';
+import { setDropLocation, setOldDropLocation, setOldPickupLocation, setOrderFee, setOrderId, setPickupLocation } from '../redux/slices/orderDeliverySlice';
+import { setNavigationMode } from '../redux/slices/navigationSlice';
 
 let userId = null
 let buttonRefs = []
@@ -31,6 +33,35 @@ const swipeableButtonAlert = (text, cat, action, orderId) => {
         }
       }, 
       { text: "NO"}
+    ],
+    { cancelable: true }
+  );
+}
+
+const swipeableUpdateOrderAlert = (navigation, order, dispatch) => {
+  dispatch(setOrderId(order._id))
+  dispatch(setPickupLocation(order.pickup_loc))
+  dispatch(setOldDropLocation(order.drop_loc))
+  dispatch(setOldPickupLocation(order.pickup_loc))
+  dispatch(setDropLocation(order.drop_loc))
+  dispatch(setOrderFee(order.order_fee))
+  dispatch(setNavigationMode("updateOrder"))
+  Alert.alert(
+    "SELECT ONE",
+    "What do you want to update?",
+    [
+      { 
+        text: "Order Details",
+        onPress: () => {
+          navigation.navigate("OrderSelection")
+        }
+      }, 
+      { 
+        text: "GET Code",
+        onPress: () => {
+          navigation.navigate("OrderCode")
+        }
+      }
     ],
     { cancelable: true }
   );
@@ -79,9 +110,10 @@ const cancelOrder = (orderId) => {
   .catch(err => console.error(err));
 }
 
-export default function SwipeableButtons({ children, navigation, orderId, deliverer, cat, catModifier, buttonRef }) {
+export default function SwipeableButtons({ children, order, cat, catModifier, buttonRef }) {
   buttonRef = useRef(null)
   userId = useSelector(selectId)
+  const orderId = order._id
 
   useFocusEffect(
     useCallback(() => {
@@ -100,11 +132,11 @@ export default function SwipeableButtons({ children, navigation, orderId, delive
       leftThreshold={50}
       rightThreshold={50}
       renderLeftActions={(dragX) => {
-          return SwipeLeftButton(dragX, navigation)
+          return SwipeLeftButton(dragX)
       }}
       renderRightActions={(progress) => {
         if (catModifier === "Active") {
-          return SwipeRightButtons(progress, navigation, orderId, deliverer, cat, buttonRef)
+          return SwipeRightButtons(progress, order, cat, buttonRef)
         }
       }}
       onSwipeableWillOpen={() => {
@@ -116,7 +148,9 @@ export default function SwipeableButtons({ children, navigation, orderId, delive
   )
 }
 
-const SwipeRightButton = ({ progress, translateX, text, color, navigation, orderId, buttonRef }) => {
+const SwipeRightButton = ({ progress, translateX, text, color, order, buttonRef }) => {
+  const navigation = useNavigation()
+  const dispatch = useDispatch()
   return (
     <Animated.View style={{ 
       flex: 1, 
@@ -138,19 +172,19 @@ const SwipeRightButton = ({ progress, translateX, text, color, navigation, order
               break
 
             case "UPDATE \n ORDER":
-              navigation.navigate("OrderSelection")
+              swipeableUpdateOrderAlert(navigation, order, dispatch)
               break
             
             case "UNMATCH":
-              swipeableButtonAlert("unmatch", "deliverer", unmatchDeliverer, orderId)
+              swipeableButtonAlert("unmatch", "deliverer", unmatchDeliverer, order._id)
               break
 
             case "CANCEL \n ORDER":
-              swipeableButtonAlert("cancel", "order", cancelOrder, orderId)
+              swipeableButtonAlert("cancel", "order", cancelOrder, order._id)
               break
 
             default:
-              swipeableButtonAlert("cancel", "delivery", unmatchDeliverer, orderId)
+              swipeableButtonAlert("cancel", "delivery", unmatchDeliverer, order._id)
           }
         }}
       >
@@ -160,7 +194,7 @@ const SwipeRightButton = ({ progress, translateX, text, color, navigation, order
   )
 }
 
-const SwipeRightButtons = (progress, navigation, orderId, deliverer, cat, buttonRef) => (
+const SwipeRightButtons = (progress, order, cat, buttonRef) => (
     <View
       style={{
         width: "68%",
@@ -171,19 +205,17 @@ const SwipeRightButtons = (progress, navigation, orderId, deliverer, cat, button
           translateX={72} 
           text={cat === "Orders" ? "UPDATE \n ORDER" : "UPDATE \n STATUS"}
           color={COLOR_PICKLE} 
-          navigation={navigation} 
-          orderId={orderId}
+          order={order}
           buttonRef={buttonRef}
         />
 
-        {cat === "Orders" && deliverer &&
+        {cat === "Orders" && order.deliverer &&
           <SwipeRightButton  
             progress={progress} 
             translateX={48} 
             text={"UNMATCH"} 
             color={COLOR_LIGHT_BLUE} 
-            navigation={navigation}
-            orderId={orderId}
+            order={order}
             buttonRef={buttonRef}
           />
         }
@@ -193,8 +225,7 @@ const SwipeRightButtons = (progress, navigation, orderId, deliverer, cat, button
           translateX={24} 
           text={cat === "Orders" ? "CANCEL \n ORDER" : "CANCEL \n DELIVERY"} 
           color="brown"
-          navigation={navigation}
-          orderId={orderId}
+          order={order}
           buttonRef={buttonRef}
         />
     </View>

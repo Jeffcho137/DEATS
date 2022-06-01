@@ -4,6 +4,7 @@ import orderDeliverySliceReducer from "./slices/orderDeliverySlice";
 import makeDeliverySliceReducer from "./slices/makeDeliverySlice";
 import socketSliceReducer from "./slices/socketSlice";
 import notificationsSliceReducer from "./slices/notificationsSlice";
+import navigationSliceReducer from "./slices/navigationSlice";
 
 export const store = configureStore({
     reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
         makeDeliverySlice: makeDeliverySliceReducer,
         socketSlice: socketSliceReducer,
         notificationsSlice: notificationsSliceReducer,
+        navigationSlice: navigationSliceReducer
     }
 })

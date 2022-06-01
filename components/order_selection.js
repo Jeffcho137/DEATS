@@ -1,25 +1,56 @@
 
 import React, { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, Button, TextInput, Pressable, Modal } from 'react-native';
+import { Alert, Text, View, Button, TextInput, Pressable, Modal } from 'react-native';
 import styles from '../style';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectId, selectPhoneNum, setDEATSTokens } from '../redux/slices/userSlice';
-import { selectDropLocation, selectPickupLocation, setOrderFee, setOrderId, setPickupLocation } from '../redux/slices/orderDeliverySlice';
-import { DEATS_SERVER_URL, ROUTE_ORDER_DEL, ROUTE_ORDER_FEE } from '../utils/Constants';
+import { selectId, selectPhoneNum } from '../redux/slices/userSlice';
+import { selectDropLocation, selectOldDropLocation, selectOldPickupLocation, selectOrderFee, selectOrderId, selectPickupLocation, setPickupLocation } from '../redux/slices/orderDeliverySlice';
+import { DEATS_SERVER_URL, ROUTE_NEW_ORDER_FEE, ROUTE_ORDER_FEE, ROUTE_UPDATE_ORDER } from '../utils/Constants';
 import { DateTime } from './date_time';
 import FoodLocs from './pickup_loc';
+import { selectNavigationMode } from '../redux/slices/navigationSlice';
 
+const orderUpdateAlert = (title, msg, proceedAction, navigation) => {
+    Alert.alert(
+        title,
+        msg,
+        [
+          { 
+            text: "Proceed",
+            onPress: () => {
+                proceedAction();
+            }
+          }, 
+          { 
+            text: "Keep updating",
+          },
+          { 
+            text: "Cancel all changes",
+            onPress: () => {
+              navigation.goBack()
+            }
+          }
+        ],
+        { cancelable: true }
+    )
+}
 
 export function Order_selection ({ navigation }) { 
-    const [modalVisible, setModalVisible] = useState(false)
-    const [tempOrderFee, setTempOrderFee] = useState(null)
-    const [selectedFoodLoc, setSelectedFoodLoc] = useState("The Hop")
-
     const dispatch = useDispatch()
     const number = useSelector(selectPhoneNum)
+    const userId = useSelector(selectId)
+    const orderId = useSelector(selectOrderId)
     const dropLocation = useSelector(selectDropLocation)
     const pickupLocation = useSelector(selectPickupLocation)
+    const OldDropLocation = useSelector(selectOldDropLocation)
+    const OldPickupLocation = useSelector(selectOldPickupLocation)
+    const orderFee = useSelector(selectOrderFee)
+    const navigationMode = useSelector(selectNavigationMode)
+
+    const [modalVisible, setModalVisible] = useState(false)
+    const [tempOrderFee, setTempOrderFee] = useState(null)
+    const [selectedFoodLoc, setSelectedFoodLoc] = useState(navigationMode === "updateOrder" ? pickupLocation.name : "The Hop")
  
     const [room, setRoom] = useState("")
     const [date, setDate] = useState(new Date(Date.now()));
@@ -62,7 +93,6 @@ export function Order_selection ({ navigation }) {
             body: JSON.stringify({
                 drop_loc: dropLocation,
                 pickup_loc: pickupLocation
-
             })
         })
         .then(response => response.json())
@@ -76,7 +106,85 @@ export function Order_selection ({ navigation }) {
          })
          .catch(err => console.error(err))
     }
+    
+    const checkNewOrderFee = () => {  
+        fetch(`${DEATS_SERVER_URL}${ROUTE_NEW_ORDER_FEE}`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                new_drop_loc: dropLocation,
+                new_pickup_loc: pickupLocation,
+                old_drop_loc: OldDropLocation,
+                old_pickup_loc: OldPickupLocation,
+                old_order_fee: orderFee
+            })
+        })
+        .then(response => response.json())
+        .then((data) => {
+            console.log("updated order fee response:", data)
+            if (data.succeeded == true) {
+                const feeDiff = data.new_order_fee - orderFee
+                if (feeDiff > 0) {
+                    const title = "FEE WARNING"
+                    const msg = `Are you sure you want to proceed with this order update? \n It costs ${feeDiff.toFixed(2)} DT extra due to the location change you made.`
+                    const proceedAction = () => {
+                        navigation.navigate("Checkout")
+                    }
+                    orderUpdateAlert(title, msg, proceedAction, navigation)
+                    
+                } else if (feeDiff < 0) {
+                    const title = "TOKENS REFUND"
+                    const msg = `The updated order costs ${Math.abs(feeDiff).toFixed(2)} less due to the location change you made \n We'll refund your money if you proceed.`
+                    const proceedAction = () => {
+                        updateOrder()
+                        navigation.goBack()
+                    }
+                    orderUpdateAlert(title, msg, proceedAction, navigation)
 
+                } else {
+                    const title = "CONFIRMATION"
+                    const msg = "There are no charges involved with this order update."
+                    const proceedAction = () => {
+                        updateOrder()
+                        navigation.goBack()
+                    }
+                    orderUpdateAlert(title, msg, proceedAction, navigation)
+                }
+
+                setTempOrderFee(data.new_order_fee)
+            } else {
+                console.log(data.msg);
+            }
+         })
+         .catch(err => console.error(err))
+    }
+
+    const updateOrder = () => {  
+        fetch(`${DEATS_SERVER_URL}${ROUTE_UPDATE_ORDER}`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user_id: userId,
+                order: {
+                    order_id: orderId,
+                    drop_loc: dropLocation,
+                    pickup_loc: pickupLocation,
+                }
+            })
+        })
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data)
+         })
+         .catch(err => console.error(err))
+    }
+    
     console.log("Drop location", dropLocation)
     
     return (
@@ -104,11 +212,13 @@ export function Order_selection ({ navigation }) {
             </View>
 
             <View style={{position: 'absolute', bottom: 50}}>
-                <Button title="Confirm" 
-                    disabled={!(dropLocation && selectedFoodLoc && room)}
+                <Button title="Done"
+                    disabled={!(dropLocation && selectedFoodLoc && (room || navigationMode === "updateOrder"))}
                     onPress={() => {
-                        setModalVisible(true)
-                        checkOrderFee()
+                        if (!navigationMode) {
+                            setModalVisible(true)
+                        }
+                        navigationMode === "updateOrder" ? checkNewOrderFee() : checkOrderFee()
                 }}/>
             </View>
             
@@ -130,7 +240,7 @@ export function Order_selection ({ navigation }) {
                                     fontWeight: 'bold',
                                     color: 'black',
                                 }}
-                            >This order costs: {tempOrderFee?.toFixed(2)} DT</Text>
+                            >{navigationMode === "updateOrder" ? "Your new order fee is" : "This order costs"} {tempOrderFee?.toFixed(2)} DT</Text>
                         </View>
                         <Pressable
                             style={[styles.button, styles.buttonClose]}
@@ -139,7 +249,7 @@ export function Order_selection ({ navigation }) {
                                 setModalVisible(false)
                             }}
                         >
-                            <Text style={styles.textModalPayment}>CHECKOUT</Text>
+                            <Text style={styles.textModalPayment}>{navigationMode === "updateOrder" ? "PAY \n DIFFERENCE" : "CHECKOUT"}</Text>
                         </Pressable>
                         <Pressable
                             onPress={() => {setModalVisible(false)}}
