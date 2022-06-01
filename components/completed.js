@@ -7,8 +7,12 @@ import { setDelivererId, setDelivererInfo } from '../redux/slices/orderDeliveryS
 import { COLOR_CROCODILE, COLOR_GREEN, COLOR_PICKLE } from '../utils/Constants';
 
 export function Completed (props) {
-    
-
+    useEffect(() => {
+        return () => {
+            dispatch(setDelivererId(null))
+            dispatch(setDelivererInfo(null))
+        }
+    }, [])
     return (
         <View style={styles.container}>
             <View style={{backgroundColor: COLOR_GREEN, fontSize: 30,width: 500, height: 500,borderRadius: 250, borderWidth: 1, justifyContent: 'center', marginTop: -300}}>

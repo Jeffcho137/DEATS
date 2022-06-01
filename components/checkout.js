@@ -121,6 +121,10 @@ export default function Checkout({ navigation }) {
   
     useEffect(() => {
       initializePaymentSheet();
+      return () => {
+        dispatch(setDelivererId(null))
+        dispatch(setDelivererInfo(null))
+      }
     }, []);
 
     const payWithDT = () => {  
