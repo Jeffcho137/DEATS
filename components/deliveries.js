@@ -92,9 +92,9 @@ export default function Deliveries({ navigation }) {
                                 source={{ uri: item.customer_img_url ? item.customer_img_url : static_deliveries[0].customer_img_url }} />
                             <OrderDetail 
                                 pickUpLocation={item.pickup_loc.name}
-                                dropLocation={item.drop_loc.name}
+                                dropLocation={item.drop_loc?.name}
                                 orderStatus={item.order_status} 
-                                customerName={item.customer.user_info.name} 
+                                customerName={item?.customer?.user_info?.name} 
                                 />
                         </View>
                     </TouchableOpacity>

@@ -78,9 +78,9 @@ export const useClientSocket = ({userId, orderId, paymentIntentId, enabled}) => 
 
     // FROM SERVER:STRIPE: announcements for customer 
     socket.on('stripe:order_wc:cus', (payload) => {
-      dispatch(setOrderId(payload.order.order_id))
-      dispatch(setOrderFee(payload.order.order_fee))
-      dispatch(setDEATSTokens(payload.user.DEATS_tokens))
+      dispatch(setOrderId(payload?.order?.order_id))
+      dispatch(setOrderFee(payload?.order?.order_fee))
+      dispatch(setDEATSTokens(payload?.user?.DEATS_tokens))
       console.log(`${userId},`, "Your order with card payment has been created:", payload);
     });
 
@@ -96,8 +96,8 @@ export const useClientSocket = ({userId, orderId, paymentIntentId, enabled}) => 
     });
 
     socket.on('del:match:cus', (payload) => {
-      dispatch(setDelivererInfo(payload.deliverer.user_info))
-      dispatch(setDelivererId(payload.deliverer.user_id))
+      dispatch(setDelivererInfo(payload?.deliverer?.user_info))
+      dispatch(setDelivererId(payload?.deliverer?.user_id))
       schedulePushNotification()
       console.log(`${userId},`, "A deliverer has requested to match with your order:", payload);
     });

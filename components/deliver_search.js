@@ -69,15 +69,15 @@ export function Deliver_search ({ navigation }) {
             .then(response => response.json())
             .then((data) => {
                 console.log(data)
-                console.log("delivery search -> id:", data.id)
+                console.log("delivery search -> id:", data?.id)
                 if (data.succeeded == 1) {
                     // only add the deliverer to the order room only if they succeed in matching the customer
                     joinRoomForOrder(orderId)
                     navigation.navigate('DeliverMatch')
                     
                 } else {
-                    console.log(data.msg);
-                    setErrorMsg(data.msg)
+                    console.log(data?.msg);
+                    setErrorMsg(data?.msg)
                 }
             })
             .catch(err => console.error(err));
@@ -99,9 +99,9 @@ export function Deliver_search ({ navigation }) {
                             return(
                                 <View>
                                     <Pressable onPress={() => displayModal(true, customers[i].order.pickup_loc.name, i)} style={styles.del_search_single_request}>
-                                        <Text style={{fontSize: 18, textAlign: 'center'}}>{customer.customer.user_info.name}</Text>
-                                        <Text style={{fontSize: 18, textAlign: 'center'}}>Picking up from: {customer.order.pickup_loc.name}</Text>
-                                        <Text style={{fontSize: 18, textAlign: 'center'}}>Going to: {customer.order.drop_loc.name}</Text>
+                                        <Text style={{fontSize: 18, textAlign: 'center'}}>{customer?.customer?.user_info?.name}</Text>
+                                        <Text style={{fontSize: 18, textAlign: 'center'}}>Picking up from: {customer?.order?.pickup_loc?.name}</Text>
+                                        <Text style={{fontSize: 18, textAlign: 'center'}}>Going to: {customer?.order?.drop_loc?.name}</Text>
                                     </Pressable>
                                 </View>
                             )
@@ -115,18 +115,18 @@ export function Deliver_search ({ navigation }) {
                         <View style={styles.centeredView}>
                             <View style={styles.modalView}>
                                 <View style={styles.del_modal_text}>
-                                    <Text style={{fontSize: 18}}>{customers[i].customer.user_info.name}</Text>
-                                    <Text style={{fontSize: 18}}>Picking up from: {customers[i].order.pickup_loc.name}</Text>
-                                    <Text style={{fontSize: 18}}>Going to: {customers[i].order.drop_loc.name}</Text>
+                                    <Text style={{fontSize: 18}}>{customers[i]?.customer?.user_info?.name}</Text>
+                                    <Text style={{fontSize: 18}}>Picking up from: {customers[i]?.order?.pickup_loc?.name}</Text>
+                                    <Text style={{fontSize: 18}}>Going to: {customers[i]?.order?.drop_loc?.name}</Text>
                                     <Text style={{color:'red'}}>{errorMsg}</Text>
                                 </View>
                                 <View style={styles.del_modal_buttons}>
-                                    <Pressable style={styles.del_modaL_cancel} onPress={() => displayModal(false, customers[i].name, i)}>
+                                    <Pressable style={styles.del_modaL_cancel} onPress={() => displayModal(false, customers[i]?.name, i)}>
                                         <Text style={{fontSize: 15, textAlign: 'center'}}>Cancel</Text>
                                     </Pressable>
                                     <Pressable style={styles.del_modaL_cancel} onPress={() => {
-                                        displayModal(false, customers[i].name, i);
-                                        match(customers[i].order.order_id);
+                                        displayModal(false, customers[i]?.name, i);
+                                        match(customers[i]?.order?.order_id);
                                         }}>
                                         <Text style={{fontSize: 15, textAlign: 'center'}}>Match!</Text>
                                     </Pressable>

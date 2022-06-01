@@ -53,13 +53,13 @@ export default function SelectedCustomer({modalVisible, setModalVisible, selecte
                     <View style={styles.modalView}>
                         <View style={styles.del_modal_text}>
                             <Image 
-                                source={{ uri: selectedCustomer?.customer.user_info.image? selectedCustomer.user_info.image : static_deliveries[1].customer_img_url}} 
+                                source={{ uri: selectedCustomer?.customer.user_info?.image? selectedCustomer.user_info.image : static_deliveries[1].customer_img_url}} 
                                 style={{ width: 120, height: 120, borderRadius: 15, alignSelf: "center" }} 
                             />
-                            <Text style={styles.modalNameStyle}>{selectedCustomer?.customer.user_info.name}</Text>
-                            <Text style={styles.modalUsernameStyle}>({selectedCustomer?.customer.user_info.username})</Text>
-                            <OrderInfo title="Pickup location" loc_name={selectedCustomer?.order.pickup_loc.name}/>
-                            <OrderInfo title="Drop location" loc_name={selectedCustomer?.order.drop_loc.name}/>
+                            <Text style={styles.modalNameStyle}>{selectedCustomer?.customer?.user_info?.name}</Text>
+                            <Text style={styles.modalUsernameStyle}>({selectedCustomer?.customer?.user_info?.username})</Text>
+                            <OrderInfo title="Pickup location" loc_name={selectedCustomer?.order?.pickup_loc?.name}/>
+                            <OrderInfo title="Drop location" loc_name={selectedCustomer?.order?.drop_loc?.name}/>
                             <RewardInfo reward={selectedCustomer?.order.order_fee.toFixed(2)}/>
                             <Text style={{color:'red'}}>{errorMsg}</Text>
                         </View>
@@ -71,7 +71,7 @@ export default function SelectedCustomer({modalVisible, setModalVisible, selecte
                                 <Text style={{fontSize: 15, textAlign: 'center'}}>Cancel</Text>
                             </Pressable>
                             <Pressable style={styles.del_modaL_cancel} onPress={() => {
-                                match(selectedCustomer?.order.order_id);
+                                match(selectedCustomer?.order?.order_id);
 
                                 if (!errorMsg) {
                                     setModalVisible(false)

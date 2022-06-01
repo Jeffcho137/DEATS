@@ -39,7 +39,7 @@ export default function DelivererSearch({ navigation }) {
         <>
             <FlatList 
                 data={unmatchedCustomers}
-                keyExtractor={(item) => item.order.order_id}
+                keyExtractor={(item) => item?.order?.order_id}
                 ItemSeparatorComponent={() => {
                     return(
                         <Divider 
@@ -53,7 +53,7 @@ export default function DelivererSearch({ navigation }) {
                             setTempSelectedCustomer(customer)
                             setModalVisible(true)
                         }}>
-                        <ImageCustomer customer={customer.customer}/>
+                        <ImageCustomer customer={customer?.customer}/>
                         <OrderDetail customer={customer}/>
                     </TouchableOpacity>
                 )}
@@ -72,17 +72,17 @@ export default function DelivererSearch({ navigation }) {
 
 const OrderDetail = ({ customer }) => (
     <View style={{ width: 200, height: 80, justifyContent: "space-around" }}>
-        <Text style={styles.usernameStyle}>{customer.customer.user_info.username}</Text>
-        <OrderLocation title="Pickup from" loc_name={customer.order.pickup_loc.name}/>
-        <OrderLocation title="Drop at" loc_name={customer.order.drop_loc.name}/>
-        <OrderReward title="Earn" reward={customer.order.order_fee?.toFixed(2)}/>
+        <Text style={styles.usernameStyle}>{customer?.customer?.user_info?.username}</Text>
+        <OrderLocation title="Pickup from" loc_name={customer?.order?.pickup_loc?.name}/>
+        <OrderLocation title="Drop at" loc_name={customer?.order?.drop_loc?.name}/>
+        <OrderReward title="Earn" reward={customer?.order?.order_fee?.toFixed(2)}/>
     </View>
 )
 
 const OrderLocation = ({ title, loc_name }) => (
     <View style={{ flexDirection: "row", marginTop: 18 }}>
             <Text style={ styles.locationStyle }>{title}:  </Text>
-            <Text>{loc_name.split(",")[0]}</Text>
+            <Text>{loc_name?.split(",")[0]}</Text>
     </View>
 )
 
@@ -96,7 +96,7 @@ const OrderReward = ({ title, reward }) => (
 
 const ImageCustomer = ({ customer }) => (
     <Image 
-        source={{ uri: customer.user_info.image? customer.user_info.image : static_deliveries[1].customer_img_url}} 
+        source={{ uri: customer.user_info?.image? customer?.user_info?.image : static_deliveries[1].customer_img_url}} 
         style={{ width: 100, height: 100, borderRadius: 100 }} 
     />
 )
