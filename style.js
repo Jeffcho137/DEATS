@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
       width: 200,
       fontSize: 18,
       textAlign: 'center',
-      marginTop: 10,
+      // marginTop: 10,
     }, 
 
     order_sel_input: {
