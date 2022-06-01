@@ -10,6 +10,7 @@ import { selectToggle } from '../redux/slices/socketSlice';
 import { Divider } from 'react-native-elements';
 import { static_deliveries } from './deliveries';
 import SelectedCustomer from './selected_customer';
+import { setDelivererId, setDelivererInfo } from '../redux/slices/orderDeliverySlice';
 
 export default function DelivererSearch({ navigation }) {
     const userId = useSelector(selectId)
@@ -33,6 +34,11 @@ export default function DelivererSearch({ navigation }) {
 
     useEffect(() => {
         makeDelivery(userId, startPoint, destination, dispatch) 
+
+        return () => {  // cleanup delivererId and delivererInfo set up socket
+            dispatch(setDelivererId(null))
+            dispatch(setDelivererInfo(null))
+        }
     }, [toggle])
 
     return (
