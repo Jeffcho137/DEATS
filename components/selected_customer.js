@@ -61,6 +61,7 @@ export default function SelectedCustomer({modalVisible, setModalVisible, selecte
                             <OrderInfo title="Pickup location" loc_name={selectedCustomer?.order?.pickup_loc?.name}/>
                             <OrderInfo title="Drop location" loc_name={selectedCustomer?.order?.drop_loc?.name}/>
                             <RewardInfo reward={selectedCustomer?.order.order_fee.toFixed(2)}/>
+
                             <Text style={{color:'red'}}>{errorMsg}</Text>
                         </View>
                         <View style={styles.del_modal_buttons}>

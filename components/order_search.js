@@ -5,7 +5,7 @@ import { Alert, Modal, Pressable, } from "react-native";
 import styles from '../style';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectDelivererId, selectDelivererInfo, selectOrderId, setDelivererId, setDelivererInfo } from '../redux/slices/orderDeliverySlice';
-import { DEATS_SERVER_URL, ROUTE_MY_DELIVERER } from '../utils/Constants';
+import { COLOR_CROCODILE, DEATS_SERVER_URL, ROUTE_MY_DELIVERER } from '../utils/Constants';
 import { useClientSocket } from './client_socket';
 import { selectId, selectPaymentIntentId } from '../redux/slices/userSlice';
 // import { Bubbles } from 'react-native-4-bubbles-loader';
@@ -78,12 +78,20 @@ export function Order_search ({ navigation }) {
                 </View>
               </View>
             </Modal>
-            <View style={{alignItems: 'center', justifyContent: 'center', marginBottom: 50}}>
+            <View style={{alignItems: 'center', justifyContent: 'center', marginBottom: 50,
+                borderWidth: 1, 
+                borderRadius: 15, 
+                backgroundColor: 'lightgrey', 
+                width: '90%', 
+                height: '15%',
+                borderColor: COLOR_CROCODILE,
+                }}>
                 <Text style={{
                   height: 30,
                   fontSize: 20,
                   textAlign: 'center',
                   fontWeight: 'bold',
+                  color: COLOR_CROCODILE
                 }}>SEARCHING FOR A DELIVERER :)</Text>
                 <Text>Please be patient</Text>
             </View>
@@ -92,7 +100,7 @@ export function Order_search ({ navigation }) {
               <Progress.CircleSnail size={100} animating={true} indeterminate={true} />
             </View> */}
             <View style={styles.cancel_order}>
-              <Button color="#006400" title="cancel my order" onPress={() => navigation.navigate('Home')}></Button>
+              <Button title="cancel my order" onPress={() => navigation.navigate('Home')}></Button>
             </View>
             {/* <Button color="#006400" title="Refresh" onPress={findDrivers}></Button> */}
             <StatusBar style="auto" />
