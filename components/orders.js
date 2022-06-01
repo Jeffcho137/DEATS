@@ -1,12 +1,14 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { View, Text, Image, FlatList, TouchableOpacity, Pressable} from "react-native";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectId } from "../redux/slices/userSlice";
 import styles from '../style'
 import { static_deliveries } from "./deliveries";
 import { Divider } from "react-native-elements";
 import SwipeableButtons from "./swipeable_buttons";
+import { setDropLocation, setOrderFee, setOrderId, setPickupLocation } from "../redux/slices/orderDeliverySlice";
+import { setNavigationMode } from "../redux/slices/navigationSlice";
 
 const static_orders = [
     {
@@ -48,9 +50,20 @@ const static_orders = [
 ]
 
 export default function Orders({ url, cat, catModifier, result_type }) {
+    const dispatch = useDispatch()
     const navigation = useNavigation()
     const  userId = useSelector(selectId)
     const [orders, setOrders] = useState([]);
+
+    useEffect(() => {
+        return () => {
+            dispatch(setOrderId(null))
+            dispatch(setPickupLocation(null))
+            dispatch(setDropLocation(null))
+            dispatch(setOrderFee(null))
+            dispatch(setNavigationMode(null))
+        }
+    }, [])
     
     useFocusEffect(
         useCallback(() => {

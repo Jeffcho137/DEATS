@@ -140,6 +140,7 @@ export function Order_selection ({ navigation }) {
                     const msg = `The updated order costs ${Math.abs(feeDiff).toFixed(2)} less due to the location change you made \n We'll refund your money if you proceed.`
                     const proceedAction = () => {
                         updateOrder()
+                        navigation.goBack()
                     }
                     orderUpdateAlert(title, msg, proceedAction, navigation)
 
