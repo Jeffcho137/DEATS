@@ -1,10 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { Text, View, Button, TextInput } from 'react-native';
 import styles from '../style';
 import { MaterialIcons } from '@expo/vector-icons';
+import { setDelivererId, setDelivererInfo } from '../redux/slices/orderDeliverySlice';
 
 export function Completed (props) {
+    
+
     return (
         <View style={styles.container}>
             <View style={{backgroundColor: 'green', fontSize: 30,width: 500, height: 500,borderRadius: 250, borderWidth: 1, justifyContent: 'center', marginTop: -300}}>
@@ -17,7 +20,7 @@ export function Completed (props) {
                 <Text style={{fontSize: 30, textAlign: 'center', marginTop: 50}}>Thanks for using DEATS!</Text>
             </View>
             <View style={{marginTop: 100, backgroundColor: 'lightgrey', borderWidth: 1, borderRadius: 15, padding: 15}}>
-                <Button title="Back to home" color={"green"} onPress={() => props.navigation.navigate('Home')}></Button>
+                <Button title="Back to home" color={"green"} onPress={() => props.navigation.replace('Home')}></Button>
             </View>
             <StatusBar style="auto" />
         </View>
